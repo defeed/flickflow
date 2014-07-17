@@ -82,4 +82,4 @@ production:
   <<: *default
   database: flickflow_production
   username: flickflow
-  password: <%= Rails.secrets.database_password %>
+  password: <%= Rails.application.secrets.database_password %>
