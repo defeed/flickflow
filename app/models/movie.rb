@@ -23,12 +23,28 @@ class Movie < ActiveRecord::Base
   has_many :recommendations, dependent: :destroy
   has_many :recommended_movies, through: :recommendations, source: :movie
   
+  scope :released,  -> { where('released_on <= ?', Date.today) }
+  scope :fetched,   -> { where('title IS NOT ?', nil) }
+  scope :unfetched, -> { where('title IS ?', nil) }
+  
   def self.fetch(imdb_id)
     fetcher = MovieFetcher.new imdb_id
     fetcher.fetch_all
   end
   
+  def self.search_on_imdb(params = {})
+    Spotlite::Movie.search(params)
+  end
+  
+  def self.find_on_imdb(query)
+    Spotlite::Movie.find(query)
+  end
+  
   def fetch
     Movie.fetch self.imdb_id
+  end
+  
+  def released?
+    released_on? && released_on <= Date.today
   end
 end
