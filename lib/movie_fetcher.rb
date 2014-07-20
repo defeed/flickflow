@@ -20,7 +20,7 @@ class MovieFetcher
     movie.original_title         = imdb.original_title
     movie.year                   = imdb.year
     movie.imdb_rating            = imdb.rating
-    movie.imdb_votes_count       = imdb.votes
+    movie.imdb_rating_count      = imdb.votes
     movie.metacritic_rating      = imdb.metascore
     movie.rotten_critics_rating  = rotten.ratings.critics_score unless rotten.error
     movie.rotten_audience_rating = rotten.ratings.audience_score unless rotten.error
