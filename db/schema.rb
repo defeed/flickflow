@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140720073526) do
+ActiveRecord::Schema.define(version: 20140720082911) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(version: 20140720073526) do
     t.integer  "year"
     t.date     "released_on"
     t.float    "imdb_rating"
-    t.integer  "imdb_votes_count"
+    t.integer  "imdb_rating_count"
     t.integer  "rotten_critics_rating"
     t.integer  "rotten_audience_rating"
     t.integer  "metacritic_rating"
@@ -146,6 +146,14 @@ ActiveRecord::Schema.define(version: 20140720073526) do
 
   add_index "people", ["imdb_id"], name: "index_people_on_imdb_id", unique: true, using: :btree
   add_index "people", ["name"], name: "index_people_on_name", using: :btree
+
+  create_table "recommendations", force: true do |t|
+    t.integer "movie_id"
+    t.integer "other_movie_id"
+  end
+
+  add_index "recommendations", ["movie_id", "other_movie_id"], name: "index_recommendations_on_movie_id_and_other_movie_id", unique: true, using: :btree
+  add_index "recommendations", ["other_movie_id", "movie_id"], name: "index_recommendations_on_other_movie_id_and_movie_id", unique: true, using: :btree
 
   create_table "releases", force: true do |t|
     t.integer  "country_id"

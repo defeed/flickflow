@@ -20,8 +20,15 @@ class Movie < ActiveRecord::Base
   has_many :actors,    through: :actorships,    source: :person
   has_many :stars,     through: :starships,     source: :person
   
+  has_many :recommendations, dependent: :destroy
+  has_many :recommended_movies, through: :recommendations, source: :movie
+  
   def self.fetch(imdb_id)
     fetcher = MovieFetcher.new imdb_id
     fetcher.fetch_all
+  end
+  
+  def fetch
+    Movie.fetch self.imdb_id
   end
 end

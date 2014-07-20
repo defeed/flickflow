@@ -5,8 +5,9 @@ class MovieFetcher
   
   def fetch_all
     fetch_basic_info
+    fetch_people
+    fetch_release_info
     fetch_keywords
-    fetch_releases
   end
   
   def fetch_basic_info
@@ -42,6 +43,12 @@ class MovieFetcher
     movie.languages = []
     imdb.languages.each do |language|
       movie.languages.find_or_create_by(code: language[:code], name: language[:name])
+    end
+    
+    movie.recommendations = []
+    imdb.recommended_movies.each do |recommended_movie|
+      other_movie = Movie.find_or_create_by(imdb_id: recommended_movie.imdb_id)
+      movie.recommendations.build(other_movie_id: other_movie.id)
     end
     
     movie.save
@@ -95,7 +102,7 @@ class MovieFetcher
   end
   handle_asynchronously :fetch_keywords, queue: 'keywords'
   
-  def fetch_releases_and_akas
+  def fetch_release_info
     imdb = Spotlite::Movie.new(@imdb_id)
     movie = Movie.find_or_create_by(imdb_id: imdb.imdb_id)
     
@@ -114,5 +121,5 @@ class MovieFetcher
     
     movie.save
   end
-  handle_asynchronously :fetch_releases_and_akas, queue: 'releases_and_akas'
+  handle_asynchronously :fetch_release_info, queue: 'release_info'  
 end
