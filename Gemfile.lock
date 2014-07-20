@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/defeed/spotlite.git
-  revision: d61502dcb81facfb324adb8872fa69cdb3845668
+  revision: 78b7baf000d6c25b247469f7b7ecb30543fda00d
   specs:
     spotlite (0.8.2)
       nokogiri (~> 1.6)
