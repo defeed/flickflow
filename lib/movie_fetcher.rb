@@ -31,17 +31,17 @@ class MovieFetcher
     
     movie.genres = []
     imdb.genres.each do |genre|
-      movie.genres << Genre.find_or_create_by(name: genre)
+      movie.genres.find_or_create_by(name: genre)
     end
     
     movie.countries = []
     imdb.countries.each do |country|
-      movie.countries << Country.find_or_create_by(code: country[:code], name: country[:name])
+      movie.countries.find_or_create_by(code: country[:code], name: country[:name])
     end
     
     movie.languages = []
     imdb.languages.each do |language|
-      movie.languages << Language.find_or_create_by(code: language[:code], name: language[:name])
+      movie.languages.find_or_create_by(code: language[:code], name: language[:name])
     end
     
     movie.save
@@ -88,7 +88,7 @@ class MovieFetcher
     
     movie.keywords = []
     imdb.keywords.each do |keyword|
-      movie.keywords << Keyword.find_or_create_by(name: keyword)
+      movie.keywords.find_or_create_by(name: keyword)
     end
     
     movie.save
@@ -104,7 +104,7 @@ class MovieFetcher
     movie.released_on = imdb.release_date
     imdb.release_dates.each do |release|
       country = Country.find_or_create_by(code: release[:code], name: release[:region])
-      movie.releases << Release.find_or_create_by(country: country, released_on: release[:date], comment: release[:comment])
+      movie.releases.create(country: country, released_on: release[:date], comment: release[:comment])
     end
     
     movie.save
