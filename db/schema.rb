@@ -110,7 +110,7 @@ ActiveRecord::Schema.define(version: 20140720082911) do
     t.integer  "rotten_audience_rating"
     t.integer  "metacritic_rating"
     t.string   "mpaa_rating"
-    t.string   "description"
+    t.string   "description",            limit: 1000
     t.text     "storyline"
     t.integer  "runtime"
     t.string   "poster_url"
