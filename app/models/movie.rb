@@ -5,6 +5,7 @@ class Movie < ActiveRecord::Base
   has_and_belongs_to_many :keywords
   
   has_many :releases, dependent: :destroy
+  has_many :alternative_titles, dependent: :destroy
   
   has_many :actorships,    -> { where job: Participation.jobs[:actor] },    class_name: 'Participation'
   has_many :starships,     -> { where job: Participation.jobs[:star] },     class_name: 'Participation'

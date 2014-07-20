@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140719064641) do
+ActiveRecord::Schema.define(version: 20140720073526) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "alternative_titles", force: true do |t|
+    t.string   "movie_id"
+    t.string   "title"
+    t.string   "comment"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "alternative_titles", ["movie_id", "title"], name: "index_alternative_titles_on_movie_id_and_title", using: :btree
 
   create_table "countries", force: true do |t|
     t.string   "code"

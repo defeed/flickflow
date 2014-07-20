@@ -95,7 +95,7 @@ class MovieFetcher
   end
   handle_asynchronously :fetch_keywords, queue: 'keywords'
   
-  def fetch_releases
+  def fetch_releases_and_akas
     imdb = Spotlite::Movie.new(@imdb_id)
     movie = Movie.find_or_create_by(imdb_id: imdb.imdb_id)
     
@@ -107,7 +107,12 @@ class MovieFetcher
       movie.releases.create(country: country, released_on: release[:date], comment: release[:comment])
     end
     
+    movie.alternative_titles = []
+    imdb.alternative_titles.each do |aka|
+      movie.alternative_titles.create(title: aka[:title], comment: aka[:comment])
+    end
+    
     movie.save
   end
-  handle_asynchronously :fetch_releases, queue: 'releases'
+  handle_asynchronously :fetch_releases_and_akas, queue: 'releases_and_akas'
 end
