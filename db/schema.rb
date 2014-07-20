@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140718162342) do
+ActiveRecord::Schema.define(version: 20140719064641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,6 +110,32 @@ ActiveRecord::Schema.define(version: 20140718162342) do
 
   add_index "movies", ["imdb_id"], name: "index_movies_on_imdb_id", unique: true, using: :btree
   add_index "movies", ["title"], name: "index_movies_on_title", using: :btree
+
+  create_table "participations", force: true do |t|
+    t.integer  "movie_id"
+    t.integer  "person_id"
+    t.integer  "job"
+    t.string   "credit"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "participations", ["movie_id", "person_id", "job", "credit"], name: "participations_index", unique: true, using: :btree
+  add_index "participations", ["movie_id", "person_id"], name: "index_participations_on_movie_id_and_person_id", using: :btree
+
+  create_table "people", force: true do |t|
+    t.string   "imdb_id"
+    t.string   "name"
+    t.string   "birth_name"
+    t.date     "born_on"
+    t.date     "died_on"
+    t.text     "bio"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "people", ["imdb_id"], name: "index_people_on_imdb_id", unique: true, using: :btree
+  add_index "people", ["name"], name: "index_people_on_name", using: :btree
 
   create_table "releases", force: true do |t|
     t.integer  "country_id"
