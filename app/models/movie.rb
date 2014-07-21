@@ -36,6 +36,7 @@ class Movie < ActiveRecord::Base
   
   has_many :releases, dependent: :destroy
   has_many :alternative_titles, dependent: :destroy
+  has_many :trivia, dependent: :destroy
   
   has_many :actorships,    -> { where job: Participation.jobs[:actor] },    class_name: 'Participation'
   has_many :starships,     -> { where job: Participation.jobs[:star] },     class_name: 'Participation'

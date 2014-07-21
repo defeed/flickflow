@@ -8,6 +8,7 @@ class MovieFetcher
     fetch_people
     fetch_release_info
     fetch_keywords
+    fetch_trivia
   end
   
   def fetch_basic_info
@@ -121,5 +122,16 @@ class MovieFetcher
     
     movie.save
   end
-  handle_asynchronously :fetch_release_info, queue: 'release_info'  
+  handle_asynchronously :fetch_release_info, queue: 'release_info'
+  
+  def fetch_trivia
+    imdb = Spotlite::Movie.new(@imdb_id)
+    movie = Movie.find_or_create_by(imdb_id: imdb.imdb_id)
+    
+    movie.trivia = []
+    imdb.trivia.each do |trivium|
+      movie.trivia.create(text: trivium)
+    end
+  end
+  handle_asynchronously :fetch_trivia, queue: 'trivia'
 end
