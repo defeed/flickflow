@@ -75,6 +75,8 @@ ActiveRecord::Schema.define(version: 20140721115704) do
     t.datetime "updated_at"
   end
 
+  add_index "keywords", ["name"], name: "index_keywords_on_name", using: :btree
+
   create_table "keywords_movies", id: false, force: true do |t|
     t.integer "keyword_id", null: false
     t.integer "movie_id",   null: false
