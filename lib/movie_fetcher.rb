@@ -9,6 +9,7 @@ class MovieFetcher
     fetch_release_info
     fetch_keywords
     fetch_trivia
+    fetch_critic_reviews
   end
   
   def fetch_basic_info
@@ -134,4 +135,15 @@ class MovieFetcher
     end
   end
   handle_asynchronously :fetch_trivia, queue: 'trivia'
+  
+  def fetch_critic_reviews
+    imdb = Spotlite::Movie.new(@imdb_id)
+    movie = Movie.find_or_create_by(imdb_id: imdb.imdb_id)
+    
+    movie.critic_reviews = []
+    imdb.critic_reviews.each do |review|
+      movie.critic_reviews.create(author: review[:author], publisher: review[:source], excerpt: review[:excerpt], rating: review[:score])
+    end
+  end
+  handle_asynchronously :fetch_critic_reviews, queue: 'critic_reviews'
 end
