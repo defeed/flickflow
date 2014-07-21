@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(version: 20140720082911) do
     t.date     "born_on"
     t.date     "died_on"
     t.text     "bio"
+    t.string   "photo_url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

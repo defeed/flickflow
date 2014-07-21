@@ -1,3 +1,33 @@
+# == Schema Information
+#
+# Table name: movies
+#
+#  id                     :integer          not null, primary key
+#  imdb_id                :string(255)
+#  title                  :string(255)
+#  original_title         :string(255)
+#  sort_title             :string(255)
+#  year                   :integer
+#  released_on            :date
+#  imdb_rating            :float
+#  imdb_rating_count      :integer
+#  rotten_critics_rating  :integer
+#  rotten_audience_rating :integer
+#  metacritic_rating      :integer
+#  mpaa_rating            :string(255)
+#  description            :string(1000)
+#  storyline              :text
+#  runtime                :integer
+#  poster_url             :string(255)
+#  created_at             :datetime
+#  updated_at             :datetime
+#
+# Indexes
+#
+#  index_movies_on_imdb_id  (imdb_id) UNIQUE
+#  index_movies_on_title    (title)
+#
+
 class Movie < ActiveRecord::Base
   has_and_belongs_to_many :genres
   has_and_belongs_to_many :countries

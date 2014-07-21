@@ -36,5 +36,6 @@ group :development do
   gem 'spring'
   gem 'better_errors'
   gem 'pry-rails'
+  gem 'annotate', '~> 2.6.5'
   # gem 'capistrano-rails'  
 end

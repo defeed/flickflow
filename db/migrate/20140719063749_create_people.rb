@@ -7,6 +7,7 @@ class CreatePeople < ActiveRecord::Migration
       t.date :born_on
       t.date :died_on
       t.text :bio
+      t.string :photo_url
 
       t.timestamps
     end

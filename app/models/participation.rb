@@ -1,3 +1,21 @@
+# == Schema Information
+#
+# Table name: participations
+#
+#  id         :integer          not null, primary key
+#  movie_id   :integer
+#  person_id  :integer
+#  job        :integer
+#  credit     :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#
+# Indexes
+#
+#  index_participations_on_movie_id_and_person_id  (movie_id,person_id)
+#  participations_index                            (movie_id,person_id,job,credit) UNIQUE
+#
+
 class Participation < ActiveRecord::Base
   belongs_to :movie
   belongs_to :person
