@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140722155051) do
+ActiveRecord::Schema.define(version: 20140724162047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,6 +116,29 @@ ActiveRecord::Schema.define(version: 20140722155051) do
   end
 
   add_index "languages_movies", ["language_id", "movie_id"], name: "index_languages_movies_on_language_id_and_movie_id", using: :btree
+
+  create_table "list_entries", force: true do |t|
+    t.integer  "list_id"
+    t.integer  "listable_id"
+    t.string   "listable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "list_entries", ["list_id", "listable_id", "listable_type"], name: "index_list_entries_on_list_id_and_listable_id_and_listable_type", unique: true, using: :btree
+
+  create_table "lists", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "list_type"
+    t.string   "name"
+    t.boolean  "is_private", default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "lists", ["name"], name: "index_lists_on_name", using: :btree
+  add_index "lists", ["user_id", "list_type"], name: "index_lists_on_user_id_and_list_type", using: :btree
+  add_index "lists", ["user_id", "name"], name: "index_lists_on_user_id_and_name", using: :btree
 
   create_table "movies", force: true do |t|
     t.string   "imdb_id"

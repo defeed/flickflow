@@ -29,4 +29,7 @@ class Person < ActiveRecord::Base
   
   has_many :participations, dependent: :destroy
   has_many :movies, through: :participations
+  
+  has_many :list_entries, as: :listable
+  has_many :lists, through: :list_entries
 end
