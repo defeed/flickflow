@@ -55,6 +55,9 @@ class Movie < ActiveRecord::Base
   has_many :recommendations, dependent: :destroy
   has_many :recommended_movies, through: :recommendations, source: :movie
   
+  has_many :list_entries, as: :listable
+  has_many :lists, through: :list_entries
+  
   scope :released,  -> { where('released_on <= ?', Date.today) }
   scope :fetched,   -> { where('title IS NOT ?', nil) }
   scope :unfetched, -> { where('title IS ?', nil) }
