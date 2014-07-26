@@ -32,5 +32,22 @@
 class User < ActiveRecord::Base
   authenticates_with_sorcery!
   
-  has_many :lists
+  has_many :lists, dependent: :destroy
+  
+  after_create :create_default_user_lists, unless: Proc.new { |u| u.is_system_user? }
+  
+  def self.system
+    User.find_by(username: 'flickflow')
+  end
+  
+  def create_default_user_lists
+    lists.movie.create name: 'Watchlist'
+    lists.movie.create name: 'Watched'
+    lists.movie.create name: 'Favorite Movies'
+    lists.person.create name: 'Favorite People'
+  end
+  
+  def is_system_user?
+    self == User.system
+  end
 end
