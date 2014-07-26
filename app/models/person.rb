@@ -30,6 +30,10 @@ class Person < ActiveRecord::Base
   has_many :participations, dependent: :destroy
   has_many :movies, through: :participations
   
-  has_many :list_entries, as: :listable
+  has_many :list_entries, as: :listable, dependent: :destroy
   has_many :lists, through: :list_entries
+  
+  def toggle_in_list(user, list)
+    list.toggle_entry user, self
+  end
 end

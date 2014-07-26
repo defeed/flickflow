@@ -21,7 +21,29 @@ class List < ActiveRecord::Base
   enum list_type: [:movie, :person]
   
   belongs_to :user
-  has_many :list_entries
+  has_many :list_entries, dependent: :destroy
   has_many :movies, through: :list_entries, source: :listable, source_type: 'Movie'
   has_many :people, through: :list_entries, source: :listable, source_type: 'Person'
+  
+  validates :name, uniqueness: { scope: :user,
+                                 case_sensitive: false, 
+                                 message: 'You already have a list with this name' }
+  
+  def toggle_entry(user, object)
+    return false unless user == self.user
+    return false unless list_type == object.class.to_s.downcase
+    in_list = list_entries.exists? listable: object
+    in_list ? remove(object) : add(object)
+    reload
+  end
+  
+  private
+  
+    def add(object)
+      list_entries.create(listable: object)
+    end
+    
+    def remove(object)
+      list_entries.find_by(listable: object).destroy
+    end
 end
