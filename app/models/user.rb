@@ -37,6 +37,10 @@ class User < ActiveRecord::Base
   
   authenticates_with_sorcery!
   
+  validates :username, format: { with: /\A[a-z0-9]+\z/i, message: 'must only contain alpha-numeric characters' },
+                       length: { in: 2..20, message: 'must be 2 to 20 characters' }
+  validates :email,    format: { with: /\A.+@.+\..+\z/i, message: 'is invalid' }
+  
   has_many :lists, dependent: :destroy
   
   after_create :create_default_user_lists, unless: Proc.new { |u| u.is_system_user? }
