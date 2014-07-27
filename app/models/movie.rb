@@ -34,6 +34,9 @@ class Movie < ActiveRecord::Base
   include FriendlyId
   friendly_id :slug_candicates
   
+  # # # # # # # #
+  # Associations
+  # # # # # # # #
   has_and_belongs_to_many :genres
   has_and_belongs_to_many :countries
   has_and_belongs_to_many :languages
@@ -63,10 +66,16 @@ class Movie < ActiveRecord::Base
   has_many :list_entries, as: :listable, dependent: :destroy
   has_many :lists, through: :list_entries
   
+  # # # # #
+  # Scopes
+  # # # # #
   scope :released,  -> { where('released_on <= ?', Date.today) }
   scope :fetched,   -> { where('title IS NOT ?', nil) }
   scope :unfetched, -> { where('title IS ?', nil) }
   
+  # # # # # # # #
+  # Class Methods
+  # # # # # # # #
   def self.fetch(imdb_id)
     fetcher = MovieFetcher.new imdb_id
     fetcher.fetch_all
@@ -85,6 +94,9 @@ class Movie < ActiveRecord::Base
     title.gsub(/^(The|An|A)\s+/, '').downcase
   end
   
+  # # # # # # # # # #
+  # Instance Methods
+  # # # # # # # # # #
   def fetch
     Movie.fetch self.imdb_id
   end
