@@ -17,8 +17,11 @@ class CreateMovies < ActiveRecord::Migration
       t.text :storyline
       t.integer :runtime
       t.string :poster_url
+      t.string :slug
 
       t.timestamps
     end
+    
+    add_index :movies, :slug, unique: true
   end
 end

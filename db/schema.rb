@@ -37,9 +37,12 @@ ActiveRecord::Schema.define(version: 20140724162047) do
   create_table "countries", force: true do |t|
     t.string   "code"
     t.string   "name"
+    t.string   "slug"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "countries", ["slug"], name: "index_countries_on_slug", unique: true, using: :btree
 
   create_table "countries_movies", id: false, force: true do |t|
     t.integer "country_id", null: false
@@ -76,9 +79,12 @@ ActiveRecord::Schema.define(version: 20140724162047) do
 
   create_table "genres", force: true do |t|
     t.string   "name"
+    t.string   "slug"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "genres", ["slug"], name: "index_genres_on_slug", unique: true, using: :btree
 
   create_table "genres_movies", id: false, force: true do |t|
     t.integer "genre_id", null: false
@@ -89,11 +95,13 @@ ActiveRecord::Schema.define(version: 20140724162047) do
 
   create_table "keywords", force: true do |t|
     t.string   "name"
+    t.string   "slug"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "keywords", ["name"], name: "index_keywords_on_name", using: :btree
+  add_index "keywords", ["name"], name: "index_keywords_on_name", unique: true, using: :btree
+  add_index "keywords", ["slug"], name: "index_keywords_on_slug", unique: true, using: :btree
 
   create_table "keywords_movies", id: false, force: true do |t|
     t.integer "keyword_id", null: false
@@ -106,9 +114,12 @@ ActiveRecord::Schema.define(version: 20140724162047) do
   create_table "languages", force: true do |t|
     t.string   "code"
     t.string   "name"
+    t.string   "slug"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "languages", ["slug"], name: "index_languages_on_slug", unique: true, using: :btree
 
   create_table "languages_movies", id: false, force: true do |t|
     t.integer "language_id", null: false
@@ -132,11 +143,13 @@ ActiveRecord::Schema.define(version: 20140724162047) do
     t.integer  "list_type"
     t.string   "name"
     t.boolean  "is_private", default: false
+    t.string   "slug"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "lists", ["name"], name: "index_lists_on_name", using: :btree
+  add_index "lists", ["slug"], name: "index_lists_on_slug", using: :btree
   add_index "lists", ["user_id", "list_type"], name: "index_lists_on_user_id_and_list_type", using: :btree
   add_index "lists", ["user_id", "name"], name: "index_lists_on_user_id_and_name", using: :btree
 
@@ -157,11 +170,13 @@ ActiveRecord::Schema.define(version: 20140724162047) do
     t.text     "storyline"
     t.integer  "runtime"
     t.string   "poster_url"
+    t.string   "slug"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "movies", ["imdb_id"], name: "index_movies_on_imdb_id", unique: true, using: :btree
+  add_index "movies", ["slug"], name: "index_movies_on_slug", unique: true, using: :btree
   add_index "movies", ["title"], name: "index_movies_on_title", using: :btree
 
   create_table "participations", force: true do |t|
@@ -184,12 +199,14 @@ ActiveRecord::Schema.define(version: 20140724162047) do
     t.date     "died_on"
     t.text     "bio"
     t.string   "photo_url"
+    t.string   "slug"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "people", ["imdb_id"], name: "index_people_on_imdb_id", unique: true, using: :btree
   add_index "people", ["name"], name: "index_people_on_name", using: :btree
+  add_index "people", ["slug"], name: "index_people_on_slug", unique: true, using: :btree
 
   create_table "recommendations", force: true do |t|
     t.integer "movie_id"
@@ -223,6 +240,7 @@ ActiveRecord::Schema.define(version: 20140724162047) do
     t.string   "email",                           null: false
     t.string   "crypted_password",                null: false
     t.string   "salt",                            null: false
+    t.string   "slug"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "remember_me_token"
@@ -240,6 +258,7 @@ ActiveRecord::Schema.define(version: 20140724162047) do
   add_index "users", ["last_logout_at", "last_activity_at"], name: "index_users_on_last_logout_at_and_last_activity_at", using: :btree
   add_index "users", ["remember_me_token"], name: "index_users_on_remember_me_token", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", using: :btree
+  add_index "users", ["slug"], name: "index_users_on_slug", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
 end

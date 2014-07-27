@@ -9,18 +9,24 @@
 #  is_private :boolean          default(FALSE)
 #  created_at :datetime
 #  updated_at :datetime
+#  slug       :string(255)
 #
 # Indexes
 #
 #  index_lists_on_name                   (name)
+#  index_lists_on_slug                   (slug)
 #  index_lists_on_user_id_and_list_type  (user_id,list_type)
 #  index_lists_on_user_id_and_name       (user_id,name)
 #
 
 class List < ActiveRecord::Base
+  include FriendlyId
+  
   enum list_type: [:movie, :person]
   
   belongs_to :user
+  friendly_id :name, use: :scoped, scope: :user
+  
   has_many :list_entries, dependent: :destroy
   has_many :movies, through: :list_entries, source: :listable, source_type: 'Movie'
   has_many :people, through: :list_entries, source: :listable, source_type: 'Person'

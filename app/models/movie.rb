@@ -21,14 +21,19 @@
 #  poster_url             :string(255)
 #  created_at             :datetime
 #  updated_at             :datetime
+#  slug                   :string(255)
 #
 # Indexes
 #
 #  index_movies_on_imdb_id  (imdb_id) UNIQUE
+#  index_movies_on_slug     (slug) UNIQUE
 #  index_movies_on_title    (title)
 #
 
 class Movie < ActiveRecord::Base
+  include FriendlyId
+  friendly_id :slug_candicates
+  
   has_and_belongs_to_many :genres
   has_and_belongs_to_many :countries
   has_and_belongs_to_many :languages
@@ -85,5 +90,17 @@ class Movie < ActiveRecord::Base
   
   def toggle_in_list(user, list)
     list.toggle_entry user, self
+  end
+  
+  def slug_candicates
+    [
+      :title,
+      [:title, :year],
+      [:imdb_id]
+    ]
+  end
+  
+  def should_generate_new_friendly_id?
+    title_changed? || year_changed? || super
   end
 end

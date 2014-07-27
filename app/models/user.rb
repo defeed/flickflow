@@ -19,6 +19,7 @@
 #  last_logout_at                  :datetime
 #  last_activity_at                :datetime
 #  last_login_from_ip_address      :string(255)
+#  slug                            :string(255)
 #
 # Indexes
 #
@@ -26,10 +27,14 @@
 #  index_users_on_last_logout_at_and_last_activity_at  (last_logout_at,last_activity_at)
 #  index_users_on_remember_me_token                    (remember_me_token)
 #  index_users_on_reset_password_token                 (reset_password_token)
+#  index_users_on_slug                                 (slug) UNIQUE
 #  index_users_on_username                             (username) UNIQUE
 #
 
 class User < ActiveRecord::Base
+  include FriendlyId
+  friendly_id :username
+  
   authenticates_with_sorcery!
   
   has_many :lists, dependent: :destroy
@@ -43,7 +48,7 @@ class User < ActiveRecord::Base
   def create_default_user_lists
     lists.movie.create name: 'Watchlist'
     lists.movie.create name: 'Watched'
-    lists.movie.create name: 'Favorite Movies'
+    lists.movie.create name: 'Favorites'
     lists.person.create name: 'Favorite People'
   end
   

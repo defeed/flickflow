@@ -8,11 +8,13 @@ class CreatePeople < ActiveRecord::Migration
       t.date :died_on
       t.text :bio
       t.string :photo_url
+      t.string :slug
 
       t.timestamps
     end
     
     add_index :people, :imdb_id, unique: true
+    add_index :people, :slug, unique: true
     add_index :people, :name
   end
 end

@@ -12,14 +12,19 @@
 #  photo_url  :string(255)
 #  created_at :datetime
 #  updated_at :datetime
+#  slug       :string(255)
 #
 # Indexes
 #
 #  index_people_on_imdb_id  (imdb_id) UNIQUE
 #  index_people_on_name     (name)
+#  index_people_on_slug     (slug) UNIQUE
 #
 
 class Person < ActiveRecord::Base
+  include FriendlyId
+  friendly_id :slug_candicates
+  
   has_many :actorships,    -> { where job: Participation.jobs[:actor] },    class_name: 'Participation'
   has_many :starships,     -> { where job: Participation.jobs[:star] },     class_name: 'Participation'
   has_many :directorships, -> { where job: Participation.jobs[:director] }, class_name: 'Participation'
@@ -35,5 +40,16 @@ class Person < ActiveRecord::Base
   
   def toggle_in_list(user, list)
     list.toggle_entry user, self
+  end
+  
+  def slug_candicates
+    [
+      :name,
+      [:imdb_id, :name]
+    ]
+  end
+  
+  def should_generate_new_friendly_id?
+    name_changed? || super
   end
 end
