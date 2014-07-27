@@ -80,6 +80,11 @@ class Movie < ActiveRecord::Base
     Spotlite::Movie.find(query)
   end
   
+  def self.sort_title(title)
+    return unless title
+    title.gsub(/^(The|An|A)\s+/, '').downcase
+  end
+  
   def fetch
     Movie.fetch self.imdb_id
   end

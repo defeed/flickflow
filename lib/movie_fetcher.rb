@@ -20,6 +20,7 @@ class MovieFetcher
     movie.imdb_id                = imdb.imdb_id
     movie.title                  = imdb.title
     movie.original_title         = imdb.original_title
+    movie.sort_title             = Movie.sort_title movie.title
     movie.year                   = imdb.year
     movie.imdb_rating            = imdb.rating
     movie.imdb_rating_count      = imdb.votes
