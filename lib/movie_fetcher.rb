@@ -48,12 +48,6 @@ class MovieFetcher
       movie.languages << Language.find_or_create_by(code: language[:code], name: language[:name])
     end
     
-    movie.recommendations = []
-    imdb.recommended_movies.each do |recommended_movie|
-      other_movie = Movie.find_or_create_by(imdb_id: recommended_movie.imdb_id)
-      movie.recommendations.build(other_movie_id: other_movie.id)
-    end
-    
     movie.save
   end
   
@@ -149,10 +143,20 @@ class MovieFetcher
   handle_asynchronously :fetch_critic_reviews, queue: 'critic_reviews'
   
   def fetch_recommended_movies
+    imdb = Spotlite::Movie.new(@imdb_id)
     movie = Movie.find_by(imdb_id: @imdb_id)
+    
+    movie.recommendations = []
+    imdb.recommended_movies.each do |recommended_movie|
+      other_movie = Movie.find_or_create_by(imdb_id: recommended_movie.imdb_id)
+      movie.recommendations.build(other_movie_id: other_movie.id)
+    end
+    
+    movie.save
     
     movie.recommended_movies.unfetched.each do |recommended_movie|
       MovieFetcher.new(recommended_movie.imdb_id).delay.fetch_all
-    end unless movie.nil?
+    end
   end
+  handle_asynchronously :fetch_recommended_movies, queue: 'recommended_movies'
 end

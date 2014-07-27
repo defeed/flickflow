@@ -101,6 +101,10 @@ class Movie < ActiveRecord::Base
     Movie.fetch self.imdb_id
   end
   
+  def fetch_recommended_movies
+    MovieFetcher.new(self.imdb_id).fetch_recommended_movies
+  end
+  
   def released?
     released_on? && released_on <= Date.today
   end
