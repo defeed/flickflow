@@ -48,6 +48,7 @@ class MovieFetcher
       movie.languages << Language.find_or_create_by(code: language[:code], name: language[:name])
     end
     
+    log_fetch(movie, imdb.response, Fetch.pages[:basic_info])
     movie.save
   end
   
@@ -82,6 +83,7 @@ class MovieFetcher
       movie.participations.producer.create(person: person, credit: producer.credits_text)
     end
     
+    log_fetch(movie, imdb.response, Fetch.pages[:people])
     movie.save
   end
   handle_asynchronously :fetch_people, queue: 'people'
@@ -95,6 +97,7 @@ class MovieFetcher
       movie.keywords << Keyword.find_or_create_by(name: keyword)
     end
     
+    log_fetch(movie, imdb.response, Fetch.pages[:basic_info])
     movie.save
   end
   handle_asynchronously :fetch_keywords, queue: 'keywords'
@@ -116,6 +119,7 @@ class MovieFetcher
       movie.alternative_titles.create(title: aka[:title], comment: aka[:comment])
     end
     
+    log_fetch(movie, imdb.response, Fetch.pages[:release_info])
     movie.save
   end
   handle_asynchronously :fetch_release_info, queue: 'release_info'
@@ -128,6 +132,8 @@ class MovieFetcher
     imdb.trivia.each do |trivium|
       movie.trivia.create(text: trivium)
     end
+    
+    log_fetch(movie, imdb.response, Fetch.pages[:trivia])
   end
   handle_asynchronously :fetch_trivia, queue: 'trivia'
   
@@ -139,6 +145,8 @@ class MovieFetcher
     imdb.critic_reviews.each do |review|
       movie.critic_reviews.create(author: review[:author], publisher: review[:source], excerpt: review[:excerpt], rating: review[:score])
     end
+    
+    log_fetch(movie, imdb.response, Fetch.pages[:critic_reviews])
   end
   handle_asynchronously :fetch_critic_reviews, queue: 'critic_reviews'
   
@@ -157,6 +165,14 @@ class MovieFetcher
     movie.recommended_movies.unfetched.each do |recommended_movie|
       MovieFetcher.new(recommended_movie.imdb_id).delay.fetch_all
     end
+    
+    log_fetch(movie, imdb.response, Fetch.pages[:recommended_movies])
   end
   handle_asynchronously :fetch_recommended_movies, queue: 'recommended_movies'
+  
+  private
+  
+    def log_fetch(movie, response, page)
+      movie.fetches.create page: page, response_code: response[:code], response_message: response[:message]
+    end
 end

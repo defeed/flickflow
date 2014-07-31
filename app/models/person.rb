@@ -38,6 +38,8 @@ class Person < ActiveRecord::Base
   has_many :list_entries, as: :listable, dependent: :destroy
   has_many :lists, through: :list_entries
   
+  has_many :fetches, as: :fetchable, dependent: :destroy
+  
   def toggle_in_list(user, list)
     list.toggle_entry user, self
   end

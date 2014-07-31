@@ -66,6 +66,8 @@ class Movie < ActiveRecord::Base
   has_many :list_entries, as: :listable, dependent: :destroy
   has_many :lists, through: :list_entries
   
+  has_many :fetches, as: :fetchable, dependent: :destroy
+  
   # # # # #
   # Scopes
   # # # # #

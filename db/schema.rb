@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140724162047) do
+ActiveRecord::Schema.define(version: 20140729075439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,18 @@ ActiveRecord::Schema.define(version: 20140724162047) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
+  create_table "fetches", force: true do |t|
+    t.integer  "fetchable_id"
+    t.string   "fetchable_type"
+    t.integer  "page"
+    t.integer  "response_code"
+    t.string   "response_message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fetches", ["fetchable_id", "fetchable_type"], name: "index_fetches_on_fetchable_id_and_fetchable_type", using: :btree
 
   create_table "genres", force: true do |t|
     t.string   "name"
