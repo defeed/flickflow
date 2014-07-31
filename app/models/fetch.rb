@@ -22,6 +22,7 @@ class Fetch < ActiveRecord::Base
   
   scope :with_response_code, -> (code) { where 'response_code = ?', code }
   scope :failed, -> { where 'response_code >= ?', 400 }
+  scope :not_found, -> { with_response_code(404) }
   
   def success?
     response_code == 200
