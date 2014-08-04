@@ -78,9 +78,10 @@ class Movie < ActiveRecord::Base
   # # # # # # # #
   # Class Methods
   # # # # # # # #
-  def self.fetch(imdb_id)
-    fetcher = MovieFetcher.new imdb_id
-    fetcher.fetch_all
+  def self.fetch imdb_id, page, force = false
+    imdb = Spotlite::Movie.new imdb_id
+    Movie.find_or_create_by(imdb_id: imdb.imdb_id)
+    Delayed::Job.enqueue MovieFetcher.new(imdb.imdb_id, page)
   end
   
   def self.search_on_imdb(params = {})
@@ -99,12 +100,12 @@ class Movie < ActiveRecord::Base
   # # # # # # # # # #
   # Instance Methods
   # # # # # # # # # #
-  def fetch
-    Movie.fetch self.imdb_id
+  def fetch page, force = false
+    Delayed::Job.enqueue MovieFetcher.new(self.imdb_id, page, force)
   end
   
   def fetch_recommended_movies
-    MovieFetcher.new(self.imdb_id).fetch_recommended_movies
+    Delayed::Job.enqueue MovieFetcher.new(self.imdb_id, :recommended_movies)
   end
   
   def released?

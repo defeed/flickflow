@@ -1,6 +1,26 @@
-class MovieFetcher
-  def initialize(imdb_id)
-    @imdb_id = imdb_id
+class MovieFetcher < Struct.new(:imdb_id, :page, :force)
+  def perform
+    return nil unless fetch_required_for? page, force
+    
+    case page
+    when :all
+      fetch_all
+    when :basic_info
+      fetch_basic_info
+    when :people
+      fetch_people
+    when :release_info
+      fetch_release_info
+    when :keywords
+      fetch_keywords
+    when :trivia
+      fetch_trivia
+    when :recommended_movies
+      fetch_recommended_movies
+    when :critic_reviews
+      fetch_critic_reviews
+    else nil
+    end
   end
   
   def fetch_all
@@ -13,10 +33,10 @@ class MovieFetcher
   end
   
   def fetch_basic_info
-    imdb = Spotlite::Movie.new(@imdb_id)
-    movie = Movie.find_or_create_by(imdb_id: imdb.imdb_id)
+    imdb = Spotlite::Movie.new(imdb_id)
+    movie = Movie.find_by(imdb_id: imdb.imdb_id)
     rotten = RottenMovie.find(imdb: imdb.imdb_id)
-    
+        
     movie.imdb_id                = imdb.imdb_id
     movie.title                  = imdb.title
     movie.original_title         = imdb.original_title
@@ -48,14 +68,14 @@ class MovieFetcher
       movie.languages << Language.find_or_create_by(code: language[:code], name: language[:name])
     end
     
-    log_fetch(movie, imdb.response, Fetch.pages[:basic_info])
+    log_fetch(Fetch.pages[:basic_info], imdb.response)
     movie.save
   end
   
   def fetch_people
-    imdb = Spotlite::Movie.new(@imdb_id)
-    movie = Movie.find_or_create_by(imdb_id: imdb.imdb_id)
-    
+    imdb = Spotlite::Movie.new(imdb_id)
+    movie = Movie.find_by(imdb_id: imdb.imdb_id)
+
     movie.participations = []
     
     imdb.cast.each do |actor|
@@ -83,28 +103,28 @@ class MovieFetcher
       movie.participations.producer.create(person: person, credit: producer.credits_text)
     end
     
-    log_fetch(movie, imdb.response, Fetch.pages[:people])
+    log_fetch(Fetch.pages[:people], imdb.response)
     movie.save
   end
   handle_asynchronously :fetch_people, queue: 'people'
     
   def fetch_keywords
-    imdb = Spotlite::Movie.new(@imdb_id)
-    movie = Movie.find_or_create_by(imdb_id: imdb.imdb_id)
+    imdb = Spotlite::Movie.new(imdb_id)
+    movie = Movie.find_by(imdb_id: imdb.imdb_id)
     
     movie.keywords = []
     imdb.keywords.each do |keyword|
       movie.keywords << Keyword.find_or_create_by(name: keyword)
     end
     
-    log_fetch(movie, imdb.response, Fetch.pages[:basic_info])
+    log_fetch(Fetch.pages[:keywords], imdb.response)
     movie.save
   end
   handle_asynchronously :fetch_keywords, queue: 'keywords'
   
   def fetch_release_info
-    imdb = Spotlite::Movie.new(@imdb_id)
-    movie = Movie.find_or_create_by(imdb_id: imdb.imdb_id)
+    imdb = Spotlite::Movie.new(imdb_id)
+    movie = Movie.find_by(imdb_id: imdb.imdb_id)
     
     movie.released_on = nil
     movie.releases = []
@@ -119,41 +139,41 @@ class MovieFetcher
       movie.alternative_titles.create(title: aka[:title], comment: aka[:comment])
     end
     
-    log_fetch(movie, imdb.response, Fetch.pages[:release_info])
+    log_fetch(Fetch.pages[:release_info], imdb.response)
     movie.save
   end
   handle_asynchronously :fetch_release_info, queue: 'release_info'
   
   def fetch_trivia
-    imdb = Spotlite::Movie.new(@imdb_id)
-    movie = Movie.find_or_create_by(imdb_id: imdb.imdb_id)
+    imdb = Spotlite::Movie.new(imdb_id)
+    movie = Movie.find_by(imdb_id: imdb.imdb_id)
     
     movie.trivia = []
     imdb.trivia.each do |trivium|
       movie.trivia.create(text: trivium)
     end
     
-    log_fetch(movie, imdb.response, Fetch.pages[:trivia])
+    log_fetch(Fetch.pages[:trivia], imdb.response)
   end
   handle_asynchronously :fetch_trivia, queue: 'trivia'
   
   def fetch_critic_reviews
-    imdb = Spotlite::Movie.new(@imdb_id)
-    movie = Movie.find_or_create_by(imdb_id: imdb.imdb_id)
+    imdb = Spotlite::Movie.new(imdb_id)
+    movie = Movie.find_by(imdb_id: imdb.imdb_id)
     
     movie.critic_reviews = []
     imdb.critic_reviews.each do |review|
       movie.critic_reviews.create(author: review[:author], publisher: review[:source], excerpt: review[:excerpt], rating: review[:score])
     end
     
-    log_fetch(movie, imdb.response, Fetch.pages[:critic_reviews])
+    log_fetch(Fetch.pages[:critic_reviews], imdb.response)
   end
   handle_asynchronously :fetch_critic_reviews, queue: 'critic_reviews'
   
   def fetch_recommended_movies
-    imdb = Spotlite::Movie.new(@imdb_id)
-    movie = Movie.find_by(imdb_id: @imdb_id)
-    
+    imdb = Spotlite::Movie.new(imdb_id)
+    movie = Movie.find_by(imdb_id: imdb.imdb_id)
+        
     movie.recommendations = []
     imdb.recommended_movies.each do |recommended_movie|
       other_movie = Movie.find_or_create_by(imdb_id: recommended_movie.imdb_id)
@@ -163,16 +183,53 @@ class MovieFetcher
     movie.save
     
     movie.recommended_movies.unfetched.each do |recommended_movie|
-      MovieFetcher.new(recommended_movie.imdb_id).delay.fetch_all
+      Delayed::Job.enqueue MovieFetcher.new(recommended_movie.imdb_id, :all)
     end
     
-    log_fetch(movie, imdb.response, Fetch.pages[:recommended_movies])
+    log_fetch(Fetch.pages[:recommended_movies], imdb.response)
   end
   handle_asynchronously :fetch_recommended_movies, queue: 'recommended_movies'
   
   private
   
-    def log_fetch(movie, response, page)
+    def log_fetch page, response
+      movie = Movie.find_by(imdb_id: imdb_id)
       movie.fetches.create page: page, response_code: response[:code], response_message: response[:message]
+    end
+    
+    def fetch_required_for? page, force = false
+      last_fetch = last_fetch_for page
+      return true if force || last_fetch.nil?
+      Time.now.utc - last_fetch.created_at > fetch_delay
+    end
+    
+    def last_fetch_for page
+      movie = Movie.find_by(imdb_id: imdb_id)
+      page == :all ? movie.fetches.last : movie.fetches.where(page: Fetch.pages[page]).last
+    end
+    
+    def fetch_delay
+      movie = Movie.find_by(imdb_id: imdb_id)
+      
+      if movie.released_on.present?
+        days_difference = (Date.today - movie.released_on).abs.to_i
+        
+        # The more distant release date from today is (in past or future), the more delay between refetching
+        if days_difference > 365
+          2.weeks
+        elsif days_difference > 180
+          1.week
+        elsif days_difference > 90
+          5.days
+        elsif days_difference > 30
+          3.days
+        elsif days_difference > 7
+          1.day
+        else
+          6.hours
+        end
+      else
+        1.week
+      end
     end
 end
