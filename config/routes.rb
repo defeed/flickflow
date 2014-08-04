@@ -53,4 +53,8 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+  
+  namespace :admin do
+    match "/jobs" => DelayedJobWeb, :anchor => false, via: [:get, :post]
+  end
 end
