@@ -68,8 +68,9 @@ class MovieFetcher < Struct.new(:imdb_id, :page, :force)
       movie.languages << Language.find_or_create_by(code: language[:code], name: language[:name])
     end
     
-    log_fetch(Fetch.pages[:basic_info], imdb.response)
     movie.save
+    has_data = [movie.title, movie.original_title, movie.year, movie.imdb_rating, movie.imdb_rating_count, movie.runtime, movie.description, movie.storyline, movie.mpaa_rating, movie.poster_url].any? &:present?
+    log_fetch :basic_info, imdb.response, has_data
   end
   
   def fetch_people
@@ -103,8 +104,10 @@ class MovieFetcher < Struct.new(:imdb_id, :page, :force)
       movie.participations.producer.create(person: person, credit: producer.credits_text)
     end
     
-    log_fetch(Fetch.pages[:people], imdb.response)
     movie.save
+    movie.reload
+    has_data = movie.participations.present?
+    log_fetch :people, imdb.response, has_data
   end
   handle_asynchronously :fetch_people, queue: 'people'
     
@@ -117,8 +120,9 @@ class MovieFetcher < Struct.new(:imdb_id, :page, :force)
       movie.keywords << Keyword.find_or_create_by(name: keyword)
     end
     
-    log_fetch(Fetch.pages[:keywords], imdb.response)
     movie.save
+    has_data = movie.keywords.present?
+    log_fetch :keywords, imdb.response, has_data
   end
   handle_asynchronously :fetch_keywords, queue: 'keywords'
   
@@ -139,8 +143,9 @@ class MovieFetcher < Struct.new(:imdb_id, :page, :force)
       movie.alternative_titles.create(title: aka[:title], comment: aka[:comment])
     end
     
-    log_fetch(Fetch.pages[:release_info], imdb.response)
     movie.save
+    has_data = [movie.releases, movie.alternative_titles].any? &:present?
+    log_fetch :release_info, imdb.response, has_data
   end
   handle_asynchronously :fetch_release_info, queue: 'release_info'
   
@@ -153,7 +158,8 @@ class MovieFetcher < Struct.new(:imdb_id, :page, :force)
       movie.trivia.create(text: trivium)
     end
     
-    log_fetch(Fetch.pages[:trivia], imdb.response)
+    has_data = movie.trivia.present?
+    log_fetch :trivia, imdb.response, has_data
   end
   handle_asynchronously :fetch_trivia, queue: 'trivia'
   
@@ -166,7 +172,8 @@ class MovieFetcher < Struct.new(:imdb_id, :page, :force)
       movie.critic_reviews.create(author: review[:author], publisher: review[:source], excerpt: review[:excerpt], rating: review[:score])
     end
     
-    log_fetch(Fetch.pages[:critic_reviews], imdb.response)
+    has_data = movie.critic_reviews.present?
+    log_fetch :critic_reviews, imdb.response, has_data
   end
   handle_asynchronously :fetch_critic_reviews, queue: 'critic_reviews'
   
@@ -181,20 +188,20 @@ class MovieFetcher < Struct.new(:imdb_id, :page, :force)
     end
     
     movie.save
+    has_data = movie.recommendations.present?
+    log_fetch :recommended_movies, imdb.response, has_data
     
     movie.recommended_movies.unfetched.each do |recommended_movie|
       Delayed::Job.enqueue MovieFetcher.new(recommended_movie.imdb_id, :all)
     end
-    
-    log_fetch(Fetch.pages[:recommended_movies], imdb.response)
   end
   handle_asynchronously :fetch_recommended_movies, queue: 'recommended_movies'
   
   private
   
-    def log_fetch page, response
+    def log_fetch page, response, has_data
       movie = Movie.find_by(imdb_id: imdb_id)
-      movie.fetches.create page: page, response_code: response[:code], response_message: response[:message]
+      movie.fetches.create page: Fetch.pages[page], response_code: response[:code], response_message: response[:message], has_data: has_data
     end
     
     def fetch_required_for? page, force = false

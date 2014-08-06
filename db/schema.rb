@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 20140729075439) do
     t.integer  "page"
     t.integer  "response_code"
     t.string   "response_message"
+    t.boolean  "has_data",         default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -5,6 +5,7 @@ class CreateFetches < ActiveRecord::Migration
       t.integer :page
       t.integer :response_code
       t.string  :response_message
+      t.boolean :has_data, default: false 
 
       t.timestamps
     end

@@ -8,6 +8,7 @@
 #  page             :integer
 #  response_code    :integer
 #  response_message :string(255)
+#  has_data         :boolean          default(FALSE)
 #  created_at       :datetime
 #  updated_at       :datetime
 #
