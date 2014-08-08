@@ -11,6 +11,17 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery_ujs
+//= require moment
+//= require moment/ru.js
+//= require moment/et.js
+//= require bootstrap/alert
+//= require bootstrap/button
+//= require bootstrap/collapse
+//= require bootstrap/dropdown
+//= require bootstrap/tab
+//= require bootstrap/tooltip
+//= require bootstrap/transition
 //= require turbolinks
 //= require_tree .

@@ -1,0 +1,3 @@
+.col-xs-4.col-sm-3.col-md-2
+  = link_to admin_movie_path(movie), {class: 'thumbnail'} do
+    = image_tag 'http://placehold.io/350/550.png?retina=true', title: "#{movie.title} (#{movie.year})", class: 'thumbnail-poster', alt: "#{movie.title} (#{movie.year})"

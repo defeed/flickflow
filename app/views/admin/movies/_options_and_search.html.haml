@@ -1,0 +1,89 @@
+.col-xs-12.col-sm-8
+  .btn-group.btn-group-justified.view-options
+    .btn-group
+      %button.btn.btn-default.btn-md.dropdown-toggle{type: 'button', data: {toggle: 'dropdown'}}
+        %span.hidden-xs
+          = fa_icon 'history'
+        Years
+        %span.caret
+      %ul.dropdown-menu{role: 'menu'}
+        %li.disabled
+          = link_to '#' do
+            = fa_icon 'calendar-o', text: 'Show all'
+            %span.pull-right= fa_icon 'check'
+        %li= link_to fa_icon('spinner', text: 'Upcoming'), '#'
+        %li= link_to fa_icon('calendar', text: '2010s'), '#'
+        %li= link_to fa_icon('calendar', text: '2000s'), '#'
+        %li= link_to fa_icon('calendar', text: '1990s'), '#'
+        %li= link_to fa_icon('calendar', text: '1980s'), '#'
+        %li= link_to fa_icon('calendar', text: '1970s'), '#'
+        %li= link_to fa_icon('calendar', text: '1960s'), '#'
+    .btn-group
+      %button.btn.btn-default.btn-md.dropdown-toggle{type: 'button', data: {toggle: 'dropdown'}}
+        %span.hidden-xs
+          = fa_icon 'tags'
+        Genre
+        %span.caret
+      %ul.dropdown-menu{role: 'menu'}
+        %li.disabled
+          = link_to '#' do
+            = fa_icon 'tags', text: 'All genres'
+            %span.pull-right= fa_icon 'check'
+        %li= link_to fa_icon('tag', text: 'Action'), '#'
+        %li= link_to fa_icon('tag', text: 'Adventure'), '#'
+        %li= link_to fa_icon('tag', text: 'Comedy'), '#'
+        %li= link_to fa_icon('tag', text: 'Crime'), '#'
+        %li= link_to fa_icon('tag', text: 'Drama'), '#'
+        %li= link_to fa_icon('tag', text: 'Family'), '#'
+        %li= link_to fa_icon('tag', text: 'Fantasy'), '#'
+        %li= link_to fa_icon('tag', text: 'Horror'), '#'
+        %li= link_to fa_icon('tag', text: 'Sci-Fi'), '#'
+        %li= link_to fa_icon('tag', text: 'Thriller'), '#'
+        %li= link_to fa_icon('tag', text: 'War'), '#'
+        %li= link_to fa_icon('tag', text: 'Western'), '#'
+    .btn-group
+      %button.btn.btn-default.btn-md.dropdown-toggle{type: 'button', data: {toggle: 'dropdown'}}
+        %span.hidden-xs
+          = fa_icon 'sort-alpha-asc'
+        Sort
+        %span.caret
+      %ul.dropdown-menu.dropdown-menu-right{role: 'menu'}
+        %li.disabled
+          = link_to '#' do
+            = fa_icon 'sort-alpha-asc', text: 'Title'
+            %span.pull-right= fa_icon 'check'
+        %li
+          = link_to '#' do
+            = fa_icon 'sort-amount-desc', text: 'Rating'
+        %li.divider
+        -# %li.dropdown-header Release Date
+        %li
+          = link_to '#' do
+            = fa_icon 'sort-numeric-asc', text: 'New first'
+        %li
+          = link_to '#' do
+            = fa_icon 'sort-numeric-desc', text: 'Old first'
+    .btn-group
+      %button.btn.btn-default.btn-md.dropdown-toggle{type: 'button', data: {toggle: 'dropdown'}}
+        %span.hidden-xs
+          = fa_icon 'th'
+        View
+        %span.caret
+      %ul.dropdown-menu.dropdown-menu-right{role: 'menu'}
+        %li.disabled
+          = link_to '#' do
+            = fa_icon 'th', text: 'Small'
+            %span.pull-right= fa_icon 'check'
+        %li
+          = link_to '#' do
+            = fa_icon 'th-large', text: 'Large'
+.col-xs-12.col-sm-4
+  %form.admin-search-form{role: 'form'}
+    .input-group
+      %input.form-control{placeholder: 'Search movies', type: 'text'}/
+      %span.input-group-btn
+        %button.btn.btn-default{type: 'submit'}
+          = fa_icon 'search'
+.col-xs-12
+  %p
+    There are 3476 movies matching you criteria.

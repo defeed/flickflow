@@ -1,0 +1,84 @@
+.row
+  .col-xs-12.col-sm-6.col-md-3
+    %form.admin-search-form{role: 'form'}
+      .input-group
+        %input.form-control{placeholder: 'Search movies', type: 'text'}/
+        %span.input-group-btn
+          %button.btn.btn-default{type: 'submit'}
+            = fa_icon 'search'
+    .panel.panel-primary
+      .panel-heading
+        %h3.panel-title
+          = fa_icon('film')
+          = link_to admin_movies_path do
+            %span.badge.pull-right 385
+            Movies
+      .list-group
+        = link_to '#', {class: 'list-group-item'} do
+          %span.badge 367
+          Fetched
+        = link_to '#', {class: 'list-group-item'} do
+          %span.badge 18
+          Unfetched
+    %hr.visible-xs.visible-sm/
+  .col-xs-12.col-sm-6.col-md-3
+    %form.admin-search-form{role: 'form'}
+      .input-group
+        %input.form-control{placeholder: 'Search people', type: 'text'}/
+        %span.input-group-btn
+          %button.btn.btn-default{type: 'submit'}
+            = fa_icon 'search'
+    .panel.panel-primary
+      .panel-heading
+        %h3.panel-title
+          = fa_icon('users')
+          = link_to admin_people_path do
+            %span.badge.pull-right 12637
+            People
+      .list-group
+        = link_to '#', {class: 'list-group-item'} do
+          %span.badge 327
+          Fetched
+        = link_to '#', {class: 'list-group-item'} do
+          %span.badge 12310
+          Unfetched
+    %hr.visible-xs.visible-sm/
+  .col-xs-12.col-sm-6.col-md-3
+    %form.admin-search-form{role: 'form'}
+      .input-group
+        %input.form-control{placeholder: 'Search lists', type: 'text'}/
+        %span.input-group-btn
+          %button.btn.btn-default{type: 'submit'}
+            = fa_icon 'search'
+    .panel.panel-primary
+      .panel-heading
+        %h3.panel-title
+          = fa_icon('list')
+          = link_to admin_lists_path do
+            Lists
+      .list-group
+        = link_to '#', {class: 'list-group-item'} do
+          System lists
+        = link_to '#', {class: 'list-group-item'} do
+          Fetch from IMDb
+    %hr.visible-xs/
+  .col-xs-12.col-sm-6.col-md-3
+    %form.admin-search-form{role: 'form'}
+      .input-group
+        %input.form-control{placeholder: 'Search users', type: 'text'}/
+        %span.input-group-btn
+          %button.btn.btn-default{type: 'submit'}
+            = fa_icon 'search'
+    .panel.panel-primary
+      .panel-heading
+        %h3.panel-title
+          = fa_icon('users')
+          = link_to admin_users_path do
+            %span.badge.pull-right 95
+            Users
+      .list-group
+        = link_to '#', {class: 'list-group-item'} do
+          %span.badge 18
+          Online
+        = link_to '#', {class: 'list-group-item'} do
+          Recent

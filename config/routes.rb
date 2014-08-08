@@ -55,6 +55,10 @@ Rails.application.routes.draw do
   #   end
   
   namespace :admin do
-    match "/jobs" => DelayedJobWeb, :anchor => false, via: [:get, :post]
+    resources :movies, :people, :lists, :users
+    match "/jobs" => DelayedJobWeb, :anchor => false, via: [:get, :post], as: 'jobs'
+    root 'dashboard#index'
   end
+  
+  root 'movies#index'
 end
