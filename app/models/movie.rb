@@ -72,9 +72,9 @@ class Movie < ActiveRecord::Base
   # # # # #
   # Scopes
   # # # # #
-  scope :released,  -> { where('released_on <= ?', Date.today) }
-  scope :fetched,   -> { where('title IS NOT ?', nil) }
-  scope :unfetched, -> { where('title IS ?', nil) }
+  scope :released,   -> { where('released_on <= ?', Date.today) }
+  scope :with_title, -> { where('title IS NOT ?', nil) }
+  scope :without_title, -> { where('title IS ?', nil) }
   
   # # # # # # # #
   # Class Methods
