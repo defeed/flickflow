@@ -1,3 +1,49 @@
-%h1
-  = @movie.title
-  %span.small= @movie.year
+.row.movie-details
+  .col-xs-12.col-sm-3.col-md-3
+    .thumbnail.no-border
+      = poster_image_for @movie, :lg, class: 'thumbnail-poster', alt: "#{@movie.title} (#{@movie.year})"
+      %a.btn.btn-primary.btn-lg.btn-block#watch-trailer{href: '#'}
+        = fa_icon 'play-circle-o', text: 'Play Trailer'
+  .col-xs-12.col-sm-6.col-md-6
+    %header
+      %h1= @movie.title
+    %ul.list-inline.list-meta.small.text-muted
+      - if @movie.year
+        %li= @movie.year
+      - if @movie.genres
+        %li
+          = fa_icon 'tags', text: @movie.genres.pluck(:name).join(' &middot; ').html_safe
+      - if @movie.runtime
+        %li
+          = fa_icon 'clock-o', text: format_runtime(@movie.runtime)
+      - if @movie.mpaa_rating
+        %li
+          = fa_icon 'ticket', text: @movie.mpaa_rating
+    %p.lead= @movie.description
+  .col-xs-12.col-sm-3.col-md-3
+    %h4 Directed by
+    %ul.media-list.credits-list
+      - @directors.map do |director|
+        %li.media
+          %a.pull-left{href: '#'}
+            %img.media-object.img-rounded{src: 'http://placehold.io/40/40.png', width: 40, heigth: 40}
+          .media-body
+            %h5
+              %a{href: '#', title: 'Add to Favorites'}
+                = fa_icon 'star-o'
+              %a{href: '#'}= director.person.name
+            %small.text-muted
+              %em= director.credit
+    %h4 Cast
+    %ul.media-list.credits-list
+      - @actors.map do |actor|
+        %li.media
+          %a.pull-left{href: '#'}
+            %img.media-object.img-rounded{src: 'http://placehold.io/40/40.png', width: 40, heigth: 40}
+          .media-body
+            %h5
+              %a{href: '#', title: 'Add to Favorites'}
+                = fa_icon 'star-o'
+              %a{href: '#'}= actor.person.name
+            %small.text-muted
+              %em= actor.credit

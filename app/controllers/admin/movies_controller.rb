@@ -6,5 +6,7 @@ class Admin::MoviesController < AdminController
   
   def show
     @movie = Movie.friendly.find(params[:id])
+    @directors = @movie.directorships.includes(:person).limit(3)
+    @actors = @movie.actorships.includes(:person).limit(15)
   end
 end

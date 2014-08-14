@@ -2,5 +2,27 @@ body { padding-top: 70px; }
 
 .pagination { margin-top: 0 }
 .view-options { margin-bottom: 20px }
-.admin-search-form {margin-bottom: 15px}
-.no-border {border: 0}
+.admin-search-form { margin-bottom: 15px }
+.no-border { border: 0 }
+.navbar-brand {
+  font-weight: 300;
+  font-style: italic;
+}
+.movie-details {
+  h1 { margin-top: 0 }
+}
+
+// Fix for dropdown menu right-aligned icons go to next line in Firefox 
+.dropdown-menu li a { white-space: normal }
+
+#watch-trailer { margin: 10px auto; }
+
+.media-list.credits-list {
+  .media {
+    margin-top: 10px;
+    .media-body {
+      margin: 5px auto;
+    }
+  }
+  h5 { margin: 0 auto }
+}

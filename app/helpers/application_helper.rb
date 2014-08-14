@@ -5,4 +5,10 @@ module ApplicationHelper
     src = file_url.presence || "#{version}_no_poster.png"
     image_tag asset_path(src), options
   end
+  
+  def format_runtime minutes
+    hours = minutes / 60
+    minutes = '%02d' % (minutes % 60)
+    "#{hours}:#{minutes}"
+  end
 end
