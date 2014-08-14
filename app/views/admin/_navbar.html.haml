@@ -3,9 +3,10 @@
     .navbar-header
       %button.navbar-toggle{type: 'button', data: {target: '#ff-navbar-collapse', toggle: 'collapse'}}
         %span.sr-only Toggle navigation
-        %span
-          = fa_icon 'bars'
-      = link_to 'flickflow', root_path, {class: 'navbar-brand visible-xs'}
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      = link_to 'flickflow', root_path, {class: 'navbar-brand'}
     #ff-navbar-collapse.collapse.navbar-collapse
       %ul.nav.navbar-nav
         %li{class: "#{is_active? 'dashboard'}"}
