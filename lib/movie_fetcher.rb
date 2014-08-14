@@ -1,5 +1,6 @@
 class MovieFetcher < Struct.new(:imdb_id, :page, :force)
   def perform
+    page = :all if page.nil?
     return nil unless fetch_required_for? page, force
     
     case page
@@ -36,7 +37,7 @@ class MovieFetcher < Struct.new(:imdb_id, :page, :force)
     imdb = Spotlite::Movie.new(imdb_id)
     movie = Movie.find_by(imdb_id: imdb.imdb_id)
     rotten = RottenMovie.find(imdb: imdb.imdb_id)
-        
+    
     movie.imdb_id                = imdb.imdb_id
     movie.title                  = imdb.title
     movie.original_title         = imdb.original_title
@@ -51,7 +52,6 @@ class MovieFetcher < Struct.new(:imdb_id, :page, :force)
     movie.description            = imdb.description
     movie.storyline              = imdb.storyline
     movie.mpaa_rating            = imdb.content_rating
-    movie.poster_url             = imdb.poster_url
     
     movie.genres = []
     imdb.genres.each do |genre|
@@ -69,7 +69,14 @@ class MovieFetcher < Struct.new(:imdb_id, :page, :force)
     end
     
     movie.save
-    has_data = [movie.title, movie.original_title, movie.year, movie.imdb_rating, movie.imdb_rating_count, movie.runtime, movie.description, movie.storyline, movie.mpaa_rating, movie.poster_url].any? &:present?
+    
+    if movie.title && imdb.poster_url && !Poster.exists?(remote_url: imdb.poster_url)
+      movie.posters.update_all(is_primary: false)
+      poster = Poster.create(imageable: movie, remote_url: imdb.poster_url, is_primary: true)
+      Delayed::Job.enqueue ImageFetcher.new(poster.id)
+    end
+    
+    has_data = [movie.title, movie.original_title, movie.year, movie.imdb_rating, movie.imdb_rating_count, movie.runtime, movie.description, movie.storyline, movie.mpaa_rating].any? &:present?
     log_fetch :basic_info, imdb.response, has_data
   end
   

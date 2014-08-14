@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140729075439) do
+ActiveRecord::Schema.define(version: 20140810062104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,6 +106,19 @@ ActiveRecord::Schema.define(version: 20140729075439) do
 
   add_index "genres_movies", ["genre_id", "movie_id"], name: "index_genres_movies_on_genre_id_and_movie_id", using: :btree
 
+  create_table "images", force: true do |t|
+    t.string   "type"
+    t.string   "file"
+    t.integer  "imageable_id"
+    t.string   "imageable_type"
+    t.string   "remote_url"
+    t.boolean  "is_primary",     default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "images", ["imageable_id", "imageable_type"], name: "index_images_on_imageable_id_and_imageable_type", using: :btree
+
   create_table "keywords", force: true do |t|
     t.string   "name"
     t.string   "slug"
@@ -182,7 +195,6 @@ ActiveRecord::Schema.define(version: 20140729075439) do
     t.string   "description",            limit: 1000
     t.text     "storyline"
     t.integer  "runtime"
-    t.string   "poster_url"
     t.string   "slug"
     t.datetime "created_at"
     t.datetime "updated_at"

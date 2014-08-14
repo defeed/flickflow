@@ -16,7 +16,6 @@ class CreateMovies < ActiveRecord::Migration
       t.string :description, limit: 1000
       t.text :storyline
       t.integer :runtime
-      t.string :poster_url
       t.string :slug
 
       t.timestamps

@@ -18,10 +18,9 @@
 #  description            :string(1000)
 #  storyline              :text
 #  runtime                :integer
-#  poster_url             :string(255)
+#  slug                   :string(255)
 #  created_at             :datetime
 #  updated_at             :datetime
-#  slug                   :string(255)
 #
 # Indexes
 #
@@ -66,6 +65,8 @@ class Movie < ActiveRecord::Base
   has_many :list_entries, as: :listable, dependent: :destroy
   has_many :lists, through: :list_entries
   
+  has_many :posters, as: :imageable, dependent: :destroy
+  has_one  :primary_poster, -> { where is_primary: true }, class_name: 'Poster', as: :imageable
   has_many :fetches, as: :fetchable, dependent: :destroy
   
   # # # # #
@@ -78,10 +79,10 @@ class Movie < ActiveRecord::Base
   # # # # # # # #
   # Class Methods
   # # # # # # # #
-  def self.fetch imdb_id, page, force = false
+  def self.fetch imdb_id, page = nil, force = false
     imdb = Spotlite::Movie.new imdb_id
     Movie.find_or_create_by(imdb_id: imdb.imdb_id)
-    Delayed::Job.enqueue MovieFetcher.new(imdb.imdb_id, page)
+    Delayed::Job.enqueue MovieFetcher.new(imdb.imdb_id, page, force)
   end
   
   def self.search_on_imdb(params = {})
@@ -100,7 +101,7 @@ class Movie < ActiveRecord::Base
   # # # # # # # # # #
   # Instance Methods
   # # # # # # # # # #
-  def fetch page, force = false
+  def fetch page = nil, force = false
     Delayed::Job.enqueue MovieFetcher.new(self.imdb_id, page, force)
   end
   
