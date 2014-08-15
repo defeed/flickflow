@@ -21,29 +21,6 @@
           = fa_icon 'ticket', text: @movie.mpaa_rating
     %p.lead= @movie.description
   .col-xs-12.col-sm-3.col-md-3
-    %h4 Directed by
-    %ul.media-list.credits-list
-      - @directors.map do |director|
-        %li.media
-          %a.pull-left{href: '#'}
-            %img.media-object.img-rounded{src: 'http://placehold.io/40/40.png', width: 40, heigth: 40}
-          .media-body
-            %h5
-              %a{href: '#', title: 'Add to Favorites'}
-                = fa_icon 'star-o'
-              %a{href: '#'}= director.person.name
-            %small.text-muted
-              %em= director.credit
-    %h4 Cast
-    %ul.media-list.credits-list
-      - @actors.map do |actor|
-        %li.media
-          %a.pull-left{href: '#'}
-            %img.media-object.img-rounded{src: 'http://placehold.io/40/40.png', width: 40, heigth: 40}
-          .media-body
-            %h5
-              %a{href: '#', title: 'Add to Favorites'}
-                = fa_icon 'star-o'
-              %a{href: '#'}= actor.person.name
-            %small.text-muted
-              %em= actor.credit
+    = render partial: 'cast_and_crew', locals: { collection: @directors, header: 'Directors' }
+    = render partial: 'cast_and_crew', locals: { collection: @writers, header: 'Writers' }
+    = render partial: 'cast_and_crew', locals: { collection: @actors, header: 'Cast' }
