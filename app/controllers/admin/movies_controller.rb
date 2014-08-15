@@ -10,4 +10,9 @@ class Admin::MoviesController < AdminController
     @writers = @movie.writerships.limit(3)
     @actors = @movie.actorships.limit(15)
   end
+  
+  def fetch
+    Movie.fetch params[:imdb_id]
+    redirect_to admin_root_path
+  end
 end

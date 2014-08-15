@@ -1,5 +1,13 @@
 .row
   .col-xs-12.col-sm-6.col-md-3
+    = form_tag admin_fetch_path, method: :get, class: 'admin-search-form' do
+      .input-group
+        %input.form-control#imdb_id{placeholder: 'IMDb ID', type: 'text', name: 'imdb_id'}/
+        %span.input-group-btn
+          %button.btn.btn-default{type: 'submit'}
+            = fa_icon 'plus-circle'
+.row
+  .col-xs-12.col-sm-6.col-md-3
     %form.admin-search-form{role: 'form'}
       .input-group
         %input.form-control{placeholder: 'Search movies', type: 'text'}/

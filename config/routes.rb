@@ -55,6 +55,7 @@ Rails.application.routes.draw do
   #   end
   
   namespace :admin do
+    get 'fetch' => 'movies#fetch', as: 'fetch'
     resources :movies, :people, :lists, :users
     match "/jobs" => DelayedJobWeb, :anchor => false, via: [:get, :post], as: 'jobs'
     root 'dashboard#index'
