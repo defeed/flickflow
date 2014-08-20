@@ -10,14 +10,14 @@ Rails.application.routes.draw do
     namespace :api, path: '/' do
       resources :movies, only: [:index, :show] do
         with_options only: :index do |list_only|
-          resources :alternative_titles
-          resources :credits
-          resources :critic_reviews
-          resources :genres
-          resources :keywords
-          resources :posters
-          resources :releases
-          resources :trivia
+          list_only.resources :alternative_titles
+          list_only.resources :credits
+          list_only.resources :critic_reviews
+          list_only.resources :genres
+          list_only.resources :keywords
+          list_only.resources :posters
+          list_only.resources :releases
+          list_only.resources :trivia
         end
       end
       
