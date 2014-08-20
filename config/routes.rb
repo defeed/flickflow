@@ -16,6 +16,7 @@ Rails.application.routes.draw do
           list_only.resources :genres
           list_only.resources :keywords
           list_only.resources :posters
+          list_only.resources :recommended_movies
           list_only.resources :releases
           list_only.resources :trivia
         end
