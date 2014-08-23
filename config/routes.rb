@@ -32,8 +32,6 @@ Rails.application.routes.draw do
     resources :keywords, only: [:index, :show] do
       resources :movies, only: :index
     end
-    
-    root '#index'
   end
   
   root 'movies#index'
