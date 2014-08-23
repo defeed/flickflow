@@ -1,6 +1,6 @@
 module API
-  class TriviaController < ApplicationController
-    # GET /movies/:id/trivia
+  class TriviaController < APIController
+    # GET /movies/:movie_id/trivia
     def index
       movie = Movie.find params[:movie_id]
       @trivia = movie.trivia

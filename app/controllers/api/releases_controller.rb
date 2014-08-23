@@ -1,7 +1,7 @@
 module API
-  class ReleasesController < ApplicationController
-    # GET /movies/:id/releases
-    # GET /movies/:id/releases?country_code=xx
+  class ReleasesController < APIController
+    # GET /movies/:movie_id/releases
+    # GET /movies/:movie_id/releases?country_code=xx
     def index
       movie = Movie.find params[:movie_id]
       @releases = movie.releases

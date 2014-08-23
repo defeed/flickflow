@@ -1,6 +1,6 @@
 module API
-  class CriticReviewsController < ApplicationController
-    # GET /movies/:id/critic_reviews
+  class CriticReviewsController < APIController
+    # GET /movies/:movie_id/critic_reviews
     def index
       movie = Movie.find params[:movie_id]
       @reviews = movie.critic_reviews

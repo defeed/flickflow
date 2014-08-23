@@ -1,6 +1,6 @@
 module API
-  class RecommendedMoviesController < ApplicationController
-    # GET /movies/:id/recommended_movies
+  class RecommendedMoviesController < APIController
+    # GET /movies/:movie_id/recommended_movies
     def index
       movie = Movie.find params[:movie_id]
       @movies = movie.recommended_movies

@@ -1,8 +1,8 @@
 module API
-  class MoviesController < ApplicationController
+  class MoviesController < APIController
     # GET /movies
-    # GET /genres/:id/movies
-    # GET /keywords/:id/movies
+    # GET /genres/:genre_id/movies
+    # GET /keywords/:keyword_id/movies
     def index
       if genre_id = params[:genre_id]
         @movies = Genre.find(genre_id).movies

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140810062104) do
+ActiveRecord::Schema.define(version: 20140823131020) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,15 @@ ActiveRecord::Schema.define(version: 20140810062104) do
   end
 
   add_index "alternative_titles", ["movie_id", "title"], name: "index_alternative_titles_on_movie_id_and_title", using: :btree
+
+  create_table "auth_tokens", force: true do |t|
+    t.string   "token",      null: false
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "auth_tokens", ["token"], name: "index_auth_tokens_on_token", unique: true, using: :btree
 
   create_table "authentications", force: true do |t|
     t.integer  "user_id",    null: false

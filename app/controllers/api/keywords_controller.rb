@@ -1,7 +1,7 @@
 module API
-  class KeywordsController < ApplicationController
+  class KeywordsController < APIController
     # GET /keywords
-    # GET /movies/:id/keywords
+    # GET /movies/:movie_id/keywords
     def index
       if movie_id = params[:movie_id]
         movie = Movie.find movie_id

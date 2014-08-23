@@ -1,5 +1,5 @@
 module API
-  class PeopleController < ApplicationController
+  class PeopleController < APIController
     # GET /people/:id
     def show
       @person = Person.find params[:id]

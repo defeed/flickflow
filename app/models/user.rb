@@ -43,6 +43,9 @@ class User < ActiveRecord::Base
   
   has_many :lists, dependent: :destroy
   
+  has_one :auth_token, dependent: :destroy
+  
+  before_create :set_auth_token
   after_create :create_default_user_lists, unless: Proc.new { |u| u.is_system_user? }
   
   def self.system
@@ -58,5 +61,12 @@ class User < ActiveRecord::Base
   
   def is_system_user?
     self == User.system
+  end
+  
+  private
+  
+  def set_auth_token
+    return if auth_token.present?
+    self.auth_token = AuthToken.create(token: AuthToken.generate)
   end
 end
