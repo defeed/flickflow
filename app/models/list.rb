@@ -40,7 +40,12 @@ class List < ActiveRecord::Base
     return false unless list_type == object.class.to_s.downcase
     in_list = list_entries.exists? listable: object
     in_list ? remove(object) : add(object)
+    touch
     reload
+  end
+  
+  def should_generate_new_friendly_id?
+    name_changed? || super
   end
   
   private

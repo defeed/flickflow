@@ -32,6 +32,14 @@ Rails.application.routes.draw do
     resources :keywords, only: [:index, :show] do
       resources :movies, only: :index
     end
+    
+    resources :users do
+      resources :lists do
+        resources :movies, only: :index do
+          post 'toggle', to: 'lists#toggle_movie'
+        end
+      end
+    end
   end
   
   root 'movies#index'
