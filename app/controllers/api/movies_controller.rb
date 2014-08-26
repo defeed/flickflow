@@ -3,14 +3,11 @@ module API
     # GET /movies
     # GET /genres/:genre_id/movies
     # GET /keywords/:keyword_id/movies
-    # GET /users/:user_id/lists/:list_id/movies
     def index
       if genre_id = params[:genre_id]
         @movies = Genre.find(genre_id).movies
       elsif keyword_id = params[:keyword_id]
         @movies = Keyword.find(keyword_id).movies
-      elsif user_id = params[:user_id] && list_id = params[:list_id]
-        @movies = List.find(list_id).movies
       else
         @movies = Movie.all
       end

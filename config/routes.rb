@@ -34,11 +34,11 @@ Rails.application.routes.draw do
     end
     
     resources :users do
-      resources :lists do
-        resources :movies, only: :index do
-          post 'toggle', to: 'lists#toggle_movie'
-        end
-      end
+      resources :lists, only: :show
+    end
+    
+    resources :lists do
+      post 'toggle', on: :member
     end
   end
   

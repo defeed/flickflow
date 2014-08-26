@@ -1,58 +1,57 @@
 module API
   class ListsController < APIController
-    # GET /users/:user_id/lists/:list_id
-    def show
-      list = List.find params[:id]
-      render json: list, status: 200
-    end
+    load_and_authorize_resource :list
     
-    # POST /users/:user_id/lists
+    # GET /api/lists/:id
+    # GET /api/users/:user_id/lists/:id
+    def show; end
+    
+    # POST /api/lists
+    # @params list_type
     def create
-      user = User.find params[:user_id]
-      list = user.lists.new(list_params)
+      @list = current_user.lists.new(list_params)
+      @list.list_type = params[:type].presence || 'movie'
       
-      if list.save
-        head 204, location: api_user_list_path(user, list)
+      if @list.save
+        head 204, location: api_user_list_path(@list.user, @list)
       else
-        render json: list.errors, status: 422
+        render json: @list.errors, status: 422
       end
     end
     
-    # PATCH /users/:user_id/lists/:list_id
+    # PATCH /api/lists/:id
     def update
-      user = User.find params[:user_id]
-      list = List.find params[:id]
-      
-      if list.update(list_params)
-        head 204, location: api_user_list_path(user, list)
+      if @list.update(list_params)
+        head 204, location: api_user_list_path(@list.user, @list)
       else
-        render json: list.errors, status: 422
+        render json: @list.errors, status: 422
       end
     end
     
-    # DELETE /users/user_id/lists/:list_id
+    # DELETE /api/lists/:id
     def destroy
-      user = User.find params[:user_id]
-      list = List.find params[:id]
-      list.destroy
+      @list.destroy
       head 204
     end
     
-    # POST /users/:user_id/lists/:list_id/movies/:movie_id/toggle_movie
-    def toggle_movie
-      user = User.find params[:user_id]
-      list = List.find params[:list_id]
-      movie = Movie.find params[:movie_id]
-      
-      if list.toggle_entry(user, movie)
-        head 204, location: api_user_list_path(user, list)
+    # POST /api/lists/:id/toggle
+    # @params movie_id
+    # @params person_id
+    def toggle
+      if movie_id = params[:movie_id]
+        object = Movie.find movie_id
+      elsif person_id = params[:person_id]
+        object = Person.find person_id
       end
+      
+      @list.toggle object if object
+      head 204, location: api_user_list_path(@list.user, @list)
     end
     
     private
     
     def list_params
-      params.require(:list).permit(:name, :list_type, :is_private)
+      params.require(:list).permit(:name, :is_private)
     end
   end
 end

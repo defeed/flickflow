@@ -35,8 +35,7 @@ class List < ActiveRecord::Base
                                  case_sensitive: false, 
                                  message: 'You already have a list with this name' }
   
-  def toggle_entry(user, object)
-    return false unless user == self.user
+  def toggle object
     return false unless list_type == object.class.to_s.downcase
     in_list = list_entries.exists? listable: object
     in_list ? remove(object) : add(object)
