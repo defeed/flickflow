@@ -38,8 +38,11 @@ class User < ActiveRecord::Base
   authenticates_with_sorcery!
   
   validates :username, format: { with: /\A[a-z0-9]+\z/i, message: 'must only contain alpha-numeric characters' },
-                       length: { in: 2..20, message: 'must be 2 to 20 characters' }
-  validates :email,    format: { with: /\A.+@.+\..+\z/i, message: 'is invalid' }
+                       length: { in: 2..20, message: 'must be 2 to 20 characters' },
+                       uniqueness: true
+  validates :email,    format: { with: /\A.+@.+\..+\z/i, message: 'is invalid' },
+                       uniqueness: true
+  validates :password, length: { minimum: 5, message: 'must be minimum 5 characters' }, on: :create
   
   has_many :lists, dependent: :destroy
   

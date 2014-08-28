@@ -1,6 +1,7 @@
 class APIController < ApplicationController
   protect_from_forgery with: :null_session
   
+  skip_before_action :require_login
   before_action :authenticate_token
   
   rescue_from CanCan::AccessDenied do |exception|

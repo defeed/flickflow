@@ -42,5 +42,12 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :users, only: [:new, :create]
+  resources :sessions, only: [:new, :create, :destroy]
+  
+  get 'sign-in' => 'sessions#new', as: :signin
+  delete 'sign-out' => 'sessions#destroy', as: :signout
+  get 'join' => 'users#new', as: :join
+  
   root 'movies#index'
 end

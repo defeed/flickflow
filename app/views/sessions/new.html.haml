@@ -1,0 +1,31 @@
+.container
+  #wrapper
+    .panel.panel-default
+      .panel-body
+        = form_tag sessions_path, method: :post, class: 'form-horizontal' do
+          .col-xs-12
+            .form-group
+              .input-group
+                %span.input-group-addon
+                  = fa_icon 'user'
+                = text_field_tag :email, nil, class: 'form-control', placeholder: 'Email or username', autocomplete: 'off', type: 'email'
+          .col-xs-12
+            .form-group
+              .input-group
+                %span.input-group-addon
+                  = fa_icon 'lock'
+                = password_field_tag :password, nil, class: 'form-control', placeholder: 'Password'
+          .col-xs-12
+            .form-group
+              = submit_tag 'Sign in to flickflow', class: 'btn btn-primary btn-block'
+            %p.text-center
+              %a{href: '#'} Forgot your password?
+        .col-xs-12
+          %hr/
+          .text-center
+            %p Or sign in with your social profile
+            = render 'shared/oauth_links'
+        .col-xs-12
+          %hr/
+          .text-center
+            = link_to 'Join flickflow', join_path

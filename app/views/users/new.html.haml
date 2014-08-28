@@ -1,0 +1,40 @@
+= render 'shared/error_messages', object: @user
+.container
+  #wrapper
+    .panel.panel-default
+      .panel-body
+        = form_for @user, html: { class: 'form-horizontal' } do |f|
+          .col-xs-12
+            .form-group
+              .input-group
+                %span.input-group-addon @
+                = f.text_field :email, { class: 'form-control', placeholder: 'Email', autocomplete: 'off', type: 'email' }
+          .col-xs-12
+            .form-group
+              .input-group
+                %span.input-group-addon
+                  = fa_icon 'user'
+                = f.text_field :username, { class: 'form-control', placeholder: 'Username', autocomplete: 'off' }
+          .col-xs-12
+            .form-group
+              .input-group
+                %span.input-group-addon
+                  = fa_icon 'lock'
+                = f.password_field :password, { class: 'form-control', placeholder: 'Password' }
+              .text-right.text-muted
+                = label_tag :show_password do
+                  = check_box_tag 'show_password', 'yes', false
+                  %small
+                    Show password
+          .col-xs-12
+            .form-group
+              = submit_tag 'Join flickflow', class: 'btn btn-primary btn-block'
+        .col-xs-12
+          %hr/
+          .text-center
+            %p Or join with your social profile
+            = render 'shared/oauth_links'
+        .col-xs-12
+          %hr/
+          .text-center
+            = link_to 'Sign in to flickflow', signin_path

@@ -24,4 +24,4 @@
 //= require bootstrap/tooltip
 //= require bootstrap/transition
 //= require turbolinks
-//= require_tree .
+//= require movies
