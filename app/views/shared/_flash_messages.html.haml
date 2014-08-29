@@ -6,5 +6,5 @@
           %div.alert.fade.in.alert-dismissable{class: "#{bootstrap_class_for(msg_type)}"}
             %button.close{type: 'button', data: { dismiss: 'alert' }}
               %span{aria: { hidden: 'true' }}
-                &times;
+                = fa_icon 'times'
             %p= msg

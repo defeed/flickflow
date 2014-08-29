@@ -5,7 +5,7 @@
         .alert.fade.in.alert-danger.alert-dismissable
           %button.close{type: 'button', data: { dismiss: 'alert' }}
             %span{aria: { hidden: 'true' }}
-              &times;
+              = fa_icon 'times'
           %ul#error-messages
             - object.errors.full_messages.each do |msg|
               = content_tag :li, msg if msg.is_a?(String)
