@@ -121,7 +121,7 @@ GEM
     fog-softlayer (0.3.14)
       fog-core
       fog-json
-    font-awesome-rails (4.1.0.0)
+    font-awesome-rails (4.2.0.0)
       railties (>= 3.2, < 5.0)
     formatador (0.2.5)
     friendly_id (5.0.4)
@@ -278,7 +278,7 @@ DEPENDENCIES
   delayed_job_web
   draper
   fog
-  font-awesome-rails
+  font-awesome-rails (~> 4.2.0)
   friendly_id (~> 5.0.3)
   haml
   jbuilder (~> 2.0)
