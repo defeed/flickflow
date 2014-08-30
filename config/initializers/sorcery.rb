@@ -107,25 +107,25 @@ Rails.application.config.sorcery.configure do |config|
   config.twitter.key = Rails.application.secrets.twitter_auth_key
   config.twitter.secret = Rails.application.secrets.twitter_auth_secret
   config.twitter.callback_url = 'http://flickflow.dev/oauth/callback?provider=twitter'
-  config.twitter.user_info_mapping = {:username => 'screen_name'}
+  config.twitter.user_info_mapping = { username: 'screen_name' }
   
   config.facebook.key = Rails.application.secrets.facebook_auth_key
   config.facebook.secret = Rails.application.secrets.facebook_auth_secret
-  config.facebook.callback_url = "http://flickflow.dev/oauth/callback?provider=facebook"
-  config.facebook.user_info_mapping = {:email => "email", :name => "name", :username => "username" }
-  config.facebook.access_permissions = ["email"]
+  config.facebook.callback_url = 'http://flickflow.dev/oauth/callback?provider=facebook'
+  config.facebook.user_info_mapping = { email: 'email', name: 'name'}
+  config.facebook.access_permissions = ['email']
   
   # Google won't allow to set callback URL as http://flickflow.dev :(
   config.google.key = Rails.application.secrets.google_auth_key
   config.google.secret = Rails.application.secrets.google_auth_secret
-  config.google.callback_url = "http://localhost:3000/oauth/callback?provider=google"
-  config.google.user_info_mapping = {:email => "email", :name => "name"}
-  #
-  # config.vk.key = ""
-  # config.vk.secret = ""
-  # config.vk.callback_url = "http://0.0.0.0:3000/oauth/callback?provider=vk"
-  # config.vk.user_info_mapping = {:login => "domain", :name => "full_name"}
-  #
+  config.google.callback_url = 'http://localhost:3000/oauth/callback?provider=google'
+  config.google.user_info_mapping = { email: 'email', name: 'name'}
+  
+  config.vk.key = Rails.application.secrets.vk_auth_key
+  config.vk.secret = Rails.application.secrets.vk_auth_secret
+  config.vk.callback_url = 'http://flickflow.dev/oauth/callback?provider=vk'
+  config.vk.user_info_mapping = { username: 'domain', name: 'full_name'}
+  
   # config.github.key = ""
   # config.github.secret = ""
   # config.github.callback_url = "http://0.0.0.0:3000/oauth/callback?provider=github"
