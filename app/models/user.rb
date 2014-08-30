@@ -55,9 +55,10 @@ class User < ActiveRecord::Base
   has_many :authentications, dependent: :destroy
   accepts_nested_attributes_for :authentications
   
-  before_save :ensure_username_present
   before_create :set_auth_token
-  after_create :create_default_user_lists, unless: Proc.new { |u| u.is_system_user? }
+  before_create :ensure_username_unique
+  before_save   :ensure_username_present
+  after_create  :create_default_user_lists, unless: Proc.new { |u| u.is_system_user? }
   
   def self.system
     User.find_by(username: 'flickflow')
@@ -87,6 +88,16 @@ class User < ActiveRecord::Base
   end
   
   private
+  
+  def ensure_username_unique
+    return unless User.exists? username: self.username
+    prefix = self.username
+    suffix = 0
+    loop do
+      self.username = "#{prefix}#{suffix+1}"
+      break unless User.exists? username: self.username
+    end
+  end
   
   def ensure_username_present
     self.username = User.generate_username if self.username.blank?

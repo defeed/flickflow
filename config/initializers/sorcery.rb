@@ -104,11 +104,11 @@ Rails.application.config.sorcery.configure do |config|
   # Twitter wil not accept any requests nor redirect uri containing localhost,
   # make sure you use 0.0.0.0:3000 to access your app in development
   #
-  # config.twitter.key = Rails.application.secrets.twitter_auth_key
-  # config.twitter.secret = Rails.application.secrets.twitter_auth_secret
-  # config.twitter.callback_url = 'http://flickflow.dev/oauth/callback?provider=twitter'
-  # config.twitter.user_info_mapping = {:username => 'screen_name'}
-  #
+  config.twitter.key = Rails.application.secrets.twitter_auth_key
+  config.twitter.secret = Rails.application.secrets.twitter_auth_secret
+  config.twitter.callback_url = 'http://flickflow.dev/oauth/callback?provider=twitter'
+  config.twitter.user_info_mapping = {:username => 'screen_name'}
+  
   config.facebook.key = Rails.application.secrets.facebook_auth_key
   config.facebook.secret = Rails.application.secrets.facebook_auth_secret
   config.facebook.callback_url = "http://flickflow.dev/oauth/callback?provider=facebook"
