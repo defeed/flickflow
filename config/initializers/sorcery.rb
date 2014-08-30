@@ -114,21 +114,22 @@ Rails.application.config.sorcery.configure do |config|
   config.facebook.callback_url = "http://flickflow.dev/oauth/callback?provider=facebook"
   config.facebook.user_info_mapping = {:email => "email", :name => "name", :username => "username" }
   config.facebook.access_permissions = ["email"]
-  #
-  # config.github.key = ""
-  # config.github.secret = ""
-  # config.github.callback_url = "http://0.0.0.0:3000/oauth/callback?provider=github"
-  # config.github.user_info_mapping = {:email => "name"}
-  #
-  # config.google.key = Rails.application.secrets.google_auth_key
-  # config.google.secret = Rails.application.secrets.google_auth_secret
-  # config.google.callback_url = "http://0.0.0.0:3000/oauth/callback?provider=google"
-  # config.google.user_info_mapping = {:email => "email", :name => "name"}
+  
+  # Google won't allow to set callback URL as http://flickflow.dev :(
+  config.google.key = Rails.application.secrets.google_auth_key
+  config.google.secret = Rails.application.secrets.google_auth_secret
+  config.google.callback_url = "http://localhost:3000/oauth/callback?provider=google"
+  config.google.user_info_mapping = {:email => "email", :name => "name"}
   #
   # config.vk.key = ""
   # config.vk.secret = ""
   # config.vk.callback_url = "http://0.0.0.0:3000/oauth/callback?provider=vk"
   # config.vk.user_info_mapping = {:login => "domain", :name => "full_name"}
+  #
+  # config.github.key = ""
+  # config.github.secret = ""
+  # config.github.callback_url = "http://0.0.0.0:3000/oauth/callback?provider=github"
+  # config.github.user_info_mapping = {:email => "name"}
   #
   # To use liveid in development mode you have to replace mydomain.com with
   # a valid domain even in development. To use a valid domain in development
