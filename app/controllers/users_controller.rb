@@ -20,9 +20,7 @@ class UsersController < ApplicationController
   
   def edit
     @user = current_user
-    has_password = @user.crypted_password.present?
-    @password_label = has_password ? 'Change password' : 'Create password'
-    @password_placeholder = has_password ? 'Type new password to change it' : nil
+    set_password_label_for @user
     render layout: 'application'
   end
   
@@ -32,6 +30,7 @@ class UsersController < ApplicationController
     if @user.update user_params
       redirect_to root_path, flash: { success: 'Your profile was successfully updated.' }
     else
+      set_password_label_for @user
       render action: :edit, layout: 'application'
     end
   end
@@ -41,5 +40,11 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).
       permit(:name, :username, :email, :password)
+  end
+  
+  def set_password_label_for user
+    has_password = user.crypted_password.present?
+    @password_label = has_password ? 'Change password' : 'Create password'
+    @password_placeholder = has_password ? 'Type new password to change it' : nil
   end
 end
