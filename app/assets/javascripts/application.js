@@ -23,5 +23,6 @@
 //= require bootstrap/tab
 //= require bootstrap/tooltip
 //= require bootstrap/transition
-//= require turbolinks
+//= require common
 //= require movies
+//= require turbolinks

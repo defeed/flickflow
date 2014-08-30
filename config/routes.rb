@@ -42,12 +42,19 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :users, only: [:new, :create]
+  resources :users, only: [:new, :create, :edit, :update]
   resources :sessions, only: [:new, :create, :destroy]
   
   get 'sign-in' => 'sessions#new', as: :signin
   delete 'sign-out' => 'sessions#destroy', as: :signout
   get 'join' => 'users#new', as: :join
+  
+  post 'oauth/callback' => 'oauths#callback'
+  get 'oauth/callback' => 'oauths#callback'
+  get 'oauth/:provider' => 'oauths#oauth',  as: :auth_at_provider
+  
+  get 'profile' => 'users#edit', as: :profile
+  post 'profile' => 'users#update'
   
   root 'movies#index'
 end

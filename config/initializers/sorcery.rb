@@ -70,7 +70,7 @@ Rails.application.config.sorcery.configure do |config|
   # What providers are supported by this app, i.e. [:twitter, :facebook, :github, :linkedin, :xing, :google, :liveid] .
   # Default: `[]`
   #
-  # config.external_providers = [:facebook, :twitter, :google]
+  config.external_providers = [:facebook, :twitter, :google, :vk]
 
 
   # You can change it by your local ca_file. i.e. '/etc/pki/tls/certs/ca-bundle.crt'
@@ -106,14 +106,14 @@ Rails.application.config.sorcery.configure do |config|
   #
   # config.twitter.key = Rails.application.secrets.twitter_auth_key
   # config.twitter.secret = Rails.application.secrets.twitter_auth_secret
-  # config.twitter.callback_url = "http://0.0.0.0:3000/oauth/callback?provider=twitter"
-  # config.twitter.user_info_mapping = {:username => "screen_name"}
+  # config.twitter.callback_url = 'http://flickflow.dev/oauth/callback?provider=twitter'
+  # config.twitter.user_info_mapping = {:username => 'screen_name'}
   #
-  # config.facebook.key = Rails.application.secrets.facebook_auth_key
-  # config.facebook.secret = Rails.application.secrets.facebook_auth_secret
-  # config.facebook.callback_url = "http://0.0.0.0:3000/oauth/callback?provider=facebook"
-  # config.facebook.user_info_mapping = {:email => "email", :name => "name" }
-  # config.facebook.access_permissions = ["email", "public_profile"]
+  config.facebook.key = Rails.application.secrets.facebook_auth_key
+  config.facebook.secret = Rails.application.secrets.facebook_auth_secret
+  config.facebook.callback_url = "http://flickflow.dev/oauth/callback?provider=facebook"
+  config.facebook.user_info_mapping = {:email => "email", :name => "name", :username => "username" }
+  config.facebook.access_permissions = ["email"]
   #
   # config.github.key = ""
   # config.github.secret = ""
@@ -410,7 +410,7 @@ Rails.application.config.sorcery.configure do |config|
     # Class which holds the various external provider data for this user.
     # Default: `nil`
     #
-    # user.authentications_class = Authentications
+    user.authentications_class = Authentication
 
 
     # User's identifier in authentications class.

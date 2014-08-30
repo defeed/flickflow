@@ -1,5 +1,4 @@
-%a.icon-social.icon-facebook{href: '#'}
-  = fa_icon 'facebook-square 3x'
+= link_to fa_icon('facebook-square 3x'), auth_at_provider_path(provider: :facebook), class: 'icon-social icon-facebook'
 %a.icon-social.icon-twitter{href: '#'}
   = fa_icon 'twitter 3x'
 %a.icon-social.icon-google{href: '#'}

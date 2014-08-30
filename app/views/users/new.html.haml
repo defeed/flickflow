@@ -9,13 +9,13 @@
               .input-group
                 %span.input-group-addon
                   = fa_icon 'at'
-                = f.text_field :email, { class: 'form-control', placeholder: 'Email', autocomplete: 'off', type: 'email' }
+                = f.email_field :email, { class: 'form-control', placeholder: 'Email', autocomplete: 'off' }
           .col-xs-12
             .form-group
               .input-group
                 %span.input-group-addon
                   = fa_icon 'user'
-                = f.text_field :username, { class: 'form-control', placeholder: 'Username', autocomplete: 'off' }
+                = f.text_field :username, { class: 'form-control', placeholder: 'Username', autocomplete: 'off', autocapitalize: 'off' }
           .col-xs-12
             .form-group
               .input-group
