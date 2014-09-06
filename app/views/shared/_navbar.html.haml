@@ -1,18 +1,19 @@
-%nav.navbar.navbar-fixed-top.navbar-default{role: 'navigation'}
+%nav#left-sidebar.navmenu.navmenu-default.navmenu-fixed-left.offcanvas
+  = render 'shared/left_sidebar'
+
+%nav.navmenu.navmenu-default.navmenu-fixed-right.offcanvas#right-sidebar
+  = yield :right_sidebar
+
+.navbar.navbar-default.navbar-fixed-top
   .container-fluid
-    .navbar-header
-      %button.navbar-toggle{type: 'button', data: {target: '#ff-navbar-collapse', toggle: 'collapse'}}
-        %span.sr-only Toggle navigation
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-      = link_to 'flickflow', root_path, {class: 'navbar-brand'}
-    #ff-navbar-collapse.collapse.navbar-collapse
-      %ul.nav.navbar-nav
-        %li{class: "#{is_active? 'movies'}"}
-          = link_to fa_icon('film', text: 'Movies'), root_path
-        %li{class: "#{is_active? 'people'}"}
-          = link_to fa_icon('users', text: 'People'), '#'
-        %li{class: "#{is_active? 'lists'}"}
-          = link_to fa_icon('list', text: 'Lists'), '#'
-      = render 'shared/user_dropdown'
+    %a.navbar-toggle.btn.btn-default#left-sidebar-toggle{type: 'button', data: {target: '#left-sidebar', toggle: 'offcanvas', canvas: 'body'}}
+      = fa_icon 'bars'
+    %a.navbar-toggle.btn.btn-default#right-sidebar-toggle{type: 'button', data: {target: '#right-sidebar', toggle: 'offcanvas', canvas: 'body'}}
+      = fa_icon 'users'
+    %form.navbar-form.hidden-xs#search-form
+      .input-group
+        %span.input-group-btn
+          %button.btn.btn-default{type: 'submit'}
+            = fa_icon 'search'
+        %input.form-control#navbar-search{type: 'text', placeholder: 'Movies, people, anything'}
+    = link_to 'FlickFlow', root_path, class: 'navbar-brand'

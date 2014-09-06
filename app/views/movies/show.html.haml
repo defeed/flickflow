@@ -1,0 +1,51 @@
+.row.movie-details
+  .col-xs-12.col-sm-4.col-md-4.col-lg-3
+    .thumbnail.no-border
+      = poster_image_for @movie, :lg, class: 'thumbnail-poster img-rounded', alt: "#{@movie.title} (#{@movie.year})"
+      %a.btn.btn-default.btn-lg.btn-block#watch-trailer{href: '#'}
+        = fa_icon 'play-circle-o', text: 'Play Trailer'
+  .col-xs-12.col-sm-8.col-md-8.col-lg-9
+    %header
+      %h1= @movie.title
+    %ul.list-inline.list-meta.small.text-muted
+      - if @movie.year
+        %li
+          %span.label.label-default= @movie.year
+      - if @movie.genres
+        %li
+          = fa_icon 'tags', text: @movie.genres.pluck(:name).join(' &middot; ').html_safe
+      - if @movie.runtime
+        %li
+          = fa_icon 'clock-o', text: format_runtime(@movie.runtime)
+      - if @movie.mpaa_rating
+        %li
+          = fa_icon 'ticket', text: @movie.mpaa_rating
+    %p.lead= @movie.description
+    %dl.dl-horizontal.dl-compact
+      %dt Cast
+      %dd
+        = @movie.stars.map(&:name).join(', ')
+    %dl.dl-horizontal.dl-compact
+      %dt Directed by
+      %dd
+        = @movie.directors.uniq.map(&:name).join(', ')
+    %dl.dl-horizontal.dl-compact
+      %dt Written by
+      %dd
+        = @movie.writers.uniq.map(&:name).join(', ')
+    %dl.dl-horizontal.dl-compact
+      %dt Produced by
+      %dd
+        = @movie.producers.uniq.map(&:name).join(', ')
+        
+- content_for :right_sidebar do
+  %ul.media-list.credits-list
+    - @movie.actorships.map do |actor|
+      %li.media
+        %a.pull-left{href: '#'}
+          %img.media-object.img-rounded{src: 'http://placehold.io/40/40.png', width: 40, heigth: 40}
+        .media-body
+          %h5
+            %a{href: '#'}= actor.person.name
+          %small.text-muted
+            %em= actor.credit

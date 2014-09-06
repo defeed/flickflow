@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   
   def new
     @user = User.new
+    @title = 'Join'
   end
 
   def create
@@ -14,6 +15,7 @@ class UsersController < ApplicationController
       auto_login @user
       redirect_to root_path, flash: { success: "Alright! You've successfully created your profile on flickflow. Now go discover some good movies and add them to your Watchlist." }
     else
+      @title = 'Join'
       render action: :new
     end
   end
@@ -21,6 +23,7 @@ class UsersController < ApplicationController
   def edit
     @user = current_user
     set_password_label_for @user
+    @title = 'Your Profile'
     render layout: 'application'
   end
   
@@ -31,6 +34,7 @@ class UsersController < ApplicationController
       redirect_to root_path, flash: { success: 'Your profile was successfully updated.' }
     else
       set_password_label_for @user
+      @title = 'Your Profile'
       render action: :edit, layout: 'application'
     end
   end

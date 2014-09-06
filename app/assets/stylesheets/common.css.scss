@@ -1,4 +1,4 @@
-body { padding-top: 50px; }
+body { padding-top: 60px; }
 
 .pagination { margin-top: 0 }
 .view-options { margin-bottom: 20px }
@@ -18,12 +18,128 @@ body { padding-top: 50px; }
 #watch-trailer { margin: 10px auto; }
 
 .media-list.credits-list {
+  padding: 10px;
   .media {
     margin-top: 10px;
     .media-body {
-      margin: 5px auto;
+      margin: 3px auto;
     }
   }
   h5 { margin: 0 auto }
-  em { padding-left: 2px }
+  em { padding-left: 1px }
+}
+
+.dl-compact { margin-bottom: 10px; }
+
+.navmenu .list-group {
+  color: $gray-light;
+  margin-top: 25px;
+  .list-group-header {
+    padding: 0 15px;
+    text-transform: uppercase;
+    color: lighten($gray-darkest, 15%);
+  }
+  .list-group-item {
+    background-color: transparent;
+    border: none;
+    color: $gray-light;
+    border-bottom: 1px solid lighten($gray-darkest, 15%);
+    border-radius: 0;
+    &:hover {
+      background-color: lighten($gray-darkest, 15%);
+    }
+    .badge {
+      font-weight: 300;
+      background-color: transparent;
+      border: 1px solid lighten($gray-darkest, 15%);
+    }
+  }
+}
+
+.navbar {
+  display: block;
+  text-align: center;
+}
+.navbar-brand {
+  display: inline-block;
+  float: none;
+}
+
+.navbar-toggle {
+  position: absolute;
+  padding: 7px 10px;
+}
+
+#left-sidebar-toggle {
+  float: left;
+  left: 0;
+  margin-left: 5px;
+}
+
+#right-sidebar-toggle {
+  float: right;
+  right: 0;
+}
+
+@media (min-width: 1px) {
+  .navbar-toggle {
+    display: block !important;
+  }
+}
+
+#left-sidebar, #right-sidebar {
+  width: 270px;
+}
+
+#search-form {
+  position: absolute;
+  left: 40px;
+  top: 0;
+  padding-top: 3px;
+  input, button {
+    -webkit-box-shadow: none;
+       -moz-box-shadow: none;
+            box-shadow: none;
+  }
+  button {
+    background: transparent;
+    border: 0;
+    color: $gray-dark;
+  }
+  input {
+    width: 180px;
+    border: 0;
+    padding: 6px 0 6px 0;
+  }
+}
+
+#sidebar-search-form {
+  ::-webkit-input-placeholder {
+    color: lighten($gray-darkest, 15%);
+  }
+  ::-moz-placeholder {
+    color: lighten($gray-darkest, 15%);
+  }
+  :-ms-input-placeholder {
+    color: lighten($gray-darkest, 15%);
+  }
+  .input-group {
+    margin: 10px;
+    border: 1px solid lighten($gray-darkest, 15%);
+    border-radius: 20px;
+  }
+  input, button {
+    border: 0;
+    -webkit-box-shadow: none;
+       -moz-box-shadow: none;
+            box-shadow: none;
+  }
+  input {
+    padding-left: 0;
+    color: $gray-lighter;
+  }
+  button {
+    background-color: transparent;
+    color: lighten($gray-darkest, 15%);
+  }
 }

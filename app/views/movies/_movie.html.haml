@@ -1,3 +1,3 @@
 .col-xs-4.col-sm-3.col-md-2
-  = link_to '#', {class: 'thumbnail no-border'} do
-    = poster_image_for movie, :md, title: "#{movie.title} (#{movie.year})", class: 'thumbnail-poster', alt: "#{movie.title} (#{movie.year})"
+  = link_to movie_path(movie), {class: 'thumbnail no-border'} do
+    = poster_image_for movie, :md, title: "#{movie.title} (#{movie.year})", class: 'thumbnail-poster img-rounded', alt: "#{movie.title} (#{movie.year})"

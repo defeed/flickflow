@@ -6,13 +6,6 @@ GIT
       httparty
       nokogiri (~> 1.6)
 
-GIT
-  remote: git://github.com/twbs/bootstrap-sass.git
-  revision: 54317e5c02a4915e7a5def3a3e94cc2738a51ed3
-  specs:
-    bootstrap-sass (3.2.0.1)
-      sass (~> 3.2)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -54,8 +47,8 @@ GEM
       rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    bootstrap-sass-extras (0.0.6)
-      rails (>= 3.1.0)
+    bootstrap-sass (3.2.0.1)
+      sass (~> 3.2)
     browser (0.6.0)
     builder (3.2.2)
     cancancan (1.9.2)
@@ -266,8 +259,7 @@ DEPENDENCIES
   babosa
   better_errors
   binding_of_caller
-  bootstrap-sass!
-  bootstrap-sass-extras
+  bootstrap-sass (~> 3.2.0)
   browser
   bundler
   cancancan (~> 1.9)

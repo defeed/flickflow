@@ -4,12 +4,14 @@ class SessionsController < ApplicationController
   
   def new
     @user = User.new
+    @title = 'Sign In'
   end
 
   def create
     if @user = login(params[:email], params[:password])
       redirect_to root_path
     else
+      @title = 'Sign In'
       flash.now[:error] = 'Provided email/username or password are invalid. Try again.'
       render action: :new
     end

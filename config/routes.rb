@@ -42,6 +42,7 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :movies, only: [:index, :show]
   resources :users, only: [:new, :create, :edit, :update]
   resources :sessions, only: [:new, :create, :destroy]
   

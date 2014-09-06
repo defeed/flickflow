@@ -1,4 +1,9 @@
 module ApplicationHelper
+  def title
+    base_title = 'FlickFlow'
+    @title.nil? ? base_title : "#{@title} &middot; #{base_title}".html_safe
+  end
+  
   def poster_image_for movie, version, options={}
     primary_poster = movie.primary_poster
     file_url = primary_poster.file_url(version) if primary_poster
@@ -19,7 +24,7 @@ module ApplicationHelper
     notice: 'alert-info'
   }
 
-  def bootstrap_class_for(flash_type)
+  def bootstrap_class_for flash_type
     BOOTSTRAP_FLASH_MSGS.fetch(flash_type.to_sym, flash_type.to_s)
   end
 end
