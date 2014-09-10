@@ -122,6 +122,7 @@ ActiveRecord::Schema.define(version: 20140823131020) do
     t.string   "imageable_type"
     t.string   "remote_url"
     t.boolean  "is_primary",     default: false
+    t.uuid     "uuid"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -205,6 +206,7 @@ ActiveRecord::Schema.define(version: 20140823131020) do
     t.text     "storyline"
     t.integer  "runtime"
     t.string   "slug"
+    t.uuid     "uuid"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -234,6 +236,7 @@ ActiveRecord::Schema.define(version: 20140823131020) do
     t.text     "bio"
     t.string   "photo_url"
     t.string   "slug"
+    t.uuid     "uuid"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -275,6 +278,7 @@ ActiveRecord::Schema.define(version: 20140823131020) do
     t.string   "crypted_password"
     t.string   "salt"
     t.string   "slug"
+    t.uuid     "uuid"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "remember_me_token"

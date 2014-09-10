@@ -10,9 +10,10 @@
 #  died_on    :date
 #  bio        :text
 #  photo_url  :string(255)
+#  slug       :string(255)
+#  uuid       :uuid
 #  created_at :datetime
 #  updated_at :datetime
-#  slug       :string(255)
 #
 # Indexes
 #
@@ -53,5 +54,11 @@ class Person < ActiveRecord::Base
   
   def should_generate_new_friendly_id?
     name_changed? || super
+  end
+  
+  private
+  
+  def set_uuid
+    self.update(uuid: SecureRandom.uuid)
   end
 end

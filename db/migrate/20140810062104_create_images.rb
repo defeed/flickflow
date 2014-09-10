@@ -6,6 +6,7 @@ class CreateImages < ActiveRecord::Migration
       t.references :imageable, polymorphic: true, index: true
       t.string :remote_url, index: true
       t.boolean :is_primary, default: false
+      t.uuid :uuid
 
       t.timestamps
     end

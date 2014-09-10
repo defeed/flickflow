@@ -19,6 +19,7 @@
 #  storyline              :text
 #  runtime                :integer
 #  slug                   :string(255)
+#  uuid                   :uuid
 #  created_at             :datetime
 #  updated_at             :datetime
 #
@@ -68,6 +69,11 @@ class Movie < ActiveRecord::Base
   has_many :posters, as: :imageable, dependent: :destroy
   has_one  :primary_poster, -> { where is_primary: true }, class_name: 'Poster', as: :imageable
   has_many :fetches, as: :fetchable, dependent: :destroy
+  
+  # # # # # #
+  # Callbacks
+  # # # # # #
+  after_create :set_uuid
   
   # # # # #
   # Scopes
@@ -127,5 +133,11 @@ class Movie < ActiveRecord::Base
   
   def should_generate_new_friendly_id?
     title_changed? || year_changed? || super
+  end
+  
+  private
+  
+  def set_uuid
+    self.update(uuid: SecureRandom.uuid)
   end
 end

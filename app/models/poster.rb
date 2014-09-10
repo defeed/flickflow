@@ -9,6 +9,7 @@
 #  imageable_type :string(255)
 #  remote_url     :string(255)
 #  is_primary     :boolean          default(FALSE)
+#  uuid           :uuid
 #  created_at     :datetime
 #  updated_at     :datetime
 #

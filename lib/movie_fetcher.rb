@@ -70,7 +70,7 @@ class MovieFetcher < Struct.new(:imdb_id, :page, :force)
     
     movie.save
     
-    if movie.title && imdb.poster_url && !Poster.exists?(remote_url: imdb.poster_url)
+    if imdb.poster_url && !Poster.exists?(remote_url: imdb.poster_url)
       movie.posters.update_all(is_primary: false)
       poster = Poster.create(imageable: movie, remote_url: imdb.poster_url, is_primary: true)
       Delayed::Job.enqueue ImageFetcher.new(poster.id)

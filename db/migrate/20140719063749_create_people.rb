@@ -9,6 +9,7 @@ class CreatePeople < ActiveRecord::Migration
       t.text :bio
       t.string :photo_url
       t.string :slug
+      t.uuid :uuid
 
       t.timestamps
     end

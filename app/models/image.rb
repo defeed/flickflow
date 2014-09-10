@@ -9,6 +9,7 @@
 #  imageable_type :string(255)
 #  remote_url     :string(255)
 #  is_primary     :boolean          default(FALSE)
+#  uuid           :uuid
 #  created_at     :datetime
 #  updated_at     :datetime
 #
@@ -19,4 +20,12 @@
 
 class Image < ActiveRecord::Base
   belongs_to :imageable, polymorphic: true
+  
+  after_create :set_uuid
+  
+  private
+  
+  def set_uuid
+    self.update(uuid: SecureRandom.uuid)
+  end
 end

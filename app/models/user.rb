@@ -9,6 +9,7 @@
 #  crypted_password                :string(255)
 #  salt                            :string(255)
 #  slug                            :string(255)
+#  uuid                            :uuid
 #  created_at                      :datetime
 #  updated_at                      :datetime
 #  remember_me_token               :string(255)
@@ -58,6 +59,7 @@ class User < ActiveRecord::Base
   before_create :set_auth_token
   before_create :ensure_username_unique
   before_save   :ensure_username_present
+  after_create  :set_uuid
   after_create  :create_default_user_lists, unless: Proc.new { |u| u.is_system_user? }
   
   def self.system
@@ -106,5 +108,9 @@ class User < ActiveRecord::Base
   def set_auth_token
     return if auth_token.present?
     self.auth_token = AuthToken.create(token: AuthToken.generate)
+  end
+  
+  def set_uuid
+    self.update(uuid: SecureRandom.uuid)
   end
 end

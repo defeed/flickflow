@@ -17,6 +17,7 @@ class CreateMovies < ActiveRecord::Migration
       t.text :storyline
       t.integer :runtime
       t.string :slug
+      t.uuid :uuid
 
       t.timestamps
     end

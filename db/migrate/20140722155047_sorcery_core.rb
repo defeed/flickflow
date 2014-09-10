@@ -7,6 +7,7 @@ class SorceryCore < ActiveRecord::Migration
       t.string :crypted_password
       t.string :salt
       t.string :slug
+      t.uuid :uuid
 
       t.timestamps
     end
