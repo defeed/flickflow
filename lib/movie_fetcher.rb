@@ -1,6 +1,7 @@
 class MovieFetcher < Struct.new(:imdb_id, :page, :force)
   def perform
-    page = :all if page.nil?
+    page  = self.page || :all
+    force = self.force || false
     return nil unless fetch_required_for? page, force
     
     case page
@@ -211,7 +212,7 @@ class MovieFetcher < Struct.new(:imdb_id, :page, :force)
       movie.fetches.create page: Fetch.pages[page], response_code: response[:code], response_message: response[:message], has_data: has_data
     end
     
-    def fetch_required_for? page, force = false
+    def fetch_required_for? page, force
       last_fetch = last_fetch_for page
       return true if force || last_fetch.nil?
       Time.now.utc - last_fetch.created_at > fetch_delay
