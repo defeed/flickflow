@@ -21,6 +21,8 @@ class MovieFetcher < Struct.new(:imdb_id, :page, :force)
       fetch_recommended_movies
     when :critic_reviews
       fetch_critic_reviews
+    when :stills
+      fetch_stills
     else nil
     end
   end
@@ -32,6 +34,7 @@ class MovieFetcher < Struct.new(:imdb_id, :page, :force)
     fetch_keywords
     fetch_trivia
     fetch_critic_reviews
+    # fetch_stills
   end
   
   def fetch_basic_info
@@ -204,6 +207,22 @@ class MovieFetcher < Struct.new(:imdb_id, :page, :force)
     end
   end
   handle_asynchronously :fetch_recommended_movies, queue: 'recommended_movies'
+  
+  def fetch_stills
+    imdb = Spotlite::Movie.new(imdb_id)
+    movie = Movie.find_by(imdb_id: imdb.imdb_id)
+    
+    imdb.images.each do |image|
+      return if Still.exists?(remote_url: image)
+      
+      still = Still.create(imageable: movie, remote_url: image)
+      Delayed::Job.enqueue ImageFetcher.new(still.id)
+    end
+    
+    has_data = imdb.images.any?
+    log_fetch :stills, imdb.response, has_data
+  end
+  handle_asynchronously :fetch_stills, queue: 'stills'
   
   private
   

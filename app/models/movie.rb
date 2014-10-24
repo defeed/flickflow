@@ -68,6 +68,7 @@ class Movie < ActiveRecord::Base
   
   has_many :posters, as: :imageable, dependent: :destroy
   has_one  :primary_poster, -> { where is_primary: true }, class_name: 'Poster', as: :imageable
+  has_many :stills, as: :imageable, dependent: :destroy
   has_many :fetches, as: :fetchable, dependent: :destroy
   
   # # # # # #
