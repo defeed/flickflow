@@ -13,9 +13,6 @@
 //= require jquery
 //= require jquery.turbolinks
 //= require jquery_ujs
-//= require moment
-//= require moment/ru.js
-//= require moment/et.js
 //= require bootstrap/alert
 //= require bootstrap/button
 //= require bootstrap/collapse

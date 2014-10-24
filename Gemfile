@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.1.5'
+gem 'rails', '4.1.6'
 gem 'pg'
 gem 'thin'
 gem 'bundler'
@@ -28,10 +28,6 @@ gem 'haml'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'will_paginate-bootstrap'
 gem 'font-awesome-rails', '~> 4.2.0'
-gem 'momentjs-rails'
-gem 'draper'
-gem 'browser'
-gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
