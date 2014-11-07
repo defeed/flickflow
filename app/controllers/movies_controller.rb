@@ -6,5 +6,6 @@ class MoviesController < ApplicationController
   def show
     @movie = Movie.friendly.find(params[:id])
     @title = @movie.title
+    @trailer = @movie.trailers.first
   end
 end

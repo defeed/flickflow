@@ -11,6 +11,22 @@ module ApplicationHelper
     image_tag src, options
   end
   
+  def trailer_button youtube_id
+    unless youtube_id.empty?
+      content_tag :a, id: 'watch-trailer', class: 'btn btn-default btn-lg btn-block sublime', data: { 'youtube-id' => youtube_id }, href: "##{youtube_id}" do
+        fa_icon 'play-circle-o', text: 'Watch Trailer'
+      end
+    end
+  end
+  
+  def sublime_video youtube_id, width = 1280, height = 720
+    unless youtube_id.empty?
+      content_tag :video, id: youtube_id, width: width, height: height, style: "display:none", data: { uid: youtube_id, 'youtube_id' => youtube_id }, preload: 'none' do
+        nil
+      end
+    end
+  end
+  
   def format_runtime minutes
     hours = minutes / 60
     minutes = '%02d' % (minutes % 60)
