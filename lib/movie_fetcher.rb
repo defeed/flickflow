@@ -23,6 +23,8 @@ class MovieFetcher < Struct.new(:imdb_id, :page, :force)
       fetch_critic_reviews
     when :stills
       fetch_stills
+    when :videos
+      fetch_videos
     else nil
     end
   end
@@ -31,6 +33,7 @@ class MovieFetcher < Struct.new(:imdb_id, :page, :force)
     fetch_basic_info
     fetch_people
     fetch_release_info
+    fetch_videos
     fetch_keywords
     fetch_trivia
     fetch_critic_reviews
@@ -223,6 +226,25 @@ class MovieFetcher < Struct.new(:imdb_id, :page, :force)
     log_fetch :stills, imdb.response, has_data
   end
   handle_asynchronously :fetch_stills, queue: 'stills'
+  
+  def fetch_videos
+    imdb = Spotlite::Movie.new(imdb_id)
+    movie = Movie.find_by(imdb_id: imdb.imdb_id)    
+    movie.videos = []
+    
+    tmdb_movie = Tmdb::Find.imdb_id("tt#{imdb_id}").movie_results.first
+    
+    unless tmdb_movie.nil?
+      videos = Tmdb::Movie.trailers(tmdb_movie.id).youtube
+      
+      videos.each do |video|
+        movie.videos.create(kind: video.type, title: video.name, youtube_id: video.source)
+      end
+    end
+    
+    has_data = tmdb_movie && videos.any?
+    log_fetch :videos, {}, has_data
+  end
   
   private
   

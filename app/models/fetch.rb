@@ -18,7 +18,7 @@
 #
 
 class Fetch < ActiveRecord::Base
-  enum page: [:basic_info, :people, :release_info, :keywords, :trivia, :critic_reviews, :recommended_movies, :bio, :filmography, :images]
+  enum page: [:basic_info, :people, :release_info, :keywords, :trivia, :critic_reviews, :recommended_movies, :bio, :filmography, :images, :videos]
   belongs_to :fetchable, polymorphic: true
   
   scope :with_response_code, -> (code) { where 'response_code = ?', code }
