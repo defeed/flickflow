@@ -41,6 +41,12 @@ class Person < ActiveRecord::Base
   
   has_many :fetches, as: :fetchable, dependent: :destroy
   
+  def self.find_or_create_from spotlite_person
+    person = self.find_or_create_by(imdb_id: spotlite_person.imdb_id)
+    person.update name: spotlite_person.name
+    person
+  end
+  
   def toggle_in_list(user, list)
     list.toggle_entry user, self
   end

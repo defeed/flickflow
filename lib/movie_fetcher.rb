@@ -91,27 +91,27 @@ class MovieFetcher < Struct.new(:imdb_id, :page, :force)
     movie.participations = []
     
     imdb.cast.each do |actor|
-      person = Person.find_or_create_by(imdb_id: actor.imdb_id, name: actor.name)
+      person = Person.find_or_create_from actor
       movie.participations.actor.create(person: person, credit: actor.credits_text)
     end
     
     imdb.stars.each do |star|
-      person = Person.find_or_create_by(imdb_id: star.imdb_id, name: star.name)
+      person = Person.find_or_create_from star
       movie.participations.star.create(person: person)
     end
     
     imdb.directors.each do |director|
-      person = Person.find_or_create_by(imdb_id: director.imdb_id, name: director.name)
+      person = Person.find_or_create_from director
       movie.participations.director.create(person: person, credit: director.credits_text)
     end
     
     imdb.writers.each do |writer|
-      person = Person.find_or_create_by(imdb_id: writer.imdb_id, name: writer.name)
+      person = Person.find_or_create_from writer
       movie.participations.writer.create(person: person, credit: writer.credits_text)
     end
     
     imdb.producers.each do |producer|
-      person = Person.find_or_create_by(imdb_id: producer.imdb_id, name: producer.name)
+      person = Person.find_or_create_from producer
       movie.participations.producer.create(person: person, credit: producer.credits_text)
     end
     
