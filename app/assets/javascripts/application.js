@@ -11,7 +11,6 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery.turbolinks
 //= require jquery_ujs
 //= require bootstrap/alert
 //= require bootstrap/button
@@ -23,4 +22,3 @@
 //= require jasny-bootstrap.min
 //= require common
 //= require movies
-//= require turbolinks
