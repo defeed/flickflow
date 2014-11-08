@@ -7,5 +7,12 @@ class MoviesController < ApplicationController
     @movie = Movie.friendly.find(params[:id])
     @title = @movie.title
     @trailer = @movie.trailers.first
+    @lists = current_user.lists
+    @watchlist = current_user.lists.friendly.find('watchlist')
+    @watched   = current_user.lists.friendly.find('watched')
+    @favorites = current_user.lists.friendly.find('favorites')
+    @in_watchlist = @watchlist.includes? @movie
+    @in_watched   = @watched.includes? @movie
+    @in_favorites = @favorites.includes? @movie
   end
 end

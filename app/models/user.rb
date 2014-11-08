@@ -89,6 +89,10 @@ class User < ActiveRecord::Base
     username_changed? || super
   end
   
+  def api_token
+    self.auth_token.token
+  end
+  
   private
   
   def ensure_username_unique

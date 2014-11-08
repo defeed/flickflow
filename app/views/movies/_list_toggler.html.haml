@@ -1,0 +1,10 @@
+- watchlist_class = @in_watchlist ? 'btn-on' : ''
+- watched_class = @in_watched ? 'btn-on' : ''
+- favorites_class = @in_favorites ? 'btn-on' : ''
+.btn-group#list-toggler{ data: { movie_id: @movie.id } }
+  = link_to '#', class: "btn btn-default btn-lg #{watchlist_class}", id: 'watchlist', data: { list_id: @watchlist.id } do
+    = fa_icon 'bookmark', text: 'Watchlist'
+  = link_to '#', class: "btn btn-default btn-lg #{watched_class}", id: 'watched', data: { list_id: @watched.id } do
+    = fa_icon 'eye'
+  = link_to '#', class: "btn btn-default btn-lg #{favorites_class}", id: 'favorites', data: { list_id: @favorites.id } do
+    = fa_icon 'heart'

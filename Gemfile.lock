@@ -125,6 +125,11 @@ GEM
     formatador (0.2.5)
     friendly_id (5.0.4)
       activerecord (>= 4.0.0)
+    gon (5.2.3)
+      actionpack (>= 2.3.0)
+      json
+      multi_json
+      request_store (>= 1.0.5)
     haml (4.0.5)
       tilt
     hashugar (0.0.6)
@@ -195,6 +200,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.3.2)
+    request_store (1.1.0)
     rottentomatoes (1.1.0)
       deepopenstruct (>= 0.1.2)
       json
@@ -262,6 +268,7 @@ DEPENDENCIES
   fog
   font-awesome-rails (~> 4.2.0)
   friendly_id (~> 5.0.3)
+  gon
   haml
   jbuilder (~> 2.0)
   jquery-rails

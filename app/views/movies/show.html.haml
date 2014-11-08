@@ -23,7 +23,11 @@
       - if @movie.mpaa_rating
         %li
           = fa_icon 'ticket', text: @movie.mpaa_rating
+    
+    = render partial: 'list_toggler'
+    
     %p.lead= @movie.description
+    
     %dl.dl-horizontal.dl-compact
       %dt Cast
       %dd

@@ -38,14 +38,33 @@ module API
     # @params movie_id
     # @params person_id
     def toggle
+      user_lists = current_user.lists
+      
       if movie_id = params[:movie_id]
-        object = Movie.find movie_id
+        @object = Movie.find(movie_id)
       elsif person_id = params[:person_id]
-        object = Person.find person_id
+        @object = Person.find(person_id)
       end
       
-      @list.toggle object if object
-      head 204, location: api_user_list_path(@list.user, @list)
+      @list.toggle(@object)
+      
+      if @object.is_a?(Movie)
+        watchlist = user_lists.detect { |list| list.name == 'Watchlist' }
+        watched   = user_lists.detect { |list| list.name == 'Watched' }
+        favorites = user_lists.detect { |list| list.name == 'Favorites' }
+        
+        if @list == watched
+          if watched.includes?(@object) && watchlist.includes?(@object)
+            watchlist.remove(@object)
+          elsif !watched.includes?(@object) && favorites.includes?(@object)
+            favorites.remove(@object)
+          end
+        end
+        
+        @lists = current_user.lists.movie
+      elsif object.is_a?(Person)
+        @lists = current_user.lists.person
+      end
     end
     
     private

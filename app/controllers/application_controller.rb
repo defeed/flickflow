@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   
   before_action :require_login
+  before_action :set_api_token
   before_action :redirect_to_profile
   
   private
@@ -21,5 +22,9 @@ class ApplicationController < ActionController::Base
   
   def not_authenticated
     redirect_to signin_path, flash: { error: 'You need to sign in to access flickflow.' }
+  end
+  
+  def set_api_token
+    gon.api_token = current_user && current_user.api_token
   end
 end

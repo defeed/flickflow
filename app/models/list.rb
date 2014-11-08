@@ -37,23 +37,26 @@ class List < ActiveRecord::Base
   
   def toggle object
     return false unless list_type == object.class.to_s.downcase
-    in_list = list_entries.exists? listable: object
-    in_list ? remove(object) : add(object)
+    includes?(object) ? remove(object) : add(object)
+  end
+  
+  def add object
+    list_entries.create(listable: object)
     touch
     reload
+  end
+  
+  def remove object
+    list_entries.find_by(listable: object).destroy
+    touch
+    reload
+  end
+  
+  def includes? object
+    list_entries.exists? listable: object
   end
   
   def should_generate_new_friendly_id?
     name_changed? || super
   end
-  
-  private
-  
-    def add(object)
-      list_entries.create(listable: object)
-    end
-    
-    def remove(object)
-      list_entries.find_by(listable: object).destroy
-    end
 end
