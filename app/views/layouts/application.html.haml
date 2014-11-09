@@ -2,14 +2,17 @@
 %html
   %head
     %title= title
-    = stylesheet_link_tag    'application', 'jasny-bootstrap.min'
-    = javascript_include_tag 'application', 'jasny-bootstrap.min'
+    = stylesheet_link_tag    'application'
+    = javascript_include_tag 'application'
     = javascript_include_tag 'http://cdn.sublimevideo.net/js/cj1d4rzp.js'
     = include_gon
-    %meta{name: "viewport", content: "width=device-width, initial-scale=1, user-scalable=no, minimal-ui"}/
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1, user-scalable=no"}/
     = csrf_meta_tags
   %body
     = render 'shared/navbar'
     = render 'shared/flash_messages'
     .container-fluid
-      = yield
+      .row
+        = render 'shared/sidebar'
+        .col-md-10.col-sm-9
+          = yield

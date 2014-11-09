@@ -1,0 +1,28 @@
+.col-md-2.col-sm-3.hidden-xs
+  #sidebar
+    .list-group
+      - @user_lists.each do |list|
+        = link_to '#', class: 'list-group-item' do
+          = list.name
+          %small.text-muted= list.list_entries.size
+    .list-group
+      %a.list-group-item{href: '#'}
+        Generes
+      %a.list-group-item{href: '#'}
+        Popular Now
+      %a.list-group-item{href: '#'}
+        Coming Soon
+      %a.list-group-item{href: '#'}
+        Spotlight
+      %a.list-group-item{href: '#'}
+        Top 1000
+      %a.list-group-item{href: '#'}
+        People
+    - if current_user
+      .list-group
+        = link_to profile_path, class: 'list-group-item' do
+          = fa_icon 'user', text: 'Profile'
+        = link_to '#', class: 'list-group-item' do
+          = fa_icon 'cog', text: 'Settings'
+        = link_to signout_path, class: 'list-group-item', method: :delete do
+          = fa_icon 'sign-out', text: 'Sign Out'

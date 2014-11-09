@@ -26,33 +26,35 @@
     
     = render partial: 'list_toggler'
     
-    %p.lead= @movie.description
+    %p= @movie.description
     
-    %dl.dl-horizontal.dl-compact
-      %dt Cast
+    %dl.dl-compact
+      %dt Stars
       %dd
         = @movie.stars.map(&:name).join(', ')
-    %dl.dl-horizontal.dl-compact
+    %dl.dl-compact
       %dt Directed by
       %dd
         = @movie.directors.uniq.map(&:name).join(', ')
-    %dl.dl-horizontal.dl-compact
+    %dl.dl-compact
       %dt Written by
       %dd
         = @movie.writers.uniq.map(&:name).join(', ')
-    %dl.dl-horizontal.dl-compact
-      %dt Produced by
-      %dd
-        = @movie.producers.uniq.map(&:name).join(', ')
-        
-- content_for :right_sidebar do
+    
+%h4
+  Cast
+  = link_to '#', class: 'credits-expander pull-right' do
+    Show All
+    = fa_icon('chevron-circle-down')
+
+.row.credits-row
   %ul.media-list.credits-list
-    - @movie.actorships.map do |actor|
-      %li.media
+    - @movie.actorships.order(:id).map do |actor|
+      %li.media.col-lg-3.col-md-4.col-sm-6
         %a.pull-left{href: '#'}
-          %img.media-object.img-rounded{src: 'http://placehold.io/40/40.png', width: 40, heigth: 40}
+          %img.media-object.img-rounded{src: 'http://placehold.io/80/110.png', width: 80, heigth: 110}
         .media-body
           %h5
             %a{href: '#'}= actor.person.name
-          %small.text-muted
+          %small.credits-text
             %em= actor.credit

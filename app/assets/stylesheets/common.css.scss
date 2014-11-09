@@ -17,41 +17,16 @@ body { padding-top: 60px; }
 
 #watch-trailer { margin: 10px auto; }
 
-.media-list.credits-list {
-  padding: 10px;
-  .media {
-    margin-top: 10px;
-    .media-body {
-      margin: 3px auto;
-    }
-  }
-  h5 { margin: 0 auto }
-  em { padding-left: 1px }
-}
-
 .dl-compact { margin-bottom: 10px; }
 
-.navmenu .list-group {
-  color: $gray-light;
-  margin-top: 25px;
-  .list-group-header {
-    padding: 0 15px;
-    text-transform: uppercase;
-    color: lighten($gray-darkest, 15%);
-  }
+#sidebar .list-group {
   .list-group-item {
-    background-color: transparent;
-    border: none;
-    color: $gray-light;
-    border-bottom: 1px solid lighten($gray-darkest, 15%);
-    border-radius: 0;
     &:hover {
-      background-color: lighten($gray-darkest, 15%);
+      background-color: lighten($gray-light, 15%);
     }
     .badge {
       font-weight: 300;
-      background-color: transparent;
-      border: 1px solid lighten($gray-darkest, 15%);
+      background-color: $gray-darker;
     }
   }
 }
@@ -70,25 +45,10 @@ body { padding-top: 60px; }
   padding: 7px 10px;
 }
 
-#left-sidebar-toggle {
-  float: left;
-  left: 0;
-  margin-left: 5px;
-}
-
-#right-sidebar-toggle {
-  float: right;
-  right: 0;
-}
-
 @media (min-width: 1px) {
   .navbar-toggle {
     display: block !important;
   }
-}
-
-#left-sidebar, #right-sidebar {
-  width: 270px;
 }
 
 #search-form {
@@ -176,4 +136,14 @@ body { padding-top: 60px; }
   #favorites.btn-on {
     color: $brand-danger;
   }  
+}
+
+.credits-row {
+  max-height: 360px;
+  overflow: hidden;
+  margin-bottom: 30px;
+  &.expanded {
+    max-height: 99999px;
+    overflow: auto;
+  }
 }

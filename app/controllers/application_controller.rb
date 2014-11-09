@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   
   before_action :require_login
   before_action :set_api_token
+  before_action :load_user_lists
   before_action :redirect_to_profile
   
   private
@@ -26,5 +27,9 @@ class ApplicationController < ActionController::Base
   
   def set_api_token
     gon.api_token = current_user && current_user.api_token
+  end
+  
+  def load_user_lists
+    @user_lists = current_user && current_user.lists.movie.order(:id)
   end
 end
