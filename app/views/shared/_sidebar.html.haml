@@ -4,7 +4,7 @@
       - @user_lists.each do |list|
         = link_to '#', class: 'list-group-item' do
           = list.name
-          %small.text-muted= list.list_entries.size
+          %span.badge.badge-default.pull-right= list.list_entries.size
     .list-group
       %a.list-group-item{href: '#'}
         Generes

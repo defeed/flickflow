@@ -17,6 +17,18 @@ body { padding-top: 60px; }
 
 #watch-trailer { margin: 10px auto; }
 
+.media-list.credits-list {
+  padding: 10px;
+  .media {
+    margin-top: 10px;
+    .media-body {
+      margin: 3px auto;
+    }
+  }
+  h5 { margin: 0 auto }
+  em { padding-left: 1px }
+}
+
 .dl-compact { margin-bottom: 10px; }
 
 #sidebar .list-group {
@@ -104,33 +116,23 @@ body { padding-top: 60px; }
   }
 }
 
-#list-toggler {
-  margin: 15px 0;
-  
-  .btn-default:hover,
-  .btn-default:focus,
-  .btn-default:active,
-  .btn-default.active,
-  .open > .btn-default.dropdown-toggle {
-    background: #fff;
-  }
-  
+#list-toggler {  
   .btn {
     -webkit-box-shadow: none;
        -moz-box-shadow: none;
             box-shadow: none;
-    border-color: $gray-darker;
     @include transition(color .5s);
-    .btn-on {
-      background: #fff;
-    }
-    &:hover {
-      background: $gray-lighter;
+    &.btn-on {
+      font-weight: 700;
     }
   }
   
-  #watchlist.btn-on, #watched.btn-on {
+  #watchlist.btn-on {
     color: $brand-primary;
+  }
+  
+  #watched.btn-on {
+    color: $brand-success;
   }
   
   #favorites.btn-on {
@@ -146,4 +148,8 @@ body { padding-top: 60px; }
     max-height: 99999px;
     overflow: auto;
   }
+}
+
+.media-list.credits-list {
+  padding: 0;
 }

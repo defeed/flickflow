@@ -3,10 +3,6 @@
     .thumbnail.no-border
       = poster_image_for @movie, :lg, class: 'thumbnail-poster img-rounded', alt: "#{@movie.title} (#{@movie.year})"
       
-    - if @trailer
-      = trailer_button @trailer.youtube_id
-      = sublime_video @trailer.youtube_id
-      
   .col-xs-12.col-sm-8.col-md-8.col-lg-9
     %header
       %h1= @movie.title
@@ -24,23 +20,29 @@
         %li
           = fa_icon 'ticket', text: @movie.mpaa_rating
     
-    = render partial: 'list_toggler'
-    
-    %p= @movie.description
-    
-    %dl.dl-compact
-      %dt Stars
-      %dd
-        = @movie.stars.map(&:name).join(', ')
-    %dl.dl-compact
-      %dt Directed by
-      %dd
-        = @movie.directors.uniq.map(&:name).join(', ')
-    %dl.dl-compact
-      %dt Written by
-      %dd
-        = @movie.writers.uniq.map(&:name).join(', ')
-    
+    .row
+      .col-sm-12.col-md-5.col-lg-4
+        .well.well-sm
+          - if @trailer
+            = trailer_button @trailer.youtube_id
+            = sublime_video @trailer.youtube_id
+          = render partial: 'list_toggler'
+      .col-sm-12.col-md-7.col-lg-8
+        %p= @movie.storyline
+        
+        %dl.dl-compact
+          %dt Stars
+          %dd
+            = @movie.stars.map(&:name).join(', ')
+        %dl.dl-compact
+          %dt Directed by
+          %dd
+            = @movie.directors.uniq.map(&:name).join(', ')
+        %dl.dl-compact
+          %dt Written by
+          %dd
+            = @movie.writers.uniq.map(&:name).join(', ')
+
 %h4
   Cast
   = link_to '#', class: 'credits-expander pull-right' do

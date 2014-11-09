@@ -14,7 +14,7 @@ module ApplicationHelper
   def trailer_button youtube_id
     unless youtube_id.empty?
       content_tag :a, id: 'watch-trailer', class: 'btn btn-default btn-lg btn-block sublime', data: { 'youtube-id' => youtube_id }, href: "##{youtube_id}" do
-        fa_icon 'play-circle-o', text: 'Watch Trailer'
+        fa_icon 'play-circle-o', text: 'Play Trailer'
       end
     end
   end
