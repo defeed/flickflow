@@ -1,3 +1,30 @@
-.navbar.navbar-default.navbar-fixed-top
+.navbar.navbar-inverse.navbar-static-top
   .container-fluid
-    = link_to 'FlickFlow', root_path, class: 'navbar-brand'
+    %ul.nav.navbar-nav
+      %li.dropdown
+        %a.dropdown-toggle{href: '#', data: {toggle: 'dropdown'}}
+          = fa_icon 'bars', text: 'Discover'
+          %span.caret
+        %ul.dropdown-menu
+          %li= link_to 'Popular Now', root_path
+          %li= link_to 'Coming Soon', '#'
+          %li= link_to 'By Genre', '#'
+          %li= link_to 'Spotlight', '#'
+          %li= link_to 'Top 1000', '#'
+          %li= link_to 'People', '#'
+    %ul.nav.navbar-nav.navbar-right
+      %li= link_to fa_icon('star', text: 'Watchlist'), '#'
+      %li.hidden-xs= link_to fa_icon('check-square-o', text: 'Watched'), '#'
+      %li.hidden-xs= link_to fa_icon('heart', text: 'Favorites'), '#'
+      %li.dropdown
+        = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'} do
+          = fa_icon 'user'
+          %span.hidden-xs= current_user.name
+          %span.caret
+        %ul.dropdown-menu
+          %li.visible-xs= link_to fa_icon('check-square-o', text: 'Watched'), '#'
+          %li.visible-xs= link_to fa_icon('heart', text: 'Favorites'), '#'
+          %li.divider.visible-xs
+          %li= link_to fa_icon('cog', text: 'Profile'), '#'
+          %li= link_to fa_icon('sign-out', text: 'Sign Out'), '#'
+

@@ -31,7 +31,16 @@ $font-size-base: 16px;
 $headings-font-weight: 600;
 $tooltip-opacity: 1;
 $input-bg: transparent;
-$navbar-default-bg: rgba(255, 255, 255, .97);
+$navbar-inverse-bg: $gray-darker;
+$navbar-margin-bottom: 0;
+
+$dropdown-bg: $gray-darker;
+$dropdown-link-color: $gray-lightest;
+$dropdown-link-hover-bg: $gray-darkest;
+$dropdown-link-hover-color: #FFFFFF;
+$dropdown-divider-bg: $gray-dark;
+
+$grid-float-breakpoint: 0;
 
 $tooltip-bg: $gray-darker;
 $text-color: $gray-lighter;

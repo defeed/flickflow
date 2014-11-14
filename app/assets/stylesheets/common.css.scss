@@ -1,13 +1,9 @@
-body {
-  background: $gray-darkest;
-  margin-top: 50px;
-}
+body { background: $gray-darkest; }
 
-.pagination { margin-top: 0 }
-.no-border { border: 0 }
-.admin-search-form { margin-bottom: 15px }
-// Fix for dropdown menu right-aligned icons go to next line in Firefox 
-.dropdown-menu li a { white-space: normal }
+.pagination { margin-top: 0; }
+.no-border { border: 0; }
+.admin-search-form { margin-bottom: 15px; }
+.movie-grid { margin-top: 15px; }
 
 #backdrop {
   z-index: 2;
