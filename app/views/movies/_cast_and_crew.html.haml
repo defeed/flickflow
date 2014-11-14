@@ -1,0 +1,16 @@
+%dl.dl-inline
+  %dt Cast:
+  %dd.text-muted
+    = @movie.stars.map(&:name).join(', ')
+%dl.dl-inline
+  %dt Directed by:
+  %dd.text-muted
+    = @movie.directors.uniq.map(&:name).join(', ')
+%dl.dl-inline
+  %dt Written by:
+  %dd.text-muted
+    = @movie.writers.uniq.map(&:name).join(', ')
+%dl.dl-inline.hidden-xs
+  %dt Produced by:
+  %dd.text-muted
+    = @movie.producers.uniq.map(&:name).join(', ')

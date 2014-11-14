@@ -1,62 +1,60 @@
-.row.movie-details
-  .col-xs-12.col-sm-4.col-md-4.col-lg-3
-    .thumbnail.no-border
-      = poster_image_for @movie, :lg, class: 'thumbnail-poster img-rounded', alt: "#{@movie.title} (#{@movie.year})"
+= backdrop_for @movie
+.container-fluid#wrapper
+  .row
+    .col-sm-3.left-column
+      .thumbnail.no-border.hidden-xs
+        = poster_image_for @movie, :lg, class: 'thumbnail-poster', alt: "#{@movie.title} (#{@movie.year})"
+      = render partial: 'list_toggler'
+    .col-sm-6.center-column
+      %h1.movie-title
+        = @movie.title
+      %ul.list-inline.list-meta
+        - if @movie.year
+          %li= @movie.year
+        - if @movie.genres
+          %li
+            = @movie.genres.pluck(:name).join(' &middot; ').html_safe
       
-  .col-xs-12.col-sm-8.col-md-8.col-lg-9
-    %header
-      %h1= @movie.title
-    %ul.list-inline.list-meta.small.text-muted
-      - if @movie.year
-        %li
-          %span.label.label-default= @movie.year
-      - if @movie.genres
-        %li
-          = fa_icon 'tags', text: @movie.genres.pluck(:name).join(' &middot; ').html_safe
+      = render partial: 'ratings_inline'
+      
+      %p.lead= @movie.description
+      
+      = render partial: 'cast_and_crew'
+    .col-sm-3
+      - if @movie.released_on
+        %dl
+          %dt Release date
+          %dd.text-muted
+            = fa_icon 'calendar', text: @movie.released_on.strftime('%e %B %Y')
       - if @movie.runtime
-        %li
-          = fa_icon 'clock-o', text: format_runtime(@movie.runtime)
+        %dl
+          %dt Runtime
+          %dd.text-muted
+            = fa_icon 'clock-o', text: format_runtime(@movie.runtime)
       - if @movie.mpaa_rating
-        %li
-          = fa_icon 'ticket', text: @movie.mpaa_rating
-    
-    .row
-      .col-sm-12.col-md-5.col-lg-4
-        .well.well-sm
-          - if @trailer
-            = trailer_button @trailer.youtube_id
-            = sublime_video @trailer.youtube_id
-          = render partial: 'list_toggler'
-      .col-sm-12.col-md-7.col-lg-8
-        %p= @movie.storyline
-        
-        %dl.dl-compact
-          %dt Stars
-          %dd
-            = @movie.stars.map(&:name).join(', ')
-        %dl.dl-compact
-          %dt Directed by
-          %dd
-            = @movie.directors.uniq.map(&:name).join(', ')
-        %dl.dl-compact
-          %dt Written by
-          %dd
-            = @movie.writers.uniq.map(&:name).join(', ')
-
-%h4
-  Cast
-  = link_to '#', class: 'credits-expander pull-right' do
-    Show All
-    = fa_icon('chevron-circle-down')
-
-.row.credits-row
-  %ul.media-list.credits-list
-    - @movie.actorships.order(:id).map do |actor|
-      %li.media.col-lg-3.col-md-4.col-sm-6
-        %a.pull-left{href: '#'}
-          %img.media-object.img-rounded{src: 'http://placehold.io/80/110.png', width: 80, heigth: 110}
-        .media-body
-          %h5
-            %a{href: '#'}= actor.person.name
-          %small.credits-text
-            %em= actor.credit
+        %dl
+          %dt MPAA rating
+          %dd.text-muted
+            = fa_icon 'ticket', text: @movie.mpaa_rating
+      - if @movie.countries
+        %dl
+          %dt Countries
+          %dd.text-muted
+            = fa_icon 'globe', text: @movie.countries.map(&:name).join(', ')
+      - if @movie.languages
+        %dl
+          %dt Languages
+          %dd.text-muted
+            = fa_icon 'comments-o', text: @movie.languages.map(&:name).join(', ')
+      - if @movie.keywords.present?
+        %dl.keywords.hidden-xs
+          %dt
+            Keywords
+            %span.keywords-expander
+              = link_to fa_icon('angle-down'), '#'
+          %dd.text-muted
+            %ul.list-inline
+              - @movie.keywords.each do |kw|
+                = content_tag :li, class: 'label-keyword' do
+                  = fa_icon 'tag', text: kw.name
+= sublime_video @trailer.youtube_id if @trailer

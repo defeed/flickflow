@@ -11,19 +11,47 @@ module ApplicationHelper
     image_tag src, options
   end
   
-  def trailer_button youtube_id
-    unless youtube_id.empty?
-      content_tag :a, id: 'watch-trailer', class: 'btn btn-default btn-lg btn-block sublime', data: { 'youtube-id' => youtube_id }, href: "##{youtube_id}" do
-        fa_icon 'play-circle-o', text: 'Play Trailer'
+  def backdrop_for movie    
+    if movie.backdrops.present? && backdrop_url = movie.primary_backdrop.file_url
+      content_tag :div, id: 'backdrop', style: "background-image: url('#{backdrop_url}')" do
+        if @trailer
+          content_tag :div, id: 'trailer-container' do
+            trailer_button @trailer.youtube_id
+          end
+        end
       end
     end
   end
   
+  def rating_image type, score, title = '', size = '50x50'
+    case type
+    when 'imdb'
+      filename = 'imdb.png'
+      image_tag('imdb.png', size: size, title: title)
+    when 'rt_critics'
+      filename = score >= 60 ? 'fresh-tomato.png' : 'rotten-tomato.png'
+    when 'rt_audience'
+      filename = score >= 60 ? 'popcorn.png' : 'spilled-popcorn.png'
+    when 'metacritic'
+      filename = 'metacritic.png'
+    end
+    
+    image_tag(filename, size: size, title: title)
+  end
+  
+  def imdb_rating_count count
+    "#{number_to_human(count, units: {thousand: 'k', million: 'm'}, format: '%n%u')} users"
+  end
+  
+  def trailer_button youtube_id
+    content_tag :a, id: 'play-trailer', class: 'sublime', data: { 'youtube-id' => youtube_id }, href: "##{youtube_id}" do
+      fa_icon 'play-circle-o'
+    end
+  end
+  
   def sublime_video youtube_id, width = 1280, height = 720
-    unless youtube_id.empty?
-      content_tag :video, id: youtube_id, width: width, height: height, style: "display:none", data: { uid: youtube_id, 'youtube_id' => youtube_id }, preload: 'none' do
-        nil
-      end
+    content_tag :video, id: youtube_id, width: width, height: height, style: "display:none", data: { uid: youtube_id, 'youtube_id' => youtube_id }, preload: 'none' do
+      nil
     end
   end
   

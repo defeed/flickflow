@@ -1,0 +1,27 @@
+%ul.media-list.ratings-list.list-inline
+  - if @movie.imdb_rating
+    %li.media
+      %span.media-left
+        = rating_image('imdb', @movie.imdb_rating, imdb_rating_count(@movie.imdb_rating_count), '25x25')
+      .media-body
+        .score
+          = @movie.imdb_rating
+          %small.text-muted.hidden-xs /10
+  - if @movie.rotten_critics_rating && @movie.rotten_critics_rating > 0
+    %li.media
+      %span.media-left
+        = rating_image('rt_critics', @movie.rotten_critics_rating, 'RottenTomatoes critics', '25x25')
+      .media-body
+        .score= "#{@movie.rotten_critics_rating}%"
+  - if @movie.rotten_audience_rating
+    %li.media
+      %span.media-left
+        = rating_image('rt_audience', @movie.rotten_audience_rating, 'RottenTomatoes audience', '25x25')
+      .media-body
+        .score= "#{@movie.rotten_audience_rating}%"
+  - if @movie.metacritic_rating
+    %li.media.hidden-xs.hidden-sm
+      %span.media-left
+        = rating_image('metacritic', @movie.metacritic_rating, 'MetaCritic', '25x25')
+      .media-body
+        .score= "#{@movie.metacritic_rating}%"

@@ -19,6 +19,5 @@
 //= require bootstrap/tab
 //= require bootstrap/tooltip
 //= require bootstrap/transition
-//= require jasny-bootstrap.min
 //= require common
 //= require movies

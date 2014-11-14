@@ -1,5 +1,6 @@
 $ ->
   $('.thumbnail-poster').tooltip()
+  $('.ratings-list img').tooltip()
   
   $('#list-toggler').on 'click', '.btn', (event) ->
     event.preventDefault()
@@ -24,9 +25,3 @@ $ ->
             list_item.addClass('btn-on')
           else
             list_item.removeClass('btn-on')
-  
-  
-  $('.credits-expander').on 'click', (event) ->
-    event.preventDefault()
-    $('.credits-row').toggleClass('expanded')
-    $(this).find('i').toggleClass('fa-chevron-circle-down').toggleClass('fa-chevron-circle-up')

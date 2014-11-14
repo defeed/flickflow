@@ -2,32 +2,41 @@
 
 // Colors
 $brand-primary: #3498db;
-$brand-success: #2ecc71;
-$brand-info: #3498db;
+$brand-success: #27ae60;
+$brand-info:    #3498db;
 $brand-warning: #f1c40f;
-$brand-danger: #e74c3c;
+$brand-danger:  #e74c3c;
 
-$gray-lighter: #ecf0f1;
-$gray-light: #bdc3c7;
-$gray-dark: #95a5a6;
-$gray-darker: #7f8c8d;
-$gray-darkest: #2a2d3b;
+$gray-darkest:  #1C1E28;
+$gray-darker:   lighten($gray-darkest, 10%);
+$gray-dark:     lighten($gray-darkest, 21%);
+$gray:          lighten($gray-darkest, 32%);
+$gray-light:    lighten($gray-darkest, 44%);
+$gray-lighter:  lighten($gray-darkest, 60%);
+$gray-lightest: lighten($gray-darkest, 70%);
 
-$thumbnail-padding: 0;
-$thumbnail-border-radius: 0;
-$grid-gutter-width: 15px;
+$thumbnail-bg: $gray;
+$thumbnail-padding: 1px;
+$thumbnail-border-radius: 3px;
+
+$btn-default-color: $gray-lightest;
+$btn-default-bg: $gray-dark;
+$btn-default-border: $gray;
+$btn-font-weight: 400;
+
+$label-default-bg: $gray-dark;
+
 $font-family-sans-serif: "Open Sans", "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
-$font-size-base: 15px;
+$font-size-base: 16px;
 $headings-font-weight: 600;
 $tooltip-opacity: 1;
 $input-bg: transparent;
 $navbar-default-bg: rgba(255, 255, 255, .97);
 
-$btn-font-weight: 300;
-$tooltip-bg: $gray-darkest;
-$text-color: $gray-darkest;
+$tooltip-bg: $gray-darker;
+$text-color: $gray-lighter;
 
 @import "bootstrap-sprockets";
 @import "bootstrap-custom";
 @import "font-awesome";
-@import "common"
+@import "common";

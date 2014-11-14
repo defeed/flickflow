@@ -10,9 +10,4 @@
     = csrf_meta_tags
   %body
     = render 'shared/navbar'
-    = render 'shared/flash_messages'
-    .container-fluid
-      .row
-        = render 'shared/sidebar'
-        .col-md-10.col-sm-9
-          = yield
+    = yield
