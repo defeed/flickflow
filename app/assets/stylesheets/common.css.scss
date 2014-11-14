@@ -3,7 +3,7 @@ body { background: $gray-darkest; }
 .pagination { margin-top: 0; }
 .no-border { border: 0; }
 .admin-search-form { margin-bottom: 15px; }
-.movie-grid { margin-top: 15px; }
+.movie-grid, .system-messages { margin-top: 15px; }
 
 #backdrop {
   z-index: 2;

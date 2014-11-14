@@ -1,27 +1,28 @@
 = render 'shared/error_messages', object: @user
-%h1= display_name_for @user
-.row
-  .col-sm-3.col-md-2
-    .thumbnail.no-border
-      = image_tag 'http://placehold.io/300/300.jpeg', class: 'img-rounded'
-  .col-sm-4.col-md-3
-    = form_for @user do |f|
-      .form-group
-        = f.label :name
-        = f.text_field :name, class: 'form-control'
-      .form-group
-        = f.label :username
-        = f.text_field :username, class: 'form-control'
-      .form-group
-        = f.label :email
-        = f.email_field :email, class: 'form-control'
-      .form-group
-        
-        = f.label :password, @password_label
-        = f.password_field :password, {placeholder: @password_placeholder, class: 'form-control'}
-        .text-right.text-muted
-          = label_tag :show_password do
-            = check_box_tag 'show_password', 'yes', false
-            %small
-              Show password
-      = f.submit 'Save profile', class: 'btn btn-success'
+.container-fluid
+  %h1= display_name_for @user
+  .row
+    .col-sm-3.col-md-2
+      .thumbnail.no-border
+        = image_tag 'http://placehold.io/300/300.jpeg'
+    .col-sm-4.col-md-3
+      = form_for @user do |f|
+        .form-group
+          = f.label :name
+          = f.text_field :name, class: 'form-control'
+        .form-group
+          = f.label :username
+          = f.text_field :username, class: 'form-control'
+        .form-group
+          = f.label :email
+          = f.email_field :email, class: 'form-control'
+        .form-group
+          
+          = f.label :password, @password_label
+          = f.password_field :password, {placeholder: @password_placeholder, class: 'form-control'}
+          .text-right.text-muted
+            = label_tag :show_password do
+              = check_box_tag 'show_password', 'yes', false
+              %small
+                Show password
+        = f.submit 'Save profile', class: 'btn btn-success'
