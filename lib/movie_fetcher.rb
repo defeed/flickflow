@@ -25,6 +25,8 @@ class MovieFetcher < Struct.new(:imdb_id, :page, :force)
       fetch_stills
     when :videos
       fetch_videos
+    when :backdrops
+      fetch_backdrops
     else nil
     end
   end
@@ -34,6 +36,7 @@ class MovieFetcher < Struct.new(:imdb_id, :page, :force)
     fetch_people
     fetch_release_info
     fetch_videos
+    fetch_backdrops
     fetch_keywords
     fetch_trivia
     fetch_critic_reviews
@@ -244,6 +247,26 @@ class MovieFetcher < Struct.new(:imdb_id, :page, :force)
     
     has_data = tmdb_movie && videos.any?
     log_fetch :videos, {}, has_data
+  end
+  
+  def fetch_backdrops
+    imdb = Spotlite::Movie.new(imdb_id)
+    movie = Movie.find_by(imdb_id: imdb.imdb_id)    
+    
+    tmdb_movie = Tmdb::Find.imdb_id("tt#{imdb_id}").movie_results.first
+    
+    if tmdb_movie && tmdb_movie.backdrop_path
+      url = 'http://image.tmdb.org/t/p/original' + tmdb_movie.backdrop_path
+      
+      return if Backdrop.exists?(remote_url: url)
+      
+      movie.backdrops.update_all(is_primary: false)
+      backdrop = Backdrop.create(imageable: movie, remote_url: url, is_primary: true)
+      Delayed::Job.enqueue ImageFetcher.new(backdrop.id)
+    end
+    
+    has_data = tmdb_movie && tmdb_movie.backdrop_path.present?
+    log_fetch :backdrops, {}, has_data
   end
   
   private
