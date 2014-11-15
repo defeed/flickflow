@@ -15,9 +15,10 @@ $gray-light:    lighten($gray-darkest, 44%);
 $gray-lighter:  lighten($gray-darkest, 60%);
 $gray-lightest: lighten($gray-darkest, 70%);
 
-$thumbnail-bg: $gray;
-$thumbnail-padding: 1px;
+$thumbnail-bg: $gray-darker;
+$thumbnail-padding: 0;
 $thumbnail-border-radius: 3px;
+$thumbnail-border: $gray-darker;
 
 $btn-default-color: $gray-lightest;
 $btn-default-bg: $gray-dark;

@@ -2,8 +2,8 @@
 .container-fluid#wrapper
   .row
     .col-sm-3.left-column
-      .thumbnail.no-border.hidden-xs
-        = poster_image_for @movie, :lg, class: 'thumbnail-poster', alt: "#{@movie.title} (#{@movie.year})"
+      .thumbnail.thumbnail-poster.hidden-xs
+        = poster_image_for @movie, :lg, alt: "#{@movie.title} (#{@movie.year})"
       = render partial: 'list_toggler'
     .col-sm-6.center-column
       %h1.movie-title

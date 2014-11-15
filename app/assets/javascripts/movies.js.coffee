@@ -2,6 +2,10 @@ $ ->
   $('.thumbnail-poster').tooltip()
   $('.ratings-list img').tooltip()
   
+  $('.thumbnail-poster').hover(
+    -> $(this).find('.caption').fadeToggle()
+  )
+  
   $('#list-toggler').on 'click', '.btn', (event) ->
     event.preventDefault()
     list_toggler = $(this).parent()

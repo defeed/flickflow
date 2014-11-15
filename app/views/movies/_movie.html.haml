@@ -1,3 +1,12 @@
-.col-xs-6.col-sm-3.col-md-2
-  = link_to movie_path(movie), {class: 'thumbnail no-border'} do
-    = poster_image_for movie, :md, title: "#{movie.title} (#{movie.year})", class: 'thumbnail-poster', alt: "#{movie.title} (#{movie.year})"
+.col-xs-4.col-sm-3.col-md-2
+  .thumbnail.thumbnail-poster
+    = link_to movie_path(movie) do
+      = poster_image_for movie, :md, alt: "#{movie.title} (#{movie.year})"
+      .caption.hidden-xs
+        %h2= movie.title
+        - if movie.year
+          %p= movie.year
+        - if movie.genres
+          %ul.list-inline.list-meta
+            - movie.genres.each do |genre|
+              %li= genre.name
