@@ -46,6 +46,10 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :create, :edit, :update]
   resources :sessions, only: [:new, :create, :destroy]
   
+  get 'watchlist' => 'lists#show', id: 'watchlist', as: :watchlist
+  get 'watched'   => 'lists#show', id: 'watched', as: :watched
+  get 'favorites' => 'lists#show', id: 'favorites', as: :favorites
+  
   get 'sign-in' => 'sessions#new', as: :signin
   delete 'sign-out' => 'sessions#destroy', as: :signout
   get 'join' => 'users#new', as: :join

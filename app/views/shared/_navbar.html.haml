@@ -14,17 +14,17 @@
           %li= link_to 'People', '#'
       %li.hidden-xs= link_to 'Popular Now', root_path
     %ul.nav.navbar-nav.navbar-right
-      %li= link_to fa_icon('star', text: 'Watchlist'), '#'
-      %li.hidden-xs= link_to fa_icon('check-square-o', text: 'Watched'), '#'
-      %li.hidden-xs= link_to fa_icon('heart', text: 'Favorites'), '#'
+      %li= link_to fa_icon('star', text: 'Watchlist'), watchlist_path
+      %li.hidden-xs= link_to fa_icon('check-square-o', text: 'Watched'), watched_path
+      %li.hidden-xs= link_to fa_icon('heart', text: 'Favorites'), favorites_path
       %li.dropdown
         = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'} do
           = fa_icon 'user'
           %span.hidden-xs= current_user.name
           %span= fa_icon 'angle-down'
         %ul.dropdown-menu
-          %li.visible-xs= link_to fa_icon('check-square-o', text: 'Watched'), '#'
-          %li.visible-xs= link_to fa_icon('heart', text: 'Favorites'), '#'
+          %li.visible-xs= link_to fa_icon('check-square-o', text: 'Watched'), watched_path
+          %li.visible-xs= link_to fa_icon('heart', text: 'Favorites'), favorites_path
           %li.divider.visible-xs
           %li= link_to fa_icon('cog', text: 'Profile'), profile_path
           %li= link_to fa_icon('sign-out', text: 'Sign Out'), signout_path

@@ -1,0 +1,6 @@
+.container-fluid
+  %h1= @list.name
+  .row.movie-grid
+    = render @movies
+  .row
+    = render 'movies/pagination'
