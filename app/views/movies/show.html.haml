@@ -8,7 +8,7 @@
     .col-sm-6.center-column
       %h1.movie-title
         = @movie.title
-      %ul.list-inline.list-meta
+      %ul.list-inline.list-meta.text-muted
         - if @movie.year
           %li= @movie.year
         - if @movie.genres

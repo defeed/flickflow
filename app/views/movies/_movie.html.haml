@@ -1,5 +1,7 @@
-.col-xs-4.col-sm-3.col-md-2
-  .thumbnail.thumbnail-poster
+- thumbnail_class = 'poster-watched' if @watched.includes?(movie)
+- thumbnail_class = 'poster-watchlist' if @watchlist.includes?(movie)
+.col-xs-4.col-sm-3.col-md-3.col-lg-2
+  .thumbnail.thumbnail-poster{class: thumbnail_class}
     = link_to movie_path(movie) do
       = poster_image_for movie, :md, alt: "#{movie.title} (#{movie.year})"
       .caption.hidden-xs
@@ -7,6 +9,7 @@
         - if movie.year
           %p= movie.year
         - if movie.genres
-          %ul.list-inline.list-meta
+          %ul.list-inline
             - movie.genres.each do |genre|
               %li= genre.name
+        %p.small= movie.description

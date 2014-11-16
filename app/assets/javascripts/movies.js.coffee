@@ -3,6 +3,7 @@ $ ->
   $('.ratings-list img').tooltip()
   
   $('.thumbnail-poster').hover(
+    -> $(this).find('.caption').slideDown('fast')
     -> $(this).find('.caption').fadeToggle()
   )
   

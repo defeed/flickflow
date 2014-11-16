@@ -58,14 +58,17 @@ body { background: $gray-darkest; }
   
   #watchlist.btn-on {
     color: $brand-primary;
+    border-color: $brand-primary;
   }
   
   #watched.btn-on {
     color: $brand-success;
+    border-color: $brand-success;
   }
   
   #favorites.btn-on {
     color: $brand-danger;
+    border-color: $brand-danger;
   }  
 }
 
@@ -75,7 +78,6 @@ body { background: $gray-darkest; }
 
 .list-meta {
   font-size: 1.2em;
-  color: $gray-light;
   font-weight: 600;
 }
 
@@ -103,6 +105,20 @@ dl.keywords {
   overflow:hidden;
   font-weight: 200;
   
+  &.poster-watchlist {
+    border-color: $brand-primary;
+    .caption {
+      background: $brand-primary;
+    }
+  }
+  
+  &.poster-watched {
+    border-color: $brand-success;
+    .caption {
+      background: $brand-success;
+    }
+  }
+  
   h2 {
     font-size: 1.2em;
     margin: 0 auto 5px;
@@ -115,7 +131,7 @@ dl.keywords {
   }
   
   .caption {
-    position:absolute;
+    position: absolute;
     top: 0;
     right: 0;
     background: $gray-darkest;
@@ -124,7 +140,6 @@ dl.keywords {
     height: 100%;
     padding: 10px;
     display: none;
-    // text-align: center;
     color: #fff;
     z-index: 2;
   }
