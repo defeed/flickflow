@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.1.6'
+gem 'rails', '4.1.8'
 gem 'pg'
 gem 'thin'
 gem 'bundler'
@@ -43,5 +43,5 @@ group :development do
   gem 'better_errors'
   gem 'pry-rails'
   gem 'annotate', '~> 2.6.5'
-  # gem 'capistrano-rails'  
+  # gem 'capistrano-rails'
 end
