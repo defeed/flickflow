@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
   before_create :ensure_username_unique
   before_save :ensure_username_present
   after_create :set_uuid
-  after_create :create_default_user_lists, unless: Proc.new(&:system_user?)
+  after_create :create_default_user_lists, unless: Proc.new { |u| u.system_user? }
 
   def self.system
     User.find_by(username: 'flickflow')
