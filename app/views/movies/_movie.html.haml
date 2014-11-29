@@ -1,5 +1,5 @@
-- thumbnail_class = 'poster-watched' if @watched.includes?(movie)
-- thumbnail_class = 'poster-watchlist' if @watchlist.includes?(movie)
+- thumbnail_class = 'poster-watched' if @watched_movies.include?(movie.id)
+- thumbnail_class = 'poster-watchlist' if @watchlist_movies.include?(movie.id)
 .col-xs-4.col-sm-3.col-md-3.col-lg-2
   .thumbnail.thumbnail-poster{class: thumbnail_class}
     = link_to movie_path(movie) do
@@ -11,5 +11,4 @@
         - if movie.genres
           %ul.list-inline
             - movie.genres.each do |genre|
-              %li= genre.name
-        %p.small= movie.description
+              %li.small= genre.name

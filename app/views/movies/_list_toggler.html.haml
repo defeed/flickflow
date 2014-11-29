@@ -1,6 +1,6 @@
-- watchlist_class = @in_watchlist ? 'btn-on' : ''
-- watched_class = @in_watched ? 'btn-on' : ''
-- favorites_class = @in_favorites ? 'btn-on' : ''
+- watchlist_class = @watchlist_movies.include?(@movie.id) ? 'btn-on' : ''
+- watched_class = @watched_movies.include?(@movie.id) ? 'btn-on' : ''
+- favorites_class = @favorite_movies.include?(@movie.id) ? 'btn-on' : ''
 #list-toggler{ data: { movie_id: @movie.id } }
   = link_to '#', class: "btn btn-default btn-lg btn-block #{watchlist_class}", id: 'watchlist', data: { list_id: @watchlist.id } do
     = fa_icon 'star', text: 'Watchlist'
