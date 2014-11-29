@@ -85,6 +85,7 @@ class Movie < ActiveRecord::Base
   # # # # #
   scope :released,   -> { where('released_on <= ?', Date.today) }
   scope :with_title, -> { where('title IS NOT ?', nil) }
+  scope :with_poster, -> { joins(:posters) }
   scope :without_title, -> { where('title IS ?', nil) }
   
   # # # # # # # #
