@@ -17,9 +17,8 @@
           = f.label :email
           = f.email_field :email, class: 'form-control'
         .form-group
-          
-          = f.label :password, @password_label
-          = f.password_field :password, {placeholder: @password_placeholder, class: 'form-control'}
+          = f.label :password, @label
+          = f.password_field :password, {placeholder: @placeholder, class: 'form-control'}
           .text-right.text-muted
             = label_tag :show_password do
               = check_box_tag 'show_password', 'yes', false

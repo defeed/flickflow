@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   layout 'pages'
   skip_before_action :require_login, only: [:new, :create]
   skip_before_action :redirect_to_profile, only: [:edit, :update]
-  
+
   def new
     @user = User.new
     @title = 'Join'
@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new user_params
-    
+
     if @user.save
       auto_login @user
       redirect_to root_path, flash: { success: "Alright! You've successfully created your profile on flickflow. Now go discover some good movies and add them to your Watchlist." }
@@ -19,36 +19,37 @@ class UsersController < ApplicationController
       render action: :new
     end
   end
-  
+
   def edit
     @user = current_user
-    set_password_label_for @user
+    password_label_for @user
     @title = 'Your Profile'
     render layout: 'application'
   end
-  
+
   def update
     @user = current_user
-    
+
     if @user.update user_params
-      redirect_to root_path, flash: { success: 'Your profile was successfully updated.' }
+      redirect_to root_path,
+                  flash: { success: 'Your profile was successfully updated.' }
     else
-      set_password_label_for @user
+      password_label_for @user
       @title = 'Your Profile'
       render action: :edit, layout: 'application'
     end
   end
 
   private
-  
+
   def user_params
-    params.require(:user).
-      permit(:name, :username, :email, :password)
+    params.require(:user)
+      .permit(:name, :username, :email, :password)
   end
-  
-  def set_password_label_for user
+
+  def password_label_for(user)
     has_password = user.crypted_password.present?
-    @password_label = has_password ? 'Change password' : 'Create password'
-    @password_placeholder = has_password ? 'Type new password to change it' : nil
+    @label = has_password ? 'Change password' : 'Create password'
+    @placeholder = has_password ? 'Type new password to change it' : nil
   end
 end

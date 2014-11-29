@@ -1,3 +1,104 @@
+class User < ActiveRecord::Base
+  include FriendlyId
+  friendly_id :username
+
+  authenticates_with_sorcery!
+
+  validates :username,
+            format: {
+              with: /\A[a-z0-9]+\z/i,
+              message: 'can only contain digits 0-9 and letters A-Z.'
+            },
+            length: {
+              in: 2..20, message: 'must be 2 to 20 characters'
+            },
+            uniqueness: {
+              case_sensitive: false,
+              message: 'is already taken. Choose another.'
+            },
+            allow_blank: true
+
+  validates :email,
+            format: { with: /\A.+@.+\..+\z/i, message: 'is invalid' },
+            uniqueness: {
+              case_sensitive: false,
+              message: 'is already taken. Choose another.'
+            },
+            allow_blank: true
+  validates :password,
+            length: { minimum: 5, message: 'must be minimum 5 characters' },
+            allow_blank: true
+
+  has_many :lists, dependent: :destroy
+
+  has_one :auth_token, dependent: :destroy
+
+  has_many :authentications, dependent: :destroy
+  accepts_nested_attributes_for :authentications
+
+  before_create :set_auth_token
+  before_create :ensure_username_unique
+  before_save :ensure_username_present
+  after_create :set_uuid
+  after_create :create_default_user_lists, unless: Proc.new(&:system_user?)
+
+  def self.system
+    User.find_by(username: 'flickflow')
+  end
+
+  def self.generate_username
+    prefix = 'user'
+    loop do
+      username = "#{prefix}#{SecureRandom.random_number(1_000_000)}"
+      break username unless User.exists? username: username
+    end
+  end
+
+  def create_default_user_lists
+    lists.movie.create name: 'Watchlist'
+    lists.movie.create name: 'Watched'
+    lists.movie.create name: 'Favorites'
+    lists.person.create name: 'Favorite People'
+  end
+
+  def system_user?
+    self == User.system
+  end
+
+  def should_generate_new_friendly_id?
+    username_changed? || super
+  end
+
+  def api_token
+    auth_token.token
+  end
+
+  private
+
+  def ensure_username_unique
+    return unless User.exists? username: username
+    prefix = username
+    suffix = 0
+    loop do
+      self.username = "#{prefix}#{suffix + 1}"
+      break unless User.exists? username: username
+    end
+  end
+
+  def ensure_username_present
+    self.username = User.generate_username if username.blank?
+  end
+
+  def set_auth_token
+    return if auth_token.present?
+    self.auth_token = AuthToken.create(token: AuthToken.generate)
+  end
+
+  def set_uuid
+    update(uuid: SecureRandom.uuid)
+  end
+end
+
 # == Schema Information
 #
 # Table name: users
@@ -31,90 +132,3 @@
 #  index_users_on_slug                                 (slug) UNIQUE
 #  index_users_on_username                             (username) UNIQUE
 #
-
-class User < ActiveRecord::Base
-  include FriendlyId
-  friendly_id :username
-  
-  authenticates_with_sorcery!
-  
-  validates :username, format: { with: /\A[a-z0-9]+\z/i, message: 'can only contain digits 0-9 and letters A-Z.' },
-                       length: { in: 2..20, message: 'must be 2 to 20 characters' },
-                       uniqueness: { case_sensitive: false, message: 'is already taken. Choose another.' },
-                       allow_blank: true
-  
-  validates :email,    format: { with: /\A.+@.+\..+\z/i, message: 'is invalid' },
-                       uniqueness: { case_sensitive: false, message: 'is already taken. Choose another.' },
-                       allow_blank: true
-  validates :password, length: { minimum: 5, message: 'must be minimum 5 characters' },
-                       allow_blank: true
-  
-  has_many :lists, dependent: :destroy
-  
-  has_one :auth_token, dependent: :destroy
-  
-  has_many :authentications, dependent: :destroy
-  accepts_nested_attributes_for :authentications
-  
-  before_create :set_auth_token
-  before_create :ensure_username_unique
-  before_save   :ensure_username_present
-  after_create  :set_uuid
-  after_create  :create_default_user_lists, unless: Proc.new { |u| u.is_system_user? }
-  
-  def self.system
-    User.find_by(username: 'flickflow')
-  end
-  
-  def self.generate_username
-    prefix = 'user'
-    loop do
-      username = "#{prefix}#{SecureRandom.random_number(1_000_000)}"
-      break username unless User.exists? username: username
-    end
-  end
-  
-  def create_default_user_lists
-    lists.movie.create name: 'Watchlist'
-    lists.movie.create name: 'Watched'
-    lists.movie.create name: 'Favorites'
-    lists.person.create name: 'Favorite People'
-  end
-  
-  def is_system_user?
-    self == User.system
-  end
-  
-  def should_generate_new_friendly_id?
-    username_changed? || super
-  end
-  
-  def api_token
-    self.auth_token.token
-  end
-  
-  private
-  
-  def ensure_username_unique
-    return unless User.exists? username: self.username
-    prefix = self.username
-    suffix = 0
-    loop do
-      self.username = "#{prefix}#{suffix+1}"
-      break unless User.exists? username: self.username
-    end
-  end
-  
-  def ensure_username_present
-    self.username = User.generate_username if self.username.blank?
-  end
-  
-  def set_auth_token
-    return if auth_token.present?
-    self.auth_token = AuthToken.create(token: AuthToken.generate)
-  end
-  
-  def set_uuid
-    self.update(uuid: SecureRandom.uuid)
-  end
-end

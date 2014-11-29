@@ -1,3 +1,7 @@
+class Poster < Image
+  mount_uploader :file, PosterUploader
+end
+
 # == Schema Information
 #
 # Table name: images
@@ -17,7 +21,3 @@
 #
 #  index_images_on_imageable_id_and_imageable_type  (imageable_id,imageable_type)
 #
-
-class Poster < Image
-  mount_uploader :file, PosterUploader
-end

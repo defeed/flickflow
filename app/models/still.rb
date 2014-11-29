@@ -1,3 +1,7 @@
+class Still < Image
+  mount_uploader :file, StillUploader
+end
+
 # == Schema Information
 #
 # Table name: images
@@ -17,7 +21,3 @@
 #
 #  index_images_on_imageable_id_and_imageable_type  (imageable_id,imageable_type)
 #
-
-class Still < Image
-  mount_uploader :file, StillUploader
-end

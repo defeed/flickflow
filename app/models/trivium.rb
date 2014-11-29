@@ -1,3 +1,7 @@
+class Trivium < ActiveRecord::Base
+  belongs_to :movie
+end
+
 # == Schema Information
 #
 # Table name: trivia
@@ -8,7 +12,3 @@
 #  created_at :datetime
 #  updated_at :datetime
 #
-
-class Trivium < ActiveRecord::Base
-  belongs_to :movie
-end

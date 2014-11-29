@@ -11,18 +11,18 @@ module API
       else
         @movies = Movie.all
       end
-      
+
       if decade = params[:decade]
         @movies = @movies.where year: get_years_by_decade(decade)
       end
-      
+
       if year = params[:year]
         @movies = @movies.where year: year
       end
-      
+
       @movies.paginate page: params[:page]
     end
-    
+
     # GET /movies/:id
     def show
       @movie = Movie.find params[:id]
@@ -30,12 +30,12 @@ module API
       @directors = @movie.directors
       @starred_actors = @movie.stars
     end
-    
+
     private
-    
+
     def get_years_by_decade(decade)
       decade = decade.to_i
-      (decade..decade+9)
+      (decade..decade + 9)
     end
   end
 end

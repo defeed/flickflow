@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
   layout 'pages'
   skip_before_action :require_login, only: [:new, :create]
-  
+
   def new
     @user = User.new
     @title = 'Sign In'
@@ -12,7 +12,8 @@ class SessionsController < ApplicationController
       redirect_to root_path
     else
       @title = 'Sign In'
-      flash.now[:error] = 'Provided email/username or password are invalid. Try again.'
+      flash.now[:error] =
+        'Provided email/username or password are invalid. Try again.'
       render action: :new
     end
   end

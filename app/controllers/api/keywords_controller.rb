@@ -10,7 +10,7 @@ module API
         @keywords = Keyword.order :name
       end
     end
-    
+
     # GET /keywords/:id
     def show
       @keyword = Keyword.find params[:id]

@@ -1,3 +1,7 @@
+class AlternativeTitle < ActiveRecord::Base
+  belongs_to :movie
+end
+
 # == Schema Information
 #
 # Table name: alternative_titles
@@ -13,7 +17,3 @@
 #
 #  index_alternative_titles_on_movie_id_and_title  (movie_id,title)
 #
-
-class AlternativeTitle < ActiveRecord::Base
-  belongs_to :movie
-end

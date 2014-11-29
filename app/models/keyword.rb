@@ -1,3 +1,10 @@
+class Keyword < ActiveRecord::Base
+  include FriendlyId
+  friendly_id :name
+
+  has_and_belongs_to_many :movies
+end
+
 # == Schema Information
 #
 # Table name: keywords
@@ -13,10 +20,3 @@
 #  index_keywords_on_name  (name) UNIQUE
 #  index_keywords_on_slug  (slug) UNIQUE
 #
-
-class Keyword < ActiveRecord::Base
-  include FriendlyId
-  friendly_id :name
-  
-  has_and_belongs_to_many :movies
-end

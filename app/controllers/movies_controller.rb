@@ -1,12 +1,14 @@
 class MoviesController < ApplicationController
   def index
     @movies = Movie.released.with_poster.with_title
-      .includes(:genres)
-      .includes(:primary_poster)
-      .order('released_on DESC')
-      .paginate(page: params[:page], per_page: 42)
-    @watchlist_movies = current_user.lists.friendly.find('watchlist').movies.map(&:id)
-    @watched_movies = current_user.lists.friendly.find('watched').movies.map(&:id)
+              .includes(:genres)
+              .includes(:primary_poster)
+              .order('released_on DESC')
+              .paginate(page: params[:page], per_page: 42)
+    @watchlist_movies = current_user.lists.friendly
+                        .find('watchlist').movies.map(&:id)
+    @watched_movies = current_user.lists.friendly
+                      .find('watched').movies.map(&:id)
   end
 
   def show

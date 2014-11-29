@@ -1,3 +1,8 @@
+class Release < ActiveRecord::Base
+  belongs_to :country
+  belongs_to :movie
+end
+
 # == Schema Information
 #
 # Table name: releases
@@ -14,8 +19,3 @@
 #
 #  index_releases_on_country_id_and_movie_id  (country_id,movie_id)
 #
-
-class Release < ActiveRecord::Base
-  belongs_to :country
-  belongs_to :movie
-end

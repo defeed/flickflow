@@ -1,3 +1,7 @@
+class CriticReview < ActiveRecord::Base
+  belongs_to :movie
+end
+
 # == Schema Information
 #
 # Table name: critic_reviews
@@ -11,7 +15,3 @@
 #  created_at :datetime
 #  updated_at :datetime
 #
-
-class CriticReview < ActiveRecord::Base
-  belongs_to :movie
-end

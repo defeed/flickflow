@@ -1,3 +1,15 @@
+class Image < ActiveRecord::Base
+  belongs_to :imageable, polymorphic: true
+
+  after_create :set_uuid
+
+  private
+
+  def set_uuid
+    update(uuid: SecureRandom.uuid)
+  end
+end
+
 # == Schema Information
 #
 # Table name: images
@@ -17,15 +29,3 @@
 #
 #  index_images_on_imageable_id_and_imageable_type  (imageable_id,imageable_type)
 #
-
-class Image < ActiveRecord::Base
-  belongs_to :imageable, polymorphic: true
-  
-  after_create :set_uuid
-  
-  private
-  
-  def set_uuid
-    self.update(uuid: SecureRandom.uuid)
-  end
-end

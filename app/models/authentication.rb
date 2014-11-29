@@ -1,3 +1,7 @@
+class Authentication < ActiveRecord::Base
+  belongs_to :user
+end
+
 # == Schema Information
 #
 # Table name: authentications
@@ -9,7 +13,3 @@
 #  created_at :datetime
 #  updated_at :datetime
 #
-
-class Authentication < ActiveRecord::Base
-  belongs_to :user
-end

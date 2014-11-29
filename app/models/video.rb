@@ -1,3 +1,7 @@
+class Video < ActiveRecord::Base
+  belongs_to :movie
+end
+
 # == Schema Information
 #
 # Table name: videos
@@ -14,7 +18,3 @@
 #
 #  index_videos_on_movie_id  (movie_id)
 #
-
-class Video < ActiveRecord::Base
-  belongs_to :movie
-end

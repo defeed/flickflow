@@ -10,7 +10,7 @@ module API
         @genres = Genre.order :name
       end
     end
-    
+
     # GET /genres/:id
     def show
       @genre = Genre.find params[:id]

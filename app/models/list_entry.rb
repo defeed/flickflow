@@ -1,3 +1,8 @@
+class ListEntry < ActiveRecord::Base
+  belongs_to :list
+  belongs_to :listable, polymorphic: true
+end
+
 # == Schema Information
 #
 # Table name: list_entries
@@ -13,8 +18,3 @@
 #
 #  index_list_entries_on_list_id_and_listable_id_and_listable_type  (list_id,listable_id,listable_type) UNIQUE
 #
-
-class ListEntry < ActiveRecord::Base
-  belongs_to :list
-  belongs_to :listable, polymorphic: true
-end
