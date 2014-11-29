@@ -55,21 +55,21 @@ body { background: $gray-darkest; }
       background: $gray-darker;
     }
   }
-  
+
   #watchlist.btn-on {
     color: $brand-primary;
     border-color: $brand-primary;
   }
-  
+
   #watched.btn-on {
     color: $brand-success;
     border-color: $brand-success;
   }
-  
+
   #favorites.btn-on {
     color: $brand-danger;
     border-color: $brand-danger;
-  }  
+  }
 }
 
 .lead {
@@ -104,32 +104,32 @@ dl.keywords {
   position:relative;
   overflow:hidden;
   font-weight: 200;
-  
+
   &.poster-watchlist {
     border-color: $brand-primary;
     .caption {
       background: $brand-primary;
     }
   }
-  
+
   &.poster-watched {
     border-color: $brand-success;
     .caption {
       background: $brand-success;
     }
   }
-  
+
   h2 {
     font-size: 1.2em;
     margin: 0 auto 5px;
   }
-  
+
   .list-meta {
     font-size: .9em;
     color: $gray-lighter;
     font-weight: 300;
   }
-  
+
   .caption {
     position: absolute;
     top: 0;
@@ -162,20 +162,25 @@ dl.keywords {
   }
 }
 
+.recommended-movie {
+  h4.movie-title {
+    margin-top: 0;
+  }
+  .list-meta {
+    font-size: 1em;
+    margin-bottom: 10px;
+  }
+}
+
 @media (max-width: $screen-xs-max) {
   #backdrop {
     font-size: 6em;
   }
-  
+
   h1.movie-title {
     font-size: 1.8em;
   }
-  
-  div[class^='col-'] {
-    padding-left: 5px;
-    padding-right: 5px;
-  }
-  
+
   .thumbnail-poster {
     margin-bottom: 10px;
   }
@@ -186,12 +191,7 @@ dl.keywords {
     font-size: 9em;
     max-height: 300px;
   }
-  
-  div[class^='col-'] {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-  
+
   .thumbnail-poster {
     margin-bottom: 20px;
   }

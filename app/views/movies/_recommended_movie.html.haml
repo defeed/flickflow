@@ -1,0 +1,22 @@
+- thumbnail_class = 'poster-watched' if @watched_movies.include?(movie.id)
+- thumbnail_class = 'poster-watchlist' if @watchlist_movies.include?(movie.id)
+
+.col-xs-12
+  %hr
+  .row
+    %li.media.recommended-movie
+      .col-xs-3
+        .thumbnail.thumbnail-poster{class: thumbnail_class}
+          = link_to movie_path(movie) do
+            = poster_image_for movie, :sm, alt: "#{movie.title} (#{movie.year})"
+      .col-xs-9
+        .media-body
+          %h4.movie-title
+            = link_to movie.title, movie_path(movie)
+          %ul.list-inline.list-meta.text-muted
+            - if movie.year
+              %li= movie.year
+            - if movie.genres
+              %li
+                = movie.genres.pluck(:name).join(' &middot; ').html_safe
+          %p= movie.description

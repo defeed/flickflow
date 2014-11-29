@@ -14,12 +14,18 @@
         - if @movie.genres
           %li
             = @movie.genres.pluck(:name).join(' &middot; ').html_safe
-      
+
       = render partial: 'ratings_inline'
-      
+
       %p.lead= @movie.description
-      
+
       = render partial: 'cast_and_crew'
+
+      - unless @recommended_movies.empty?
+        %h3 Recommended movies
+        .row
+          %ul.media-list
+            = render partial: 'recommended_movie', collection: @recommended_movies, as: :movie
     .col-sm-3
       - if @movie.released_on
         %dl

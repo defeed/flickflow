@@ -21,5 +21,9 @@ class MoviesController < ApplicationController
     @watchlist_movies = @watchlist.movies.map(&:id)
     @favorite_movies = @favorites.movies.map(&:id)
     @watched_movies = @watched.movies.map(&:id)
+    @recommended_movies = @movie.recommended_movies.with_title
+                          .includes(:genres)
+                          .includes(:primary_poster)
+                          .order('released_on DESC')
   end
 end
