@@ -32,7 +32,7 @@
 
 class Movie < ActiveRecord::Base
   include FriendlyId
-  friendly_id :slug_candicates
+  friendly_id :slug_candidates
   
   # # # # # # # #
   # Associations
@@ -128,7 +128,7 @@ class Movie < ActiveRecord::Base
     list.toggle_entry user, self
   end
   
-  def slug_candicates
+  def slug_candidates
     [
       :title,
       [:title, :year],
