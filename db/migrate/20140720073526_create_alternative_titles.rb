@@ -9,5 +9,6 @@ class CreateAlternativeTitles < ActiveRecord::Migration
     end
 
     add_index :alternative_titles, [:movie_id, :title]
+    add_index :alternative_titles, :title
   end
 end

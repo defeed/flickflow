@@ -16,4 +16,5 @@ end
 # Indexes
 #
 #  index_alternative_titles_on_movie_id_and_title  (movie_id,title)
+#  index_alternative_titles_on_title               (title)
 #

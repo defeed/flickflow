@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20141107194853) do
   end
 
   add_index "alternative_titles", ["movie_id", "title"], name: "index_alternative_titles_on_movie_id_and_title", using: :btree
+  add_index "alternative_titles", ["title"], name: "index_alternative_titles_on_title", using: :btree
 
   create_table "auth_tokens", force: true do |t|
     t.string   "token",      null: false
