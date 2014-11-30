@@ -51,6 +51,7 @@ class Movie < ActiveRecord::Base
 
   scope :released,   -> { where('released_on <= ?', Date.today) }
   scope :with_title, -> { where('title IS NOT ?', nil) }
+  scope :with_pop_index, -> { where('pop_index IS NOT ?', nil) }
   scope :with_poster, -> { joins(:posters) }
   scope :without_title, -> { where('title IS ?', nil) }
 
@@ -128,6 +129,7 @@ end
 #  description            :string(1000)
 #  storyline              :text
 #  runtime                :integer
+#  pop_index              :integer
 #  slug                   :string(255)
 #  uuid                   :uuid
 #  created_at             :datetime
@@ -135,7 +137,8 @@ end
 #
 # Indexes
 #
-#  index_movies_on_imdb_id  (imdb_id) UNIQUE
-#  index_movies_on_slug     (slug) UNIQUE
-#  index_movies_on_title    (title)
+#  index_movies_on_imdb_id    (imdb_id) UNIQUE
+#  index_movies_on_pop_index  (pop_index)
+#  index_movies_on_slug       (slug) UNIQUE
+#  index_movies_on_title      (title)
 #

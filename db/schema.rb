@@ -206,6 +206,7 @@ ActiveRecord::Schema.define(version: 20141107194853) do
     t.string   "description",            limit: 1000
     t.text     "storyline"
     t.integer  "runtime"
+    t.integer  "pop_index"
     t.string   "slug"
     t.uuid     "uuid"
     t.datetime "created_at"
@@ -213,6 +214,7 @@ ActiveRecord::Schema.define(version: 20141107194853) do
   end
 
   add_index "movies", ["imdb_id"], name: "index_movies_on_imdb_id", unique: true, using: :btree
+  add_index "movies", ["pop_index"], name: "index_movies_on_pop_index", using: :btree
   add_index "movies", ["slug"], name: "index_movies_on_slug", unique: true, using: :btree
   add_index "movies", ["title"], name: "index_movies_on_title", using: :btree
 

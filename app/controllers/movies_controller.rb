@@ -1,9 +1,9 @@
 class MoviesController < ApplicationController
   def index
-    @movies = Movie.released.with_poster.with_title
+    @movies = Movie.with_title.released.with_pop_index
               .includes(:genres)
               .includes(:primary_poster)
-              .order('released_on DESC')
+              .order('pop_index')
               .paginate(page: params[:page], per_page: 42)
     @watchlist_movies = current_user.lists.friendly
                         .find('watchlist').movies.map(&:id)

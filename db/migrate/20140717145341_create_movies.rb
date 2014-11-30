@@ -16,12 +16,14 @@ class CreateMovies < ActiveRecord::Migration
       t.string :description, limit: 1000
       t.text :storyline
       t.integer :runtime
+      t.integer :pop_index
       t.string :slug
       t.uuid :uuid
 
       t.timestamps
     end
-    
+
     add_index :movies, :slug, unique: true
+    add_index :movies, :pop_index
   end
 end
