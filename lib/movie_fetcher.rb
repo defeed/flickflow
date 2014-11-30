@@ -208,8 +208,8 @@ class MovieFetcher < Struct.new(:imdb_id, :page, :force)
     has_data = movie.recommendations.present?
     log_fetch :recommended_movies, imdb.response, has_data
 
-    movie.recommended_movies.without_title.each do |recommended_movie|
-      Delayed::Job.enqueue MovieFetcher.new(recommended_movie.imdb_id, :all)
+    movie.recommended_movies.each do |recommended_movie|
+      recommended_movie.fetch
     end
   end
   handle_asynchronously :fetch_recommended_movies, queue: 'recommended_movies'

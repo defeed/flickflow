@@ -78,8 +78,8 @@ class Movie < ActiveRecord::Base
     Delayed::Job.enqueue MovieFetcher.new(imdb_id, page, force)
   end
 
-  def fetch_recommended_movies
-    Delayed::Job.enqueue MovieFetcher.new(imdb_id, :recommended_movies)
+  def fetch_recommended_movies(force = false)
+    Delayed::Job.enqueue MovieFetcher.new(imdb_id, :recommended_movies, force)
   end
 
   def released?

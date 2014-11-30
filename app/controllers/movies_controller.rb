@@ -24,6 +24,5 @@ class MoviesController < ApplicationController
     @recommended_movies = @movie.recommended_movies.with_title
                           .includes(:genres)
                           .includes(:primary_poster)
-                          .order('released_on DESC')
   end
 end
