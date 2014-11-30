@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20141107194853) do
   enable_extension "plpgsql"
 
   create_table "alternative_titles", force: true do |t|
-    t.string   "movie_id"
+    t.integer  "movie_id"
     t.string   "title"
     t.string   "comment"
     t.datetime "created_at"

@@ -7,7 +7,7 @@ end
 # Table name: alternative_titles
 #
 #  id         :integer          not null, primary key
-#  movie_id   :string(255)
+#  movie_id   :integer
 #  title      :string(255)
 #  comment    :string(255)
 #  created_at :datetime
