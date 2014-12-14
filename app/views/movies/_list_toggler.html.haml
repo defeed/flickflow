@@ -1,10 +1,13 @@
-- watchlist_class = @watchlist_movies.include?(@movie.id) ? 'btn-on' : ''
-- watched_class = @watched_movies.include?(@movie.id) ? 'btn-on' : ''
-- favorites_class = @favorite_movies.include?(@movie.id) ? 'btn-on' : ''
-#list-toggler{ data: { movie_id: @movie.id } }
-  = link_to '#', class: "btn btn-default btn-lg btn-block #{watchlist_class}", id: 'watchlist', data: { list_id: @watchlist.id } do
+- size = options[:size] || :sm
+- btn_block = 'btn-block' if options[:block_buttons]
+- watchlist_class = @watchlist_movies.include?(movie.id) ? 'btn-on' : ''
+- watched_class = @watched_movies.include?(movie.id) ? 'btn-on' : ''
+- favorites_class = @favorite_movies.include?(movie.id) ? 'btn-on' : ''
+.list-toggler{ data: { movie_id: movie.id } }
+  = content_tag :span, nil, class: "btn btn-#{size} btn-default #{btn_block} #{watchlist_class}", id: 'watchlist', data: { list_id: @watchlist.id } do
     = fa_icon 'star', text: 'Watchlist'
-  = link_to '#', class: "btn btn-default btn-lg btn-block #{watched_class}", id: 'watched', data: { list_id: @watched.id } do
+  = content_tag :span, nil, class: "btn btn-#{size} btn-default #{btn_block} #{watched_class}", id: 'watched', data: { list_id: @watched.id } do
     = fa_icon 'check-square-o', text: 'Watched'
-  = link_to '#', class: "btn btn-default btn-lg btn-block #{favorites_class}", id: 'favorites', data: { list_id: @favorites.id } do
-    = fa_icon 'heart', text: 'Favorites'
+  - if options[:show_favorites]
+    = content_tag :span, nil, class: "btn btn-#{size} btn-default #{btn_block} #{favorites_class}", id: 'favorites', data: { list_id: @favorites.id } do
+      = fa_icon 'heart', text: 'Favorites'

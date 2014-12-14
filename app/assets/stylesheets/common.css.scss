@@ -9,7 +9,7 @@ body { background: $gray-darkest; }
   z-index: 2;
   height: 50vw;
   max-height: 500px;
-  background-position: center 30%;
+  background-position: center top;
   background-size: cover;
   background-repeat: no-repeat;
   text-align: center;
@@ -47,8 +47,8 @@ body { background: $gray-darkest; }
           box-shadow: none;
 }
 
-#list-toggler {
-  margin-bottom: 30px;
+.list-toggler {
+  margin-bottom: 10px;
   .btn {
     @include transition(all .2s);
     &.btn-on {
@@ -105,18 +105,12 @@ dl.keywords {
   overflow:hidden;
   font-weight: 200;
 
-  &.poster-watchlist {
-    border-color: $brand-primary;
-    .caption {
-      background: $brand-primary;
-    }
-  }
-
   &.poster-watched {
     border-color: $brand-success;
-    .caption {
-      background: $brand-success;
-    }
+  }
+
+  &.poster-watchlist {
+    border-color: $brand-primary;
   }
 
   h2 {
@@ -135,7 +129,7 @@ dl.keywords {
     top: 0;
     right: 0;
     background: $gray-darkest;
-    opacity: .9;
+    opacity: .95;
     width: 100%;
     height: 100%;
     padding: 10px;
