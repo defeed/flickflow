@@ -4,7 +4,7 @@ class ListsController < ApplicationController
     @watchlist = current_user.lists.friendly.find('watchlist')
     @watched   = current_user.lists.friendly.find('watched')
 
-    @movies = @list.movies.with_poster.with_title
+    @movies = @list.movies.with_title
               .includes(:genres)
               .includes(:primary_poster)
               .order('released_on DESC')
