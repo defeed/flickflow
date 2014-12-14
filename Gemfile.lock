@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/defeed/spotlite.git
-  revision: 596261ce1dfc896a09e1ce0d86b161ff17d33597
+  revision: c5adf46ebdb7cad28bcad54446eada77f0cff7a0
   specs:
-    spotlite (0.8.2)
+    spotlite (0.8.3)
       httparty
       nokogiri (~> 1.6)
 
@@ -138,7 +138,7 @@ GEM
     fog-softlayer (0.3.25)
       fog-core
       fog-json
-    fog-storm_on_demand (0.0.1)
+    fog-storm_on_demand (0.1.0)
       fog-core
       fog-json
     fog-terremark (0.0.3)
