@@ -107,10 +107,12 @@ dl.keywords {
 
   &.poster-watched {
     border-color: $brand-success;
+    background-color: $brand-success;
   }
 
   &.poster-watchlist {
     border-color: $brand-primary;
+    background-color: $brand-primary;
   }
 
   h2 {
