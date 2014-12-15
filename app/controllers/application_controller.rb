@@ -7,6 +7,15 @@ class ApplicationController < ActionController::Base
   before_action :set_api_token
   before_action :redirect_to_profile
 
+  def find_user_lists
+    @watchlist = current_user.lists.friendly.find('watchlist')
+    @watched = current_user.lists.friendly.find('watched')
+    @favorites = current_user.lists.friendly.find('favorites')
+    @watchlist_movies = @watchlist.movies.map(&:id)
+    @watched_movies = @watched.movies.map(&:id)
+    @favorite_movies = @favorites.movies.map(&:id)
+  end
+
   private
 
   def redirect_to_profile

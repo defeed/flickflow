@@ -1,10 +1,17 @@
+- if @watched_movies.include?(@movie.id)
+  - thumbnail_class = 'poster-watched'
+  - watched_class = 'btn-on'
+- if @watchlist_movies.include?(@movie.id)
+  - thumbnail_class = 'poster-watchlist'
+  - watchlist_class = 'btn-on'
+
 = backdrop_for @movie
 .container-fluid#wrapper
   .row
     .col-sm-3.left-column
-      .thumbnail.thumbnail-poster.hidden-xs
+      .thumbnail.thumbnail-poster.hidden-xs{class: thumbnail_class, id: "thumbnail-poster-#{@movie.id}"}
         = poster_image_for @movie, :lg, alt: "#{@movie.title} (#{@movie.year})"
-      = render partial: 'list_toggler'
+      = render partial: 'list_toggler', locals: { movie: @movie, options: { size: :lg, show_favorites: true, block_buttons: true } }
     .col-sm-6.center-column
       %h1.movie-title
         = @movie.title

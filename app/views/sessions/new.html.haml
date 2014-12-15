@@ -17,6 +17,13 @@
                 = password_field_tag :password, nil, class: 'form-control', placeholder: 'Password'
           .col-xs-12
             .form-group
+              .checkbox
+                = label_tag :remember do
+                  = check_box_tag :remember, 1, true
+                  Remember me
+
+          .col-xs-12
+            .form-group
               = submit_tag 'Sign in to flickflow', class: 'btn btn-primary btn-block'
             %p.text-center
               %a{href: '#'} Forgot your password?

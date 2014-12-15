@@ -6,7 +6,7 @@
   .row
     %li.media.recommended-movie
       .col-xs-3
-        .thumbnail.thumbnail-poster{class: thumbnail_class}
+        .thumbnail.thumbnail-poster{class: thumbnail_class, id: "thumbnail-poster-#{movie.id}"}
           = link_to movie_path(movie) do
             = poster_image_for movie, :sm, alt: "#{movie.title} (#{movie.year})"
       .col-xs-9
@@ -20,3 +20,5 @@
               %li
                 = movie.genres.pluck(:name).join(' &middot; ').html_safe
           %p= movie.description
+
+          = render partial: 'list_toggler', locals: { movie: movie, options: { size: :sm, show_favorites: true } }
