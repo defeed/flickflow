@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   namespace :admin do
     get 'fetch' => 'movies#fetch', as: 'fetch'
@@ -59,6 +61,8 @@ Rails.application.routes.draw do
 
   get 'profile' => 'users#edit', as: :profile
   post 'profile' => 'users#update'
+
+  mount Sidekiq::Web, at: '/sidekiq'
 
   root 'movies#index'
 end
