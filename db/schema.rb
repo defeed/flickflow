@@ -90,7 +90,6 @@ ActiveRecord::Schema.define(version: 20141107194853) do
   create_table "fetches", force: true do |t|
     t.integer  "fetchable_id"
     t.string   "fetchable_type"
-    t.integer  "page"
     t.integer  "response_code"
     t.string   "response_message"
     t.boolean  "has_data",         default: false
