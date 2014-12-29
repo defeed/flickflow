@@ -55,10 +55,11 @@ class Movie < ActiveRecord::Base
   scope :with_poster, -> { joins(:posters) }
   scope :without_title, -> { where('title IS ?', nil) }
 
-  def self.fetch(imdb_id, page = nil, force = false)
-    imdb = Spotlite::Movie.new imdb_id
-    Movie.find_or_create_by(imdb_id: imdb.imdb_id)
-    Delayed::Job.enqueue MovieFetcher.new(imdb.imdb_id, page, force)
+  def self.fetch(imdb_ids)
+    imdb_ids.each do |imdb_id|
+      movie = Movie.find_or_create_by(imdb_id: imdb_id)
+      movie.fetch
+    end
   end
 
   def self.search_on_imdb(params = {})
@@ -74,12 +75,19 @@ class Movie < ActiveRecord::Base
     title.gsub(/^(The|An|A)\s+/, '').downcase
   end
 
-  def fetch(page = nil, force = false)
-    Delayed::Job.enqueue MovieFetcher.new(imdb_id, page, force)
+  def fetch
+    MovieFetchWorker.perform_async(imdb_id)
   end
 
-  def fetch_recommended_movies(force = false)
-    Delayed::Job.enqueue MovieFetcher.new(imdb_id, :recommended_movies, force)
+  def fetch!
+    MovieFetchWorker.perform_async(imdb_id, true)
+  end
+
+  def fetch_recommended_movies
+  end
+
+  def has_release_date?
+    released_on.present?
   end
 
   def released?
