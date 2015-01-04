@@ -52,6 +52,8 @@ ActiveRecord::Schema.define(version: 20141107194853) do
     t.datetime "updated_at"
   end
 
+  add_index "countries", ["code"], name: "index_countries_on_code", unique: true, using: :btree
+  add_index "countries", ["name"], name: "index_countries_on_name", unique: true, using: :btree
   add_index "countries", ["slug"], name: "index_countries_on_slug", unique: true, using: :btree
 
   create_table "countries_movies", id: false, force: true do |t|
@@ -107,6 +109,7 @@ ActiveRecord::Schema.define(version: 20141107194853) do
     t.datetime "updated_at"
   end
 
+  add_index "genres", ["name"], name: "index_genres_on_name", unique: true, using: :btree
   add_index "genres", ["slug"], name: "index_genres_on_slug", unique: true, using: :btree
 
   create_table "genres_movies", id: false, force: true do |t|
@@ -156,6 +159,8 @@ ActiveRecord::Schema.define(version: 20141107194853) do
     t.datetime "updated_at"
   end
 
+  add_index "languages", ["code"], name: "index_languages_on_code", unique: true, using: :btree
+  add_index "languages", ["name"], name: "index_languages_on_name", unique: true, using: :btree
   add_index "languages", ["slug"], name: "index_languages_on_slug", unique: true, using: :btree
 
   create_table "languages_movies", id: false, force: true do |t|
