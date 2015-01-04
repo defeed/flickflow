@@ -2,6 +2,8 @@ class Movie < ActiveRecord::Base
   include FriendlyId
   friendly_id :slug_candidates
 
+  validates :imdb_id, presence: true
+
   has_and_belongs_to_many :genres
   has_and_belongs_to_many :countries
   has_and_belongs_to_many :languages
