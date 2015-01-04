@@ -50,6 +50,7 @@ class Movie < ActiveRecord::Base
   has_many :fetches, as: :fetchable, dependent: :destroy
 
   after_create :set_uuid
+  after_create :fetch
 
   scope :released,   -> { where('released_on <= ?', Date.today) }
   scope :with_title, -> { where('title IS NOT ?', nil) }
