@@ -58,10 +58,10 @@ class Movie < ActiveRecord::Base
   scope :with_poster, -> { joins(:posters) }
   scope :without_title, -> { where('title IS ?', nil) }
 
-  def self.fetch(imdb_id, page = nil, force = false)
-    imdb = Spotlite::Movie.new imdb_id
-    Movie.find_or_create_by(imdb_id: imdb.imdb_id)
-    Delayed::Job.enqueue MovieFetcher.new(imdb.imdb_id, page, force)
+  def self.fetch(imdb_ids)
+    imdb_ids.each do |imdb_id|
+      Movie.find_or_create_by(imdb_id: imdb_id)
+    end
   end
 
   def self.search_on_imdb(params = {})
