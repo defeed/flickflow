@@ -83,6 +83,8 @@ class Movie < ActiveRecord::Base
     Delayed::Job.enqueue BackdropsFetchJob.new(imdb_id)
     Delayed::Job.enqueue VideosFetchJob.new(imdb_id)
     Delayed::Job.enqueue KeywordsFetchJob.new(imdb_id)
+    Delayed::Job.enqueue CriticReviewsFetchJob.new(imdb_id)
+    Delayed::Job.enqueue TriviaFetchJob.new(imdb_id)
   end
 
   def fetch_recommended_movies
