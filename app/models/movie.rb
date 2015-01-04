@@ -76,12 +76,17 @@ class Movie < ActiveRecord::Base
     title.gsub(/^(The|An|A)\s+/, '').downcase
   end
 
-  def fetch(page = nil, force = false)
-    Delayed::Job.enqueue MovieFetcher.new(imdb_id, page, force)
+  def fetch
+    Delayed::Job.enqueue MovieFetchJob.new(imdb_id)
+    Delayed::Job.enqueue PeopleFetchJob.new(imdb_id)
+    Delayed::Job.enqueue ReleasesFetchJob.new(imdb_id)
+    Delayed::Job.enqueue BackdropsFetchJob.new(imdb_id)
+    Delayed::Job.enqueue VideosFetchJob.new(imdb_id)
+    Delayed::Job.enqueue KeywordsFetchJob.new(imdb_id)
   end
 
-  def fetch_recommended_movies(force = false)
-    Delayed::Job.enqueue MovieFetcher.new(imdb_id, :recommended_movies, force)
+  def fetch_recommended_movies
+    Delayed::Job.enqueue RecommendationsFetchJob.new(imdb_id)
   end
 
   def released?
