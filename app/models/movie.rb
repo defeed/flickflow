@@ -60,7 +60,7 @@ class Movie < ActiveRecord::Base
 
   def self.fetch(imdb_ids)
     imdb_ids.each do |imdb_id|
-      Movie.find_or_create_by(imdb_id: imdb_id)
+      Movie.find_or_create_by(imdb_id: imdb_id).fetch
     end
   end
 
@@ -78,18 +78,50 @@ class Movie < ActiveRecord::Base
   end
 
   def fetch
-    Delayed::Job.enqueue MovieFetchJob.new(imdb_id)
-    Delayed::Job.enqueue PeopleFetchJob.new(imdb_id)
-    Delayed::Job.enqueue ReleasesFetchJob.new(imdb_id)
-    Delayed::Job.enqueue BackdropsFetchJob.new(imdb_id)
-    Delayed::Job.enqueue VideosFetchJob.new(imdb_id)
-    Delayed::Job.enqueue KeywordsFetchJob.new(imdb_id)
-    Delayed::Job.enqueue CriticReviewsFetchJob.new(imdb_id)
-    Delayed::Job.enqueue TriviaFetchJob.new(imdb_id)
+    [:general_info, :people, :release_info, :keywords,
+     :trivia, :critic_reviews, :videos, :backdrops].each do |page|
+       if fetch_required_for?(page)
+         Delayed::Job.enqueue(MovieFetchJob.new(imdb_id, page))
+       end
+    end
   end
 
   def fetch_recommended_movies
-    Delayed::Job.enqueue RecommendationsFetchJob.new(imdb_id)
+    Delayed::Job.enqueue MovieFetchJob.new(imdb_id, :recommended_movies)
+  end
+
+  def fetch_required_for?(page)
+    last_fetch = last_fetch_for(page)
+    return true if last_fetch.nil?
+    Time.now.utc - last_fetch.created_at > fetch_delay
+  end
+
+  def last_fetch_for(page)
+    fetches.where(page: Fetch.pages[page]).last
+  end
+
+  def fetch_delay
+    return 1.week unless has_release_date?
+
+    days_difference = (Date.today - released_on).abs.to_i
+
+    if days_difference > 365
+      1.week
+    elsif days_difference > 180
+      5.days
+    elsif days_difference > 90
+      3.days
+    elsif days_difference > 30
+      2.days
+    elsif days_difference > 7
+      1.day
+    else
+      6.hours
+    end
+  end
+
+  def has_release_date?
+    released_on.present?
   end
 
   def released?

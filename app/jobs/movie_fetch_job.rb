@@ -1,89 +1,21 @@
-MovieFetchJob = Struct.new(:imdb_id) do
+MovieFetchJob = Struct.new(:imdb_id, :page) do
   def perform
-    MovieFetcher.new(imdb_id).fetch
+    MovieFetcher.new(imdb_id).send("fetch_#{page}")
   end
 
-  def queue_name
-    'movies'
-  end
-end
-
-class PeopleFetchJob < MovieFetchJob
-  def perform
-    MovieFetcher.new(imdb_id).fetch_people
-  end
-
-  def queue_name
-    'people'
-  end
-end
-
-class ReleasesFetchJob < MovieFetchJob
-  def perform
-    MovieFetcher.new(imdb_id).fetch_release_info
-  end
-
-  def queue_name
-    'releases'
-  end
-end
-
-class BackdropsFetchJob < MovieFetchJob
-  def perform
-    MovieFetcher.new(imdb_id).fetch_backdrops
+  def success(job)
+    log_fetch(page)
+    puts "Fetched: #{imdb_id} - #{page}"
   end
 
   def queue
-    'backdrops'
-  end
-end
-
-class VideosFetchJob < MovieFetchJob
-  def perform
-    MovieFetcher.new(imdb_id).fetch_videos
+    "#{page}"
   end
 
-  def queue
-    'videos'
-  end
-end
+  private
 
-class KeywordsFetchJob < MovieFetchJob
-  def perform
-    MovieFetcher.new(imdb_id).fetch_keywords
-  end
-
-  def queue_name
-    'keywords'
-  end
-end
-
-class RecommendationsFetchJob < MovieFetchJob
-  def perform
-    MovieFetcher.new(imdb_id).fetch_recommended_movies
-  end
-
-  def queue_name
-    'recommendations'
-  end
-end
-
-class CriticReviewsFetchJob < MovieFetchJob
-  def perform
-    MovieFetcher.new(imdb_id).fetch_critic_reviews
-  end
-
-  def queue_name
-    'reviews'
-  end
-end
-
-class TriviaFetchJob < MovieFetchJob
-  def perform
-    MovieFetcher.new(imdb_id).fetch_trivia
-  end
-
-  def queue_name
-    'trivia'
+  def log_fetch(page)
+    movie = Movie.find_by(imdb_id: imdb_id)
+    movie.fetches.create(page: Fetch.pages[page])
   end
 end

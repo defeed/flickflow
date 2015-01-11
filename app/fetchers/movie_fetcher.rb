@@ -4,7 +4,7 @@ class MovieFetcher
     @movie = Movie.find_or_create_by(imdb_id: imdb_id)
   end
 
-  def fetch
+  def fetch_general_info
     rotten = RottenMovie.find(imdb: @movie.imdb_id)
 
     @movie.title                  = @imdb.title
@@ -123,6 +123,7 @@ class MovieFetcher
     @imdb.recommended_movies.each do |recommended_movie|
       other_movie = Movie.find_or_create_by(imdb_id: recommended_movie.imdb_id)
       @movie.recommendations.create(other_movie_id: other_movie.id)
+      other_movie.fetch
     end
   end
 
