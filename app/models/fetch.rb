@@ -1,15 +1,12 @@
 class Fetch < ActiveRecord::Base
   enum page: [
-    :basic_info,
+    :general_info,
     :people,
     :release_info,
     :keywords,
     :trivia,
     :critic_reviews,
     :recommended_movies,
-    :bio,
-    :filmography,
-    :images,
     :videos,
     :backdrops
   ]
