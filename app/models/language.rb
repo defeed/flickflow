@@ -10,13 +10,15 @@ end
 # Table name: languages
 #
 #  id         :integer          not null, primary key
-#  code       :string(255)
-#  name       :string(255)
-#  slug       :string(255)
+#  code       :string
+#  name       :string
+#  slug       :string
 #  created_at :datetime
 #  updated_at :datetime
 #
 # Indexes
 #
+#  index_languages_on_code  (code) UNIQUE
+#  index_languages_on_name  (name) UNIQUE
 #  index_languages_on_slug  (slug) UNIQUE
 #

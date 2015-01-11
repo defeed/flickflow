@@ -23,7 +23,7 @@ end
 #  movie_id   :integer
 #  person_id  :integer
 #  job        :integer
-#  credit     :string(255)
+#  credit     :string
 #  created_at :datetime
 #  updated_at :datetime
 #
