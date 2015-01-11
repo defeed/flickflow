@@ -133,14 +133,13 @@ class Movie < ActiveRecord::Base
 
   def slug_candidates
     [
-      :title,
-      [:title, :year],
-      [:imdb_id]
+      [:imdb_id, :title],
+      :imdb_id
     ]
   end
 
   def should_generate_new_friendly_id?
-    title_changed? || year_changed? || super
+    title_changed? || super
   end
 
   private
