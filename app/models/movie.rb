@@ -124,7 +124,7 @@ class Movie < ActiveRecord::Base
   end
 
   def released?
-    released_on? && released_on <= Date.today
+    has_released_date? && released_on <= Date.today
   end
 
   def toggle_in_list(user, list)
