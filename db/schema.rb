@@ -93,9 +93,6 @@ ActiveRecord::Schema.define(version: 20141107194853) do
     t.integer  "fetchable_id"
     t.string   "fetchable_type"
     t.integer  "page"
-    t.integer  "response_code"
-    t.string   "response_message"
-    t.boolean  "has_data",         default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
