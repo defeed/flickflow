@@ -1,15 +1,12 @@
 class Fetch < ActiveRecord::Base
   enum page: [
-    :basic_info,
+    :general_info,
     :people,
     :release_info,
     :keywords,
     :trivia,
     :critic_reviews,
     :recommended_movies,
-    :bio,
-    :filmography,
-    :images,
     :videos,
     :backdrops
   ]
@@ -29,15 +26,12 @@ end
 #
 # Table name: fetches
 #
-#  id               :integer          not null, primary key
-#  fetchable_id     :integer
-#  fetchable_type   :string(255)
-#  page             :integer
-#  response_code    :integer
-#  response_message :string(255)
-#  has_data         :boolean          default(FALSE)
-#  created_at       :datetime
-#  updated_at       :datetime
+#  id             :integer          not null, primary key
+#  fetchable_id   :integer
+#  fetchable_type :string
+#  page           :integer
+#  created_at     :datetime
+#  updated_at     :datetime
 #
 # Indexes
 #

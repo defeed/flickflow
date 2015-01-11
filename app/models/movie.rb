@@ -2,6 +2,8 @@ class Movie < ActiveRecord::Base
   include FriendlyId
   friendly_id :slug_candidates
 
+  validates :imdb_id, presence: true
+
   has_and_belongs_to_many :genres
   has_and_belongs_to_many :countries
   has_and_belongs_to_many :languages
@@ -55,10 +57,10 @@ class Movie < ActiveRecord::Base
   scope :with_poster, -> { joins(:posters) }
   scope :without_title, -> { where('title IS ?', nil) }
 
-  def self.fetch(imdb_id, page = nil, force = false)
-    imdb = Spotlite::Movie.new imdb_id
-    Movie.find_or_create_by(imdb_id: imdb.imdb_id)
-    Delayed::Job.enqueue MovieFetcher.new(imdb.imdb_id, page, force)
+  def self.fetch(imdb_ids)
+    imdb_ids.each do |imdb_id|
+      Movie.find_or_create_by(imdb_id: imdb_id).fetch
+    end
   end
 
   def self.search_on_imdb(params = {})
@@ -74,16 +76,55 @@ class Movie < ActiveRecord::Base
     title.gsub(/^(The|An|A)\s+/, '').downcase
   end
 
-  def fetch(page = nil, force = false)
-    Delayed::Job.enqueue MovieFetcher.new(imdb_id, page, force)
+  def fetch
+    [:general_info, :people, :release_info, :keywords,
+     :trivia, :critic_reviews, :videos, :backdrops].each do |page|
+       if fetch_required_for?(page)
+         Delayed::Job.enqueue(MovieFetchJob.new(imdb_id, page))
+       end
+    end
   end
 
-  def fetch_recommended_movies(force = false)
-    Delayed::Job.enqueue MovieFetcher.new(imdb_id, :recommended_movies, force)
+  def fetch_recommended_movies
+    Delayed::Job.enqueue MovieFetchJob.new(imdb_id, :recommended_movies)
+  end
+
+  def fetch_required_for?(page)
+    last_fetch = last_fetch_for(page)
+    return true if last_fetch.nil?
+    Time.now.utc - last_fetch.created_at > fetch_delay
+  end
+
+  def last_fetch_for(page)
+    fetches.where(page: Fetch.pages[page]).last
+  end
+
+  def fetch_delay
+    return 1.week unless has_release_date?
+
+    days_difference = (Date.today - released_on).abs.to_i
+
+    if days_difference > 365
+      1.week
+    elsif days_difference > 180
+      5.days
+    elsif days_difference > 90
+      3.days
+    elsif days_difference > 30
+      2.days
+    elsif days_difference > 7
+      1.day
+    else
+      6.hours
+    end
+  end
+
+  def has_release_date?
+    released_on.present?
   end
 
   def released?
-    released_on? && released_on <= Date.today
+    has_released_date? && released_on <= Date.today
   end
 
   def toggle_in_list(user, list)
@@ -92,14 +133,13 @@ class Movie < ActiveRecord::Base
 
   def slug_candidates
     [
-      :title,
-      [:title, :year],
-      [:imdb_id]
+      [:imdb_id, :title],
+      :imdb_id
     ]
   end
 
   def should_generate_new_friendly_id?
-    title_changed? || year_changed? || super
+    title_changed? || super
   end
 
   private
@@ -114,10 +154,10 @@ end
 # Table name: movies
 #
 #  id                     :integer          not null, primary key
-#  imdb_id                :string(255)
-#  title                  :string(255)
-#  original_title         :string(255)
-#  sort_title             :string(255)
+#  imdb_id                :string
+#  title                  :string
+#  original_title         :string
+#  sort_title             :string
 #  year                   :integer
 #  released_on            :date
 #  imdb_rating            :float
@@ -125,12 +165,12 @@ end
 #  rotten_critics_rating  :integer
 #  rotten_audience_rating :integer
 #  metacritic_rating      :integer
-#  mpaa_rating            :string(255)
+#  mpaa_rating            :string
 #  description            :string(1000)
 #  storyline              :text
 #  runtime                :integer
 #  pop_index              :integer
-#  slug                   :string(255)
+#  slug                   :string
 #  uuid                   :uuid
 #  created_at             :datetime
 #  updated_at             :datetime

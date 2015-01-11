@@ -11,7 +11,7 @@ end
 #  country_id  :integer
 #  movie_id    :integer
 #  released_on :date
-#  comment     :string(255)
+#  comment     :string
 #  created_at  :datetime
 #  updated_at  :datetime
 #

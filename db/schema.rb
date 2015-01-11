@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20141107194853) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "alternative_titles", force: true do |t|
+  create_table "alternative_titles", force: :cascade do |t|
     t.integer  "movie_id"
     t.string   "title"
     t.string   "comment"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20141107194853) do
   add_index "alternative_titles", ["movie_id", "title"], name: "index_alternative_titles_on_movie_id_and_title", using: :btree
   add_index "alternative_titles", ["title"], name: "index_alternative_titles_on_title", using: :btree
 
-  create_table "auth_tokens", force: true do |t|
+  create_table "auth_tokens", force: :cascade do |t|
     t.string   "token",      null: false
     t.integer  "user_id"
     t.datetime "created_at"
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20141107194853) do
 
   add_index "auth_tokens", ["token"], name: "index_auth_tokens_on_token", unique: true, using: :btree
 
-  create_table "authentications", force: true do |t|
+  create_table "authentications", force: :cascade do |t|
     t.integer  "user_id",    null: false
     t.string   "provider",   null: false
     t.string   "uid",        null: false
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 20141107194853) do
     t.datetime "updated_at"
   end
 
-  create_table "countries", force: true do |t|
+  create_table "countries", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
     t.string   "slug"
@@ -52,16 +52,18 @@ ActiveRecord::Schema.define(version: 20141107194853) do
     t.datetime "updated_at"
   end
 
+  add_index "countries", ["code"], name: "index_countries_on_code", unique: true, using: :btree
+  add_index "countries", ["name"], name: "index_countries_on_name", unique: true, using: :btree
   add_index "countries", ["slug"], name: "index_countries_on_slug", unique: true, using: :btree
 
-  create_table "countries_movies", id: false, force: true do |t|
+  create_table "countries_movies", id: false, force: :cascade do |t|
     t.integer "country_id", null: false
     t.integer "movie_id",   null: false
   end
 
   add_index "countries_movies", ["country_id", "movie_id"], name: "index_countries_movies_on_country_id_and_movie_id", using: :btree
 
-  create_table "critic_reviews", force: true do |t|
+  create_table "critic_reviews", force: :cascade do |t|
     t.integer  "movie_id"
     t.string   "author"
     t.string   "publisher"
@@ -71,7 +73,7 @@ ActiveRecord::Schema.define(version: 20141107194853) do
     t.datetime "updated_at"
   end
 
-  create_table "delayed_jobs", force: true do |t|
+  create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
     t.integer  "attempts",   default: 0, null: false
     t.text     "handler",                null: false
@@ -87,36 +89,34 @@ ActiveRecord::Schema.define(version: 20141107194853) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
-  create_table "fetches", force: true do |t|
+  create_table "fetches", force: :cascade do |t|
     t.integer  "fetchable_id"
     t.string   "fetchable_type"
     t.integer  "page"
-    t.integer  "response_code"
-    t.string   "response_message"
-    t.boolean  "has_data",         default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "fetches", ["fetchable_id", "fetchable_type"], name: "index_fetches_on_fetchable_id_and_fetchable_type", using: :btree
 
-  create_table "genres", force: true do |t|
+  create_table "genres", force: :cascade do |t|
     t.string   "name"
     t.string   "slug"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "genres", ["name"], name: "index_genres_on_name", unique: true, using: :btree
   add_index "genres", ["slug"], name: "index_genres_on_slug", unique: true, using: :btree
 
-  create_table "genres_movies", id: false, force: true do |t|
+  create_table "genres_movies", id: false, force: :cascade do |t|
     t.integer "genre_id", null: false
     t.integer "movie_id", null: false
   end
 
   add_index "genres_movies", ["genre_id", "movie_id"], name: "index_genres_movies_on_genre_id_and_movie_id", using: :btree
 
-  create_table "images", force: true do |t|
+  create_table "images", force: :cascade do |t|
     t.string   "type"
     t.string   "file"
     t.integer  "imageable_id"
@@ -128,9 +128,10 @@ ActiveRecord::Schema.define(version: 20141107194853) do
     t.datetime "updated_at"
   end
 
-  add_index "images", ["imageable_id", "imageable_type"], name: "index_images_on_imageable_id_and_imageable_type", using: :btree
+  add_index "images", ["imageable_type", "imageable_id"], name: "index_images_on_imageable_type_and_imageable_id", using: :btree
+  add_index "images", ["remote_url"], name: "index_images_on_remote_url", using: :btree
 
-  create_table "keywords", force: true do |t|
+  create_table "keywords", force: :cascade do |t|
     t.string   "name"
     t.string   "slug"
     t.datetime "created_at"
@@ -140,7 +141,7 @@ ActiveRecord::Schema.define(version: 20141107194853) do
   add_index "keywords", ["name"], name: "index_keywords_on_name", unique: true, using: :btree
   add_index "keywords", ["slug"], name: "index_keywords_on_slug", unique: true, using: :btree
 
-  create_table "keywords_movies", id: false, force: true do |t|
+  create_table "keywords_movies", id: false, force: :cascade do |t|
     t.integer "keyword_id", null: false
     t.integer "movie_id",   null: false
   end
@@ -148,7 +149,7 @@ ActiveRecord::Schema.define(version: 20141107194853) do
   add_index "keywords_movies", ["keyword_id", "movie_id"], name: "index_keywords_movies_on_keyword_id_and_movie_id", using: :btree
   add_index "keywords_movies", ["movie_id", "keyword_id"], name: "index_keywords_movies_on_movie_id_and_keyword_id", using: :btree
 
-  create_table "languages", force: true do |t|
+  create_table "languages", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
     t.string   "slug"
@@ -156,16 +157,18 @@ ActiveRecord::Schema.define(version: 20141107194853) do
     t.datetime "updated_at"
   end
 
+  add_index "languages", ["code"], name: "index_languages_on_code", unique: true, using: :btree
+  add_index "languages", ["name"], name: "index_languages_on_name", unique: true, using: :btree
   add_index "languages", ["slug"], name: "index_languages_on_slug", unique: true, using: :btree
 
-  create_table "languages_movies", id: false, force: true do |t|
+  create_table "languages_movies", id: false, force: :cascade do |t|
     t.integer "language_id", null: false
     t.integer "movie_id",    null: false
   end
 
   add_index "languages_movies", ["language_id", "movie_id"], name: "index_languages_movies_on_language_id_and_movie_id", using: :btree
 
-  create_table "list_entries", force: true do |t|
+  create_table "list_entries", force: :cascade do |t|
     t.integer  "list_id"
     t.integer  "listable_id"
     t.string   "listable_type"
@@ -175,7 +178,7 @@ ActiveRecord::Schema.define(version: 20141107194853) do
 
   add_index "list_entries", ["list_id", "listable_id", "listable_type"], name: "index_list_entries_on_list_id_and_listable_id_and_listable_type", unique: true, using: :btree
 
-  create_table "lists", force: true do |t|
+  create_table "lists", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "list_type"
     t.string   "name"
@@ -190,7 +193,7 @@ ActiveRecord::Schema.define(version: 20141107194853) do
   add_index "lists", ["user_id", "list_type"], name: "index_lists_on_user_id_and_list_type", using: :btree
   add_index "lists", ["user_id", "name"], name: "index_lists_on_user_id_and_name", using: :btree
 
-  create_table "movies", force: true do |t|
+  create_table "movies", force: :cascade do |t|
     t.string   "imdb_id"
     t.string   "title"
     t.string   "original_title"
@@ -218,7 +221,7 @@ ActiveRecord::Schema.define(version: 20141107194853) do
   add_index "movies", ["slug"], name: "index_movies_on_slug", unique: true, using: :btree
   add_index "movies", ["title"], name: "index_movies_on_title", using: :btree
 
-  create_table "participations", force: true do |t|
+  create_table "participations", force: :cascade do |t|
     t.integer  "movie_id"
     t.integer  "person_id"
     t.integer  "job"
@@ -230,7 +233,7 @@ ActiveRecord::Schema.define(version: 20141107194853) do
   add_index "participations", ["movie_id", "person_id", "job", "credit"], name: "participations_index", unique: true, using: :btree
   add_index "participations", ["movie_id", "person_id"], name: "index_participations_on_movie_id_and_person_id", using: :btree
 
-  create_table "people", force: true do |t|
+  create_table "people", force: :cascade do |t|
     t.string   "imdb_id"
     t.string   "name"
     t.string   "birth_name"
@@ -248,7 +251,7 @@ ActiveRecord::Schema.define(version: 20141107194853) do
   add_index "people", ["name"], name: "index_people_on_name", using: :btree
   add_index "people", ["slug"], name: "index_people_on_slug", unique: true, using: :btree
 
-  create_table "recommendations", force: true do |t|
+  create_table "recommendations", force: :cascade do |t|
     t.integer "movie_id"
     t.integer "other_movie_id"
   end
@@ -256,7 +259,7 @@ ActiveRecord::Schema.define(version: 20141107194853) do
   add_index "recommendations", ["movie_id", "other_movie_id"], name: "index_recommendations_on_movie_id_and_other_movie_id", unique: true, using: :btree
   add_index "recommendations", ["other_movie_id", "movie_id"], name: "index_recommendations_on_other_movie_id_and_movie_id", unique: true, using: :btree
 
-  create_table "releases", force: true do |t|
+  create_table "releases", force: :cascade do |t|
     t.integer  "country_id"
     t.integer  "movie_id"
     t.date     "released_on"
@@ -267,14 +270,14 @@ ActiveRecord::Schema.define(version: 20141107194853) do
 
   add_index "releases", ["country_id", "movie_id"], name: "index_releases_on_country_id_and_movie_id", using: :btree
 
-  create_table "trivia", force: true do |t|
+  create_table "trivia", force: :cascade do |t|
     t.integer  "movie_id"
     t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "username"
     t.string   "email"
@@ -302,7 +305,7 @@ ActiveRecord::Schema.define(version: 20141107194853) do
   add_index "users", ["slug"], name: "index_users_on_slug", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
-  create_table "videos", force: true do |t|
+  create_table "videos", force: :cascade do |t|
     t.integer  "movie_id"
     t.string   "kind"
     t.string   "title"

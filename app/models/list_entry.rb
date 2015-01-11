@@ -10,7 +10,7 @@ end
 #  id            :integer          not null, primary key
 #  list_id       :integer
 #  listable_id   :integer
-#  listable_type :string(255)
+#  listable_type :string
 #  created_at    :datetime
 #  updated_at    :datetime
 #

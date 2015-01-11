@@ -54,14 +54,14 @@ end
 # Table name: people
 #
 #  id         :integer          not null, primary key
-#  imdb_id    :string(255)
-#  name       :string(255)
-#  birth_name :string(255)
+#  imdb_id    :string
+#  name       :string
+#  birth_name :string
 #  born_on    :date
 #  died_on    :date
 #  bio        :text
-#  photo_url  :string(255)
-#  slug       :string(255)
+#  photo_url  :string
+#  slug       :string
 #  uuid       :uuid
 #  created_at :datetime
 #  updated_at :datetime

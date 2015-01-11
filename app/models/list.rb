@@ -52,9 +52,9 @@ end
 #  id         :integer          not null, primary key
 #  user_id    :integer
 #  list_type  :integer
-#  name       :string(255)
-#  is_private :boolean          default(FALSE)
-#  slug       :string(255)
+#  name       :string
+#  is_private :boolean          default("false")
+#  slug       :string
 #  created_at :datetime
 #  updated_at :datetime
 #
