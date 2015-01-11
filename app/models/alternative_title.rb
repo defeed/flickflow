@@ -8,8 +8,8 @@ end
 #
 #  id         :integer          not null, primary key
 #  movie_id   :integer
-#  title      :string(255)
-#  comment    :string(255)
+#  title      :string
+#  comment    :string
 #  created_at :datetime
 #  updated_at :datetime
 #

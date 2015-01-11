@@ -14,7 +14,7 @@ end
 # Table name: auth_tokens
 #
 #  id         :integer          not null, primary key
-#  token      :string(255)      not null
+#  token      :string           not null
 #  user_id    :integer
 #  created_at :datetime
 #  updated_at :datetime

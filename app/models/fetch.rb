@@ -26,12 +26,12 @@ end
 #
 # Table name: fetches
 #
-#  id               :integer          not null, primary key
-#  fetchable_id     :integer
-#  fetchable_type   :string(255)
-#  page             :integer
-#  created_at       :datetime
-#  updated_at       :datetime
+#  id             :integer          not null, primary key
+#  fetchable_id   :integer
+#  fetchable_type :string
+#  page           :integer
+#  created_at     :datetime
+#  updated_at     :datetime
 #
 # Indexes
 #

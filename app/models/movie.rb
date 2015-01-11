@@ -154,10 +154,10 @@ end
 # Table name: movies
 #
 #  id                     :integer          not null, primary key
-#  imdb_id                :string(255)
-#  title                  :string(255)
-#  original_title         :string(255)
-#  sort_title             :string(255)
+#  imdb_id                :string
+#  title                  :string
+#  original_title         :string
+#  sort_title             :string
 #  year                   :integer
 #  released_on            :date
 #  imdb_rating            :float
@@ -165,12 +165,12 @@ end
 #  rotten_critics_rating  :integer
 #  rotten_audience_rating :integer
 #  metacritic_rating      :integer
-#  mpaa_rating            :string(255)
+#  mpaa_rating            :string
 #  description            :string(1000)
 #  storyline              :text
 #  runtime                :integer
 #  pop_index              :integer
-#  slug                   :string(255)
+#  slug                   :string
 #  uuid                   :uuid
 #  created_at             :datetime
 #  updated_at             :datetime

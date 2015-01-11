@@ -10,8 +10,8 @@ end
 # Table name: keywords
 #
 #  id         :integer          not null, primary key
-#  name       :string(255)
-#  slug       :string(255)
+#  name       :string
+#  slug       :string
 #  created_at :datetime
 #  updated_at :datetime
 #

@@ -10,12 +10,13 @@ end
 # Table name: genres
 #
 #  id         :integer          not null, primary key
-#  name       :string(255)
-#  slug       :string(255)
+#  name       :string
+#  slug       :string
 #  created_at :datetime
 #  updated_at :datetime
 #
 # Indexes
 #
+#  index_genres_on_name  (name) UNIQUE
 #  index_genres_on_slug  (slug) UNIQUE
 #

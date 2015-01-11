@@ -8,9 +8,9 @@ end
 #
 #  id         :integer          not null, primary key
 #  movie_id   :integer
-#  kind       :string(255)
-#  title      :string(255)
-#  youtube_id :string(255)
+#  kind       :string
+#  title      :string
+#  youtube_id :string
 #  created_at :datetime
 #  updated_at :datetime
 #
